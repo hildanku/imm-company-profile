@@ -1,5 +1,5 @@
-import path from 'path'
-import tailwindcss from '@vitejs/plugin-react'
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
@@ -12,8 +12,11 @@ export default defineConfig({
             autoCodeSplitting: true,
         }),
         react(),
-        tailwindcss()
+        tailwindcss(),
     ],
+    server: {
+        allowedHosts: true
+    },
     resolve: {
         alias: {
             "@": path.resolve(__dirname, "./src"),
