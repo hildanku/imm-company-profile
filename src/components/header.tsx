@@ -18,7 +18,7 @@ export const Header = () => {
 
     return (
         <div className="w-full space-y-8">
-            <header className="border-b bg-white">
+            <header className="border-b bg-white relative">
                 <div className="container mx-auto px-4 py-4">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
@@ -45,8 +45,8 @@ export const Header = () => {
                         </div>
                         {/* Here  */}
                         <nav className="hidden md:flex items-center space-x-8">
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Home</Link>
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> About</Link>
+                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Home</a>
+                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> About</a>
                             <NavigationMenu viewport={false}>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>
@@ -55,21 +55,33 @@ export const Header = () => {
                                             <ul className="grid w-[300px] gap-4">
                                                 <li>
                                                     <NavigationMenuLink asChild>
-                                                        <Link href="">
+                                                        <Link href="https://invitationery.asia" to="/">
                                                             <div className="font-medium">Invitationery</div>
                                                         </Link>
                                                     </NavigationMenuLink>
                                                     <NavigationMenuLink asChild>
-                                                        <Link href="#">
+                                                        <Link href="https://invittoprintery.com/" to="/">
                                                             <div className="font-medium">Invitto</div>
                                                         </Link>
                                                     </NavigationMenuLink>
                                                     <NavigationMenuLink asChild>
-                                                        <Link href="#">
+                                                        <Link href="https://printfy.id/" to="/">
                                                             <div className="font-medium">Printfy.ID</div>
-                                                            <div className="text-muted-foreground">
-                                                                Read our latest blog posts.
-                                                            </div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="https://www.galeriainvitation.com/" to="/">
+                                                            <div className="font-medium">Galeria Invitation</div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="https://immenterprise.com/" to="/">
+                                                            <div className="font-medium">IMM Enterprise</div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="https://www.luxeawear.com/" to="/">
+                                                            <div className="font-medium">Luxea Wear</div>
                                                         </Link>
                                                     </NavigationMenuLink>
                                                 </li>
@@ -78,9 +90,9 @@ export const Header = () => {
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</Link>
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</Link>
-                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</Link>
+                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
+                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
+                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
                             <Button variant="secondary" size="icon" className="size-8">
                                 <Moon />
                             </Button>
@@ -95,6 +107,100 @@ export const Header = () => {
                         </Button>
                     </div>
                 </div>
+
+                {mobileMenu && (
+                    <div className="absolute top-full left-0 right-0 bg-white border-b shadow-lg md:hidden z-50">
+                        <nav className="container mx-auto px-4 py-4">
+                            <div className="flex flex-col space-y-4">
+                                <a
+                                    href="#home"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    Home
+                                </a>
+                                <a
+                                    href="#about"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    About
+                                </a>
+                                <div className="py-2 border-b border-gray-100">
+                                    <div className="text-gray-800 font-medium mb-2">Our Products</div>
+                                    <div className="pl-4 space-y-2">
+                                        <a
+                                            href="https://invitationery.asia"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            Invitationery
+                                        </a>
+                                        <a
+                                            href="https://invittoprintery.com/"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            Invitto
+                                        </a>
+                                        <a
+                                            href="https://printfy.id/"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            Printfy.ID
+                                        </a>
+                                        <a
+                                            href="https://www.galeriainvitation.com/"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            Galeria Invitation
+                                        </a>
+                                        <a
+                                            href="https://immenterprise.com/"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            IMM Enterprise
+                                        </a>
+                                        <a
+                                            href="https://www.luxeawear.com/"
+                                            className="block text-gray-600 hover:text-gray-800 py-1"
+                                            onClick={() => setMobileMenu(false)}
+                                        >
+                                            Luxea Wear
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <a
+                                    href="#blog"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    Blog
+                                </a>
+                                <a
+                                    href="#career"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    Career
+                                </a>
+                                <a
+                                    href="#contact"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    Contact
+                                </a>
+
+                            </div>
+                        </nav>
+                    </div>
+                )}
+
             </header>
         </div>
     )
