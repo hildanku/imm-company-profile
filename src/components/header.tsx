@@ -1,7 +1,7 @@
 "use client"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { Button } from "@/components/ui/button"
-import { Menu, Moon, X } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -11,6 +11,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
+import { ThemeToggle } from "./theme-toggle"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -93,9 +94,10 @@ export const Header = () => {
                             <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
                             <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
                             <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
-                            <Button variant="secondary" size="icon" className="size-8">
+                            {/* <Button variant="secondary" size="icon" className="size-8">
                                 <Moon />
-                            </Button>
+                            </Button> */}
+                            <ThemeToggle />
                         </nav>
                         <Button
                             variant="ghost"
