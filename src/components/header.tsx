@@ -1,7 +1,7 @@
 "use client"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { Button } from "@/components/ui/button"
-import { Menu, Moon } from "lucide-react"
+import { Menu, Moon, X } from "lucide-react"
 import {
     NavigationMenu,
     NavigationMenuContent,
@@ -10,9 +10,11 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
+import { useState } from "react"
 
 export const Header = () => {
     const navigate = useNavigate()
+    const [mobileMenu, setMobileMenu] = useState(false)
 
     return (
         <div className="w-full space-y-8">
@@ -83,8 +85,13 @@ export const Header = () => {
                                 <Moon />
                             </Button>
                         </nav>
-                        <Button variant="ghost" size="icon" className="md:hidden">
-                            <Menu className="w-5 h-5" />
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="md:hidden"
+                            onClick={() => setMobileMenu(!mobileMenu)}
+                        >
+                            {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                         </Button>
                     </div>
                 </div>
