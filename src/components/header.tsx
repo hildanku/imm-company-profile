@@ -1,7 +1,7 @@
 "use client"
 import { Link, useNavigate } from "@tanstack/react-router"
 import { Button } from "./ui/button"
-import { Moon } from "lucide-react"
+import { Menu, Moon } from "lucide-react"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -44,6 +44,9 @@ export const Header = () => {
                                 <Moon />
                             </Button>
                         </nav>
+                        <Button variant="ghost" size="icon" className="md:hidden">
+                            <Menu className="w-5 h-5" />
+                        </Button>
                     </div>
                 </div>
             </header>
