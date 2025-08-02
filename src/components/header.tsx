@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useNavigate } from "@tanstack/react-router"
 
 export const Header = () => {
-    //const navigate = useNavigate()
+    const navigate = useNavigate()
 
     return (
         <div className="w-full space-y-8">
@@ -13,12 +13,23 @@ export const Header = () => {
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                             <div className="flex items-center space-x-3">
+                                {/* 
                                 <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                                     <Building2 className="w-6 h-6 text-white" />
-                                </div>
+                                </div> */}
                                 <div>
-                                    <h1 className="text-xl font-bold text-gray-900">Indonesia Mitra Media</h1>
-                                    <p className="text-sm text-gray-500">xxx</p>
+                                    <div
+                                        className="flex items-center cursor-pointer"
+                                        onClick={() => navigate({ to: "/" })}
+                                    >
+                                        <img
+                                            src="./logo-black.png"
+                                            alt="Indonesia Mitra Media"
+                                            className="h-12 w-auto"
+                                        />
+                                    </div>
+                                    {/*   <h1 className="text-xl font-bold text-gray-900">Indonesia Mitra Media</h1 >
+                                        <p className="text-sm text-gray-500">xxx</p> */}
                                 </div>
                             </div>
                         </div>
