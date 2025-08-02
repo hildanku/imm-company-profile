@@ -1,7 +1,15 @@
 "use client"
 import { Link, useNavigate } from "@tanstack/react-router"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import { Menu, Moon } from "lucide-react"
+import {
+    NavigationMenu,
+    NavigationMenuContent,
+    NavigationMenuItem,
+    NavigationMenuLink,
+    NavigationMenuList,
+    NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -37,6 +45,37 @@ export const Header = () => {
                         <nav className="hidden md:flex items-center space-x-8">
                             <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Home</Link>
                             <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> About</Link>
+                            <NavigationMenu viewport={false}>
+                                <NavigationMenuList>
+                                    <NavigationMenuItem>
+                                        <NavigationMenuTrigger>Our Product</NavigationMenuTrigger>
+                                        <NavigationMenuContent>
+                                            <ul className="grid w-[300px] gap-4">
+                                                <li>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="">
+                                                            <div className="font-medium">Invitationery</div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="#">
+                                                            <div className="font-medium">Invitto</div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                    <NavigationMenuLink asChild>
+                                                        <Link href="#">
+                                                            <div className="font-medium">Printfy.ID</div>
+                                                            <div className="text-muted-foreground">
+                                                                Read our latest blog posts.
+                                                            </div>
+                                                        </Link>
+                                                    </NavigationMenuLink>
+                                                </li>
+                                            </ul>
+                                        </NavigationMenuContent>
+                                    </NavigationMenuItem>
+                                </NavigationMenuList>
+                            </NavigationMenu>
                             <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</Link>
                             <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</Link>
                             <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</Link>
