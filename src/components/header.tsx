@@ -1,7 +1,7 @@
 "use client"
-import { Building2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
+import { Button } from "./ui/button"
+import { Moon } from "lucide-react"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -33,6 +33,17 @@ export const Header = () => {
                                 </div>
                             </div>
                         </div>
+                        {/* Here  */}
+                        <nav className="hidden md:flex items-center space-x-8">
+                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Home</Link>
+                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> About</Link>
+                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</Link>
+                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</Link>
+                            <Link href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</Link>
+                            <Button variant="secondary" size="icon" className="size-8">
+                                <Moon />
+                            </Button>
+                        </nav>
                     </div>
                 </div>
             </header>
