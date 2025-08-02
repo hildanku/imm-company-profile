@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { ImageZoom } from '@/components/ui/shadcn-io/image-zoom'
 import { createFileRoute } from '@tanstack/react-router'
 import { Award, MapPin } from 'lucide-react'
 
@@ -51,6 +52,16 @@ function Index() {
                                 <span>Kebumen, Central Java</span>
                             </div>
                         </div>
+                    </div>
+                    <div className="relative">
+                        <ImageZoom>
+                            <img
+                                src="./assets/hero-section.jpg"
+                                alt="hero section"
+                                className="rounded-lg shadow-2xl"
+                                loading="lazy"
+                            />
+                        </ImageZoom>
                     </div>
                 </div>
             </div>
