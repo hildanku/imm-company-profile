@@ -1,4 +1,5 @@
 import { Clock, MapPin, Phone } from "lucide-react"
+import { Separator } from "./ui/separator"
 
 export const Footer = () => {
 
@@ -31,6 +32,9 @@ export const Footer = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="flex justify-center items-center py-6 text-sm text-gray-400">
+                © 2025. Indonesia Mitra Media
             </div>
         </section>
     )
