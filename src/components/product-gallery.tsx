@@ -1,14 +1,7 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Heart, BookOpen } from "lucide-react"
-
-interface Product {
-    id: number
-    name: string
-    description: string
-    image_path: string
-    url_product: string
-}
+import { BookOpen } from "lucide-react"
+import type { Product } from "@/types"
 
 const products: Product[] = [
     {
@@ -86,14 +79,14 @@ function ProductCard({ product }: { product: Product }) {
                         </Badge>
                     )}
                     {product.isSale && <Badge variant="destructive">Sale</Badge>}
-                </div> */}
-                <Button
+                </div>                 <Button
                     size="icon"
                     variant="ghost"
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 hover:bg-white"
                 >
                     <Heart className="w-4 h-4" />
-                </Button>
+                </Button> */}
+
             </CardHeader>
 
             <CardContent className="p-4">
@@ -109,6 +102,9 @@ function ProductCard({ product }: { product: Product }) {
             </CardContent>
 
             <CardFooter className="p-4 pt-0">
+                {/* <Link className="w-full" size="sm" href="https://www.luxeawear.com/" to="/">
+                    <div className="">Luxea Wear</div>
+                </Link> */}
                 <Button className="w-full" size="sm">
                     <BookOpen className="w-4 h-4 mr-2" />
                     Learn More
