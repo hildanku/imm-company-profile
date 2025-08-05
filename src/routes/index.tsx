@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ImageZoom } from '@/components/ui/shadcn-io/image-zoom'
 import { createFileRoute } from '@tanstack/react-router'
-import { Award, MapPin } from 'lucide-react'
+import { Award } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -36,23 +36,24 @@ function Index() {
                                 size="lg"
                                 variant="outline"
                                 className="bg-white hover:bg-gray-100">
-                                Learn More
+                                More about us
                             </Button>
-                            <Button
+                            {/* <Button
                                 size="lg"
                                 variant="outline"
                                 className="bg-white hover:bg-gray-100"
                             >
                                 View Our Product
-                            </Button>
+                            </Button>  */}
                         </div>
 
+                        {/* 
                         <div className="flex items-center space-x-6 pt-4">
                             <div className="flex items-center space-x-2">
                                 <MapPin className="w-5 h-5" />
                                 <span>Kebumen, Central Java</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="relative">
                         <ImageZoom>
