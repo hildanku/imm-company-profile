@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CareerRouteImport } from './routes/career'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as VendorInvitationeryRouteImport } from './routes/vendor/invitationery'
@@ -17,6 +19,16 @@ import { Route as VendorInvitationeryRouteImport } from './routes/vendor/invitat
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerRoute = CareerRouteImport.update({
+  id: '/career',
+  path: '/career',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -38,12 +50,16 @@ const VendorInvitationeryRoute = VendorInvitationeryRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/vendor/invitationery': typeof VendorInvitationeryRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/vendor/invitationery': typeof VendorInvitationeryRoute
 }
@@ -51,20 +67,43 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/blog': typeof BlogRoute
+  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/vendor/invitationery': typeof VendorInvitationeryRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/contact' | '/vendor/invitationery'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/career'
+    | '/contact'
+    | '/vendor/invitationery'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/vendor/invitationery'
-  id: '__root__' | '/' | '/about' | '/contact' | '/vendor/invitationery'
+  to:
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/career'
+    | '/contact'
+    | '/vendor/invitationery'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/blog'
+    | '/career'
+    | '/contact'
+    | '/vendor/invitationery'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  BlogRoute: typeof BlogRoute
+  CareerRoute: typeof CareerRoute
   ContactRoute: typeof ContactRoute
   VendorInvitationeryRoute: typeof VendorInvitationeryRoute
 }
@@ -76,6 +115,20 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career': {
+      id: '/career'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -105,6 +158,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  BlogRoute: BlogRoute,
+  CareerRoute: CareerRoute,
   ContactRoute: ContactRoute,
   VendorInvitationeryRoute: VendorInvitationeryRoute,
 }

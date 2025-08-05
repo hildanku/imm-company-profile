@@ -46,8 +46,8 @@ export const Header = () => {
                         </div>
                         {/* Here  */}
                         <nav className="hidden md:flex items-center space-x-8">
-                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Home</a>
-                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> About</a>
+                            <a href="/" className="text-gray-600 hover:text-gray-800 font-medium"> Home</a>
+                            <a href="/about" className="text-gray-600 hover:text-gray-800 font-medium"> About</a>
                             <NavigationMenu viewport={false}>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>
@@ -91,9 +91,9 @@ export const Header = () => {
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
-                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
-                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
-                            <a href="#about" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
+                            <a href="/blog" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
+                            <a href="/career" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
+                            <a href="/contact" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
                             {/* <Button variant="secondary" size="icon" className="size-8">
                                 <Moon />
                             </Button> */}
