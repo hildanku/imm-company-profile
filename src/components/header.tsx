@@ -105,7 +105,7 @@ export const Header = () => {
                             className="md:hidden"
                             onClick={() => setMobileMenu(!mobileMenu)}
                         >
-                            {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                            {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 dark:text-black" />}
                         </Button>
                     </div>
                 </div>
