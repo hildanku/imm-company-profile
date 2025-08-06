@@ -58,6 +58,14 @@ const products: Product[] = [
         url_product: "https://printfy.id/"
 
     },
+    {
+        id: 7,
+        name: "souvenery.asia",
+        description: "Durable water-resistant backpack with laptop compartment",
+        image_path: "./assets/SOUVENERY.jpg",
+        url_product: "https://printfy.id/"
+
+    },
 ]
 
 function ProductCard({ product }: { product: Product }) {
