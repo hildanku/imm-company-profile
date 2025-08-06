@@ -12,3 +12,39 @@ export interface Product {
     image_path: string
     url_product: string
 }
+
+export interface BlogPost {
+    id: number
+    title: string
+    summary: string
+    label: string
+    author: string
+    published: string
+    url: string
+    image: string
+}
+
+export interface Career {
+    id: number
+    job_title: string
+    job_position: string
+    job_description: string
+    job_type: 'FullTime' | 'PartTime' | 'Freelance' | 'Internship'
+    job_location: string
+    work_arrangement: 'Hybrid' | 'Remote' | 'On-Site'
+    deadline: string
+    image?: string
+}
+
+// in ts 5.8 enum is not supported, if erasablesyntaxonly is enabled
+// so my approach is to use string literal
+// fixing: https://stackoverflow.com/questions/79441290/eslint-rule-to-warn-on-typescripts-erasablesyntaxonly-flag
+// some article: 
+// 1. https://www.totaltypescript.com/erasable-syntax-only
+// 2. https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-8.html
+/* enum JobType {
+    fulltime = 'fulltime',
+    parttime = 'parttime',
+    freelance = 'freelance',
+    internship = 'internship',
+} */
