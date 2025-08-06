@@ -16,7 +16,7 @@ export interface BlogProps {
 export default function BlogPostCard(props: BlogProps) {
     return (
         <section className="py-32">
-            <div className="container mx-auto flex flex-col items-center gap-16 lg:px-16">
+            <div className="container mx-auto flex flex-col items-center gap-16 p-4 lg:px-16">
                 <div className="text-center">
                     <Badge variant="secondary" className="mb-6">
                         {props.tagline}
