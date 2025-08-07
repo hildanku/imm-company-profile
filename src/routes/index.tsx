@@ -1,9 +1,10 @@
 import ProductGallery from '@/components/product-gallery'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { ImageZoom } from '@/components/ui/shadcn-io/image-zoom'
 import { createFileRoute } from '@tanstack/react-router'
-import { Award } from 'lucide-react'
+import { Award, Target, Users } from 'lucide-react'
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -67,6 +68,78 @@ function Index() {
                     </div>
                 </div>
             </div>
+            <section className="py-16 bg-black text-white">
+                <div className="container mx-auto px-4">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div className="space-y-2">
+                            <div className="text-4xl font-bold text-white">500+</div>
+                            <div className="text-gray-300">Projects Completed</div>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="text-4xl font-bold text-white">150+</div>
+                            <div className="text-gray-300">Happy Clients</div>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="text-4xl font-bold text-white">8+</div>
+                            <div className="text-gray-300">Years Experience</div>
+                        </div>
+                        <div className="space-y-2">
+                            <div className="text-4xl font-bold text-white">24/7</div>
+                            <div className="text-gray-300">Support Available</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section className="py-20 bg-gray-50">
+                <div className="container mx-auto px-4">
+                    <div className="text-center space-y-4 mb-16">
+                        {/* <Badge variant="outline" className="text-amber-600 border-amber-600">
+                            Our Services
+                        </Badge> */}
+                        <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
+                            Comprehensive Solutions for Your Business
+                        </h2>
+                        <p className="text-gray-600 max-w-2xl mx-auto">
+                            We offer a wide range of services to help your business grow and succeed in today's competitive market.
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <Card className="p-6 hover:shadow-lg transition-shadow">
+                            <CardContent className="space-y-4 p-0">
+                                <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
+                                    <Target className="h-6 w-6 text-amber-600" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-900">Digital Strategy</h3>
+                                <p className="text-gray-600">
+                                    Comprehensive digital strategies to help your business reach its full potential online.
+                                </p>
+                            </CardContent>
+                        </Card>
+                        <Card className="p-6 hover:shadow-lg transition-shadow">
+                            <CardContent className="space-y-4 p-0">
+                                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                                    <Award className="h-6 w-6 text-blue-600" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-900">Brand Design</h3>
+                                <p className="text-gray-600">
+                                    Creative branding solutions that make your business stand out from the competition.
+                                </p>
+                            </CardContent>
+                        </Card>
+                        <Card className="p-6 hover:shadow-lg transition-shadow">
+                            <CardContent className="space-y-4 p-0">
+                                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                    <Users className="h-6 w-6 text-green-600" />
+                                </div>
+                                <h3 className="text-xl font-semibold text-gray-900">Consulting</h3>
+                                <p className="text-gray-600">
+                                    Expert consulting services to guide your business through digital transformation.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            </section>
             <ProductGallery />
         </section>
     )
