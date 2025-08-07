@@ -2,30 +2,16 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { TrendingUp, Globe, Heart } from 'lucide-react'
 import { milestones, stats } from '@/lib/data'
+import { HeaderSection } from '@/components/header-section'
 
 export const AboutUs = () => {
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="bg-black dark:bg-slate-950 border-b border-slate-800 dark:border-slate-700">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                    <div className="text-center">
-                        <Badge className="mb-4 bg-white text-slate-900 dark:bg-slate-100 dark:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-200">
-                            Since 2016
-                        </Badge>
-                        <h1 className="text-4xl md:text-5xl font-bold text-white dark:text-slate-100 mb-6">
-                            Make Your Business
-                            <span className="block text-slate-300 dark:text-slate-300">
-                                More Unique
-                            </span>
-                        </h1>
-                        <p className="text-lg text-slate-400 dark:text-slate-400 max-w-2xl mx-auto">
-                            From a modest kiosk in Kebumen to serving clients across Indonesia and Asia,
-                            our journey is powered by innovative digital marketing and unwavering dedication.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
+            <HeaderSection 
+                firstText='Make Your Business'
+                secondText='More Unique'
+                description='From a modest kiosk in Kebumen to serving clients across Indonesia and Asia, our journey is powered by innovative digital marketing and unwavering dedication.'
+            />
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                     {stats.map((stat, index) => (
