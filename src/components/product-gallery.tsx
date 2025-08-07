@@ -1,70 +1,65 @@
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { BookOpen } from "lucide-react"
+import { ExternalLink } from "lucide-react"
 import type { Product } from "@/types"
+
 
 const products: Product[] = [
     {
         id: 1,
         name: "Invitationery",
-        description: "Premium noise-cancelling wireless headphones with 30-hour battery life",
+        description: "Creates high-quality physical invitations for weddings, birthdays, and other special occasions with elegant and exclusive designs.",
         image_path: "./assets/INVITATIONERY.jpg",
         url_product: "https://invitationery.com/"
     },
     {
         id: 2,
         name: "Invitto",
-        description: "Advanced fitness tracking with heart rate monitor and GPS",
+        description: "Offers complete invitation packages, including custom prints, premium boxes, and digital cards for various events.",
         image_path: "./assets/INVITTO.jpg",
         url_product: "https://invitto.com/"
     },
     {
         id: 3,
         name: "Galeria Invitation",
-        description: "Durable water-resistant backpack with laptop compartment",
+        description: "Specializes in physical invitation design and printing, focusing on luxury materials and high-end finishes.",
         image_path: "./assets/GALERIA.jpg",
         url_product: "https://galeriainvitation.com/"
-
     },
     {
         id: 4,
         name: "Expose",
-        description: "Durable water-resistant backpack with laptop compartment",
+        description: "Provides high-quality printing services for invitations, brochures, banners, and other promotional materials.",
         image_path: "./assets/EXPOSE.jpg",
         url_product: "https://galeriainvitation.com/"
-
     },
     {
         id: 5,
         name: "IMM Enterprise",
-        description: "Durable water-resistant backpack with laptop compartment",
+        description: "Delivers creative and professional event planning services for a wide range of private and corporate events.",
         image_path: "./assets/ENTERPRISE.jpg",
         url_product: "https://galeriainvitation.com/"
-
     },
     {
         id: 6,
         name: "Luxea Wear",
-        description: "Durable water-resistant backpack with laptop compartment",
+        description: "A modern clothing brand offering stylish and comfortable outfits, perfect for everyday wear or special occasions.",
         image_path: "./assets/LUXEA.jpg",
         url_product: "https://galeriainvitation.com/"
-
-    },
-    {
-        id: 6,
-        name: "Printfy.ID",
-        description: "Durable water-resistant backpack with laptop compartment",
-        image_path: "./assets/PRINTFY.jpg",
-        url_product: "https://printfy.id/"
-
     },
     {
         id: 7,
+        name: "Printfy.ID",
+        description: "Produces personalized office essentials such as ID cards, lanyards, name tags, and other custom accessories.",
+        image_path: "./assets/PRINTFY.jpg",
+        url_product: "https://printfy.id/"
+    },
+    {
+        id: 8,
         name: "souvenery.asia",
-        description: "Durable water-resistant backpack with laptop compartment",
+        description: "Offers a wide selection of custom souvenirs for weddings, company events, and other memorable occasions.",
         image_path: "./assets/SOUVENERY.jpg",
         url_product: "https://printfy.id/"
-
     },
 ]
 
@@ -113,10 +108,12 @@ function ProductCard({ product }: { product: Product }) {
                 {/* <Link className="w-full" size="sm" href="https://www.luxeawear.com/" to="/">
                     <div className="">Luxea Wear</div>
                 </Link> */}
-                <Button className="w-full" size="sm">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    Learn More
-                </Button>
+                <a href={product.url_product} target="_blank" rel="noopener noreferrer" className="w-full">
+                    <Button variant="outline" className="w-full" size="sm">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        See more
+                    </Button>
+                </a>
             </CardFooter>
         </Card>
     )
