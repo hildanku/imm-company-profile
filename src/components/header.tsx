@@ -115,14 +115,14 @@ export const Header = () => {
                         <nav className="container mx-auto px-4 py-4">
                             <div className="flex flex-col space-y-4">
                                 <a
-                                    href="#home"
+                                    href="/"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
                                     Home
                                 </a>
                                 <a
-                                    href="#about"
+                                    href="/about"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
@@ -177,21 +177,21 @@ export const Header = () => {
                                 </div>
 
                                 <a
-                                    href="#blog"
+                                    href="/blog"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
                                     Blog
                                 </a>
                                 <a
-                                    href="#career"
+                                    href="/career"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
                                     Career
                                 </a>
                                 <a
-                                    href="#contact"
+                                    href="/contact"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
