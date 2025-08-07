@@ -109,8 +109,8 @@ function Index() {
                                 <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
                                     <Target className="h-6 w-6 text-amber-600" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900">Digital Strategy</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Digital Strategy</h3>
+                                <p className="text-gray-600 dark:text-gray-50">
                                     Comprehensive digital strategies to help your business reach its full potential online.
                                 </p>
                             </CardContent>
@@ -120,8 +120,8 @@ function Index() {
                                 <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                                     <Award className="h-6 w-6 text-blue-600" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900">Brand Design</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Brand Design</h3>
+                                <p className="text-gray-600 dark:text-gray-50">
                                     Creative branding solutions that make your business stand out from the competition.
                                 </p>
                             </CardContent>
@@ -131,8 +131,8 @@ function Index() {
                                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                                     <Users className="h-6 w-6 text-green-600" />
                                 </div>
-                                <h3 className="text-xl font-semibold text-gray-900">Consulting</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Consulting</h3>
+                                <p className="text-gray-600 dark:text-gray-50">
                                     Expert consulting services to guide your business through digital transformation.
                                 </p>
                             </CardContent>
