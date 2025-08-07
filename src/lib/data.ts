@@ -1,7 +1,54 @@
 import type { BlogProps } from "@/components/pages/blog"
 import type { Career } from "@/types"
+import { Calendar, Mail, MapPin, Phone, TrendingUp, Users } from "lucide-react"
 
 const dummyJobImage = "./assets/careers/imm.jpg"
+
+export const contactInfo = [
+    {
+        icon: MapPin,
+        title: "Our Location",
+        content: "Kebumen, Jawa Tengah",
+        detail: "RT.01/RW.04, Kepel, Candi, Kec. Karanganyar"
+    },
+    {
+        icon: Mail,
+        title: "Email",
+        content: "indonesia.mitra.media@gmail.com",
+        detail: "We'll respond within 24 hours"
+    },
+    {
+        icon: Phone,
+        title: "Phone",
+        content: "( 0287 ) 551628",
+        detail: "Available Mon-Sat 9AM-5PM"
+    }
+]
+
+export const stats = [
+    { icon: Users, label: "Employees", value: "140+" },
+    { icon: Users, label: "Monthly Customers", value: "1,000+" },
+    { icon: TrendingUp, label: "Daily Social Media Visitors", value: "20K-40K" },
+    { icon: Calendar, label: "Years of Experience", value: "8+" }
+]
+
+export const milestones = [
+    {
+        year: "2016",
+        title: "Humble Beginnings",
+        description: "Started as a modest kiosk in Kebumen, Indonesia with conventional marketing methods"
+    },
+    {
+        year: "2020",
+        title: "Digital Transformation",
+        description: "Embraced digital marketing systems and began expanding our reach"
+    },
+    {
+        year: "2024",
+        title: "Regional Success",
+        description: "Serving clients across Indonesia and multiple Asian countries"
+    }
+]
 
 export const careers: Career[] = [
     {

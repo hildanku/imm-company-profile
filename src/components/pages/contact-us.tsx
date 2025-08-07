@@ -1,26 +1,6 @@
 import { Mail, MapPin, Phone } from "lucide-react"
 import { ContactMap } from "@/components/contact-map"
-
-const contactInfo = [
-    {
-        icon: MapPin,
-        title: "Our Location",
-        content: "Kebumen, Jawa Tengah",
-        detail: "9HFM+JMW, RT.01/RW.04, Kepel, Candi, Kec. Karanganyar"
-    },
-    {
-        icon: Mail,
-        title: "Email",
-        content: "indonesia.mitra.media@gmail.com",
-        detail: "We'll respond within 24 hours"
-    },
-    {
-        icon: Phone,
-        title: "Phone",
-        content: "( 0287 ) 551628",
-        detail: "Available Mon-Sat 9AM-5PM"
-    }
-]
+import { contactInfo } from "@/lib/data"
 
 export const ContactUs = () => {
     const businessLocation = {

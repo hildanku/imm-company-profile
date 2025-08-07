@@ -1,31 +1,7 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Users, Calendar, TrendingUp, Globe, Heart } from 'lucide-react'
-
-const stats = [
-    { icon: Users, label: "Employees", value: "140+" },
-    { icon: Users, label: "Monthly Customers", value: "1,000+" },
-    { icon: TrendingUp, label: "Daily Social Media Visitors", value: "20K-40K" },
-    { icon: Calendar, label: "Years of Experience", value: "8+" }
-]
-
-const milestones = [
-    {
-        year: "2016",
-        title: "Humble Beginnings",
-        description: "Started as a modest kiosk in Kebumen, Indonesia with conventional marketing methods"
-    },
-    {
-        year: "2020",
-        title: "Digital Transformation",
-        description: "Embraced digital marketing systems and began expanding our reach"
-    },
-    {
-        year: "2024",
-        title: "Regional Success",
-        description: "Serving clients across Indonesia and multiple Asian countries"
-    }
-]
+import { TrendingUp, Globe, Heart } from 'lucide-react'
+import { milestones, stats } from '@/lib/data'
 
 export const AboutUs = () => {
     return (
