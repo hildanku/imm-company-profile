@@ -1,4 +1,3 @@
-import { Mail, MapPin, Phone } from "lucide-react"
 import { ContactMap } from "@/components/contact-map"
 import { contactInfo } from "@/lib/data"
 
