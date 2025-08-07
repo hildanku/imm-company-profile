@@ -61,7 +61,7 @@ export const ContactUs = () => {
                     markerTitle="Our Office"
                     markerDescription="9HFM+JMW, RT.01/RW.04, Kepel, Candi, Kec. Karanganyar, Kabupaten Kebumen, Jawa Tengah 54364"
                     height="400px"
-                    className="w-full rounded-lg border border-gray-200 dark:border-gray-600"
+                    className="pt-0 pb-0 w-full rounded-lg border border-gray-200 dark:border-gray-600"
                 />
             </div>
         </div>
