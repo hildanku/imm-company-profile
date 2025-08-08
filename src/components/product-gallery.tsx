@@ -66,7 +66,7 @@ const products: Product[] = [
 function ProductCard({ product }: { product: Product }) {
 
     return (
-        <Card className="group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+        <Card className="pt-0 pb-2 group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
             <CardHeader className="p-0 relative">
                 <div className="aspect-square overflow-hidden bg-gray-50">
                     <img
@@ -92,7 +92,7 @@ function ProductCard({ product }: { product: Product }) {
 
             </CardHeader>
 
-            <CardContent className="p-4">
+            <CardContent className="px-4 pb-0">
                 {/* <div className="mb-2">
                     <Badge variant="outline" className="text-xs">
                         {product.category}
@@ -127,7 +127,7 @@ export default function ProductGallery() {
                 <p className="text-gray-600 dark:text-white">Discover our latest collection of premium products</p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {products.map((product) => (
                     <ProductCard key={product.id} product={product} />
                 ))}
