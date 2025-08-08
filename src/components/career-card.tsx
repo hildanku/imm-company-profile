@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 export function CareerCard({ career }: { career: Career }) {
 
     return (
-        <Card className="pt-0 group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
+        <Card className="pt-0 pb-1 group hover:shadow-lg transition-shadow duration-300 overflow-hidden">
             <CardHeader className="p-0 relative">
                 <div className="aspect-square overflow-hidden bg-gray-50">
                     <img
