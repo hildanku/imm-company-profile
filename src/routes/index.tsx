@@ -12,7 +12,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
     return (
-        <section className="bg-white text-black dark:bg-black dark:text-white">
+        <div className="bg-white text-black dark:bg-black dark:text-white">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
                     <div className="space-y-6">
@@ -39,22 +39,7 @@ function Index() {
                                 className="bg-white hover:bg-gray-100">
                                 More about us
                             </Button>
-                            {/* <Button
-                                size="lg"
-                                variant="outline"
-                                className="bg-white hover:bg-gray-100"
-                            >
-                                View Our Product
-                            </Button>  */}
                         </div>
-
-                        {/* 
-                        <div className="flex items-center space-x-6 pt-4">
-                            <div className="flex items-center space-x-2">
-                                <MapPin className="w-5 h-5" />
-                                <span>Kebumen, Central Java</span>
-                            </div>
-                        </div> */}
                     </div>
                     <div className="relative">
                         <ImageZoom>
@@ -93,9 +78,6 @@ function Index() {
             <section className="py-20 bg-gray-50">
                 <div className="container mx-auto px-4">
                     <div className="text-center space-y-4 mb-16">
-                        {/* <Badge variant="outline" className="text-amber-600 border-amber-600">
-                            Our Services
-                        </Badge> */}
                         <h2 className="text-3xl lg:text-4xl font-bold text-gray-900">
                             Comprehensive Solutions for Your Business
                         </h2>
@@ -141,6 +123,6 @@ function Index() {
                 </div>
             </section>
             <ProductGallery />
-        </section>
+        </div>
     )
 }
