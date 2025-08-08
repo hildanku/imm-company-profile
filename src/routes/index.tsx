@@ -15,11 +15,11 @@ function Index() {
         <div className="bg-white text-black dark:bg-black dark:text-white">
             <div className="container mx-auto px-4 py-16">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
-                    <div className="space-y-6">
+                    <div className="space-y-6 overflow-x-hidden">
                         <div className="space-y-2">
-                            <Badge variant="outline" className="dark:text-white border-gray-300 dark:border-gray-600">
-                                <Award className="w-4 h-4 mr-2" />
-                                <span>
+                            <Badge variant="outline" className="dark:text-white border-gray-300 dark:border-gray-600 max-w-full">
+                                <Award className="w-4 h-4 mr-2 flex-shrink-0" />
+                                <span className="truncate">
                                     Indonesia Mitra Media is a company that was established in 2016.
                                 </span>
                             </Badge>
