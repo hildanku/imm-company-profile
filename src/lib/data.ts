@@ -21,7 +21,7 @@ export const contactInfo = [
         icon: Phone,
         title: "Phone",
         content: "( 0287 ) 551628",
-        detail: "Available Mon-Sat 9AM-5PM"
+        detail: "Mon - Sat | 09.00 AM - 05.00 PM"
     }
 ]
 
