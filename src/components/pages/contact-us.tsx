@@ -15,18 +15,18 @@ export const ContactUs = () => {
                 secondText='With Us'
                 description='Ready to transform your business? Get in touch with our team and let&apos;s discuss how we can help make your business more unique.'
             />
-            <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+            <div className="min-h-screen bg-gray-50 dark:bg-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                     <div className="grid md:grid-cols-3 gap-8 mb-16">
                         {contactInfo.map((info, index) => (
-                            <div key={index} className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-8 text-center hover:shadow-md transition-shadow">
+                            <div key={index} className="bg-white dark:bg-neutral-900 rounded-lg border border-gray-200 dark:border-neutral-800 p-8 text-center hover:shadow-md transition-shadow">
                                 <div className="w-16 h-16 bg-slate-900 dark:bg-slate-700 rounded-lg flex items-center justify-center mx-auto mb-4">
                                     <info.icon className="w-8 h-8 text-white" />
                                 </div>
                                 <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
                                     {info.title}
                                 </h2>
-                                <p className="text-gray-900 dark:text-gray-100 font-medium mb-2">
+                                <p className="text-gray-900 dark:text-gray-100 font-medium mb-2 break-words">
                                     {info.content}
                                 </p>
                                 <p className="text-sm text-gray-600 dark:text-gray-400">
