@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import type { Product } from "@/types"
+import { SUPABASE_OBJECT_URL } from "@/lib/const"
 
 
 const products: Product[] = [
@@ -9,56 +10,56 @@ const products: Product[] = [
         id: 1,
         name: "Invitationery",
         description: "Creates high-quality physical invitations for weddings, birthdays, and other special occasions with elegant and exclusive designs.",
-        image_path: "./assets/INVITATIONERY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "INVITATIONERY.jpg",
         url_product: "https://invitationery.com/"
     },
     {
         id: 2,
         name: "Invitto",
         description: "Offers complete invitation packages, including custom prints, premium boxes, and digital cards for various events.",
-        image_path: "./assets/INVITTO.jpg",
+        image_path: SUPABASE_OBJECT_URL + "INVITTO.jpg",
         url_product: "https://invitto.com/"
     },
     {
         id: 3,
         name: "Galeria Invitation",
         description: "Specializes in physical invitation design and printing, focusing on luxury materials and high-end finishes.",
-        image_path: "./assets/GALERIA.jpg",
+        image_path: SUPABASE_OBJECT_URL + "GALERIA.jpg",
         url_product: "https://galeriainvitation.com/"
     },
     {
         id: 4,
         name: "Expose",
         description: "Provides high-quality printing services for invitations, brochures, banners, and other promotional materials.",
-        image_path: "./assets/EXPOSE.jpg",
+        image_path: SUPABASE_OBJECT_URL + "EXPOSE.jpg",
         url_product: "https://galeriainvitation.com/"
     },
     {
         id: 5,
         name: "IMM Enterprise",
         description: "Delivers creative and professional event planning services for a wide range of private and corporate events.",
-        image_path: "./assets/ENTERPRISE.jpg",
+        image_path: SUPABASE_OBJECT_URL + "ENTERPRISE.jpg",
         url_product: "https://galeriainvitation.com/"
     },
     {
         id: 6,
         name: "Luxea Wear",
         description: "A modern clothing brand offering stylish and comfortable outfits, perfect for everyday wear or special occasions.",
-        image_path: "./assets/LUXEA.jpg",
+        image_path: SUPABASE_OBJECT_URL + "LUXEA.jpg",
         url_product: "https://galeriainvitation.com/"
     },
     {
         id: 7,
         name: "Printfy.ID",
         description: "Produces personalized office essentials such as ID cards, lanyards, name tags, and other custom accessories.",
-        image_path: "./assets/PRINTFY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "PRINTFY.jpg",
         url_product: "https://printfy.id/"
     },
     {
         id: 8,
         name: "souvenery.asia",
         description: "Offers a wide selection of custom souvenirs for weddings, company events, and other memorable occasions.",
-        image_path: "./assets/SOUVENERY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "SOUVENERY.jpg",
         url_product: "https://printfy.id/"
     },
 ]
@@ -70,7 +71,7 @@ function ProductCard({ product }: { product: Product }) {
             <CardHeader className="p-0 relative">
                 <div className="aspect-square overflow-hidden bg-gray-50">
                     <img
-                        src={product.image_path || "/placeholder.svg"}
+                        src={product.image_path}
                         alt={product.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />

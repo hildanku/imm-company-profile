@@ -1,0 +1,1 @@
+export const SUPABASE_OBJECT_URL = import.meta.env.VITE_SUPABASE_OBJECT_URL

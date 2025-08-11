@@ -1,6 +1,7 @@
 import type { BlogPost } from "@/types"
 import { ArrowRight } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
+import { SUPABASE_OBJECT_URL } from "@/lib/const"
 import { HeaderSection } from "../header-section"
 
 export interface BlogProps {
@@ -35,7 +36,7 @@ export default function BlogPostCard(props: BlogProps) {
                                         className="transition-opacity duration-200 fade-in hover:opacity-70"
                                     >
                                         <img
-                                            src={post.image}
+                                            src={SUPABASE_OBJECT_URL + post.image}
                                             alt={post.title}
                                             className="h-full w-full rounded-lg object-cover object-center"
                                         />
