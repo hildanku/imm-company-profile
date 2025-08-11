@@ -6,8 +6,8 @@ import { HeaderSection } from '@/components/header-section'
 
 export const AboutUs = () => {
     return (
-        <div className="min-h-screen bg-gray-50">
-            <HeaderSection 
+        <div className="min-h-screen bg-gray-50 dark:bg-black">
+            <HeaderSection
                 firstText='Make Your Business'
                 secondText='More Unique'
                 description='From a modest kiosk in Kebumen to serving clients across Indonesia and Asia, our journey is powered by innovative digital marketing and unwavering dedication.'
@@ -33,10 +33,10 @@ export const AboutUs = () => {
                             <Badge className="mb-4 bg-gray-900 text-white">
                                 Our Story
                             </Badge>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                            <h2 className="text-3xl font-bold text-gray-900 mb-4 dark:text-white">
                                 Indonesia Mitra Media
                             </h2>
-                            <p className="text-gray-600">
+                            <p className="text-gray-600 dark:text-white">
                                 Established in 2016 in the heart of Kebumen, Indonesia, our journey began with
                                 a simple vision and a modest kiosk. What started as a small business with
                                 conventional marketing methods has transformed into a digital powerhouse.
@@ -49,32 +49,32 @@ export const AboutUs = () => {
                                     <Globe className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Global Reach</h3>
-                                    <p className="text-gray-600 text-sm">
+                                    <h3 className="font-semibold text-gray-900 mb-1 dark:text-white">Global Reach</h3>
+                                    <p className="text-gray-600 text-sm dark:text-gray-300">
                                         We now serve clients from nearly every city in Indonesia and several countries across Asia.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="flex items-start space-x-4">
-                                <div className="w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <TrendingUp className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Digital Excellence</h3>
-                                    <p className="text-gray-600 text-sm">
+                                    <h3 className="font-semibold text-gray-900 mb-1 dark:text-white">Digital Excellence</h3>
+                                    <p className="text-gray-600 text-sm dark:text-gray-300">
                                         We attract 20,000 to 40,000 potential customers who visit our social media platforms daily.
                                     </p>
                                 </div>
                             </div>
 
                             <div className="flex items-start space-x-4">
-                                <div className="w-10 h-10 bg-gray-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <div className="w-10 h-10 bg-gray-900 rounded-lg flex items-center justify-center flex-shrink-0">
                                     <Heart className="w-5 h-5 text-white" />
                                 </div>
                                 <div>
-                                    <h3 className="font-semibold text-gray-900 mb-1">Team Growth</h3>
-                                    <p className="text-gray-600 text-sm">
+                                    <h3 className="font-semibold text-gray-900 mb-1 dark:text-white">Team Growth</h3>
+                                    <p className="text-gray-600 text-sm dark:text-gray-300">
                                         From a handful of visitors to over 140 dedicated employees and 1,000+ customers monthly.
                                     </p>
                                 </div>
@@ -87,7 +87,7 @@ export const AboutUs = () => {
                             <Badge className="mb-4 bg-gray-700 text-white">
                                 Our Journey
                             </Badge>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Milestones</h2>
+                            <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-white">Key Milestones</h2>
                         </div>
 
                         <div className="space-y-6">
@@ -105,8 +105,8 @@ export const AboutUs = () => {
                                         <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
                                             {milestone.year}
                                         </span>
-                                        <h3 className="font-bold text-gray-900 mt-2 mb-1">{milestone.title}</h3>
-                                        <p className="text-gray-600 text-sm">{milestone.description}</p>
+                                        <h3 className="font-bold text-gray-900 mt-2 mb-1 dark:text-white">{milestone.title}</h3>
+                                        <p className="text-gray-600 text-sm dark:text-gray-300">{milestone.description}</p>
                                     </div>
                                 </div>
                             ))}
