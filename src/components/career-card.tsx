@@ -29,7 +29,7 @@ export function CareerCard({ career }: { career: Career }) {
                         {career.job_position}
                     </Badge>
                 </div>
-                <CardTitle className="text-lg mb-2 line-clamp-1">{career.job_title}</CardTitle>
+                <CardTitle className="text-lg mb-2">{career.job_title}</CardTitle>
                 <CardDescription className="text-sm mb-1 line-clamp-2">{career.job_description}</CardDescription>
                 <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                     <p>Placement: {career.job_location}</p>
