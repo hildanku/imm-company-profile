@@ -11,6 +11,7 @@ export const Footer = () => {
                             Make your business be #1
                         </p>
                         <div className="space-y-4">
+                            <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
                             <div className="flex items-center space-x-4">
                                 <Phone className="w-5 h-5 text-gray-400" />
                                 <span>( 0287 ) 551628</span>
@@ -25,7 +26,7 @@ export const Footer = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-col space-y-4 mt-25 lg:items-start lg:justify-start">
+                    <div className="flex flex-col space-y-4 lg:mt-27 lg:items-start lg:justify-start">
                         <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
                         <div className="flex items-center space-x-4">
                             <a href="https://id.linkedin.com/company/cv-indonesia-mitra-media" target="_blank" rel="noopener noreferrer">
