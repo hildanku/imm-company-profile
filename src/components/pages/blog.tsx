@@ -21,7 +21,7 @@ export default function BlogPostCard(props: BlogProps) {
                 secondText='From People Who Build'
                 description='Discover stories, insights, and behind-the-scenes updates from the people shaping our products, culture, and vision.'
             />
-            <section className="py-8 dark:bg-slate-800">
+            <section className="py-8 bg-gray-50 dark:bg-black">
                 <div className="container mx-auto flex flex-col items-center gap-16 p-4 lg:px-16">
                     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
                         {props.posts.map((post) => (
