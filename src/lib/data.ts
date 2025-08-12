@@ -172,6 +172,7 @@ export const careers: Career[] = [
     },
 ]
 
+// https://wawilelrjyhdqnsuuioy.supabase.co/storage/v1/object/public/assets-imm/assets/posts/101.png
 export const posts: BlogProps = {
     tagline: "Latest Posts",
     heading: "Blog",
@@ -188,7 +189,7 @@ export const posts: BlogProps = {
             author: "Aulia Rahman",
             published: "5 Agustus 2025",
             url: "https://example.com/blog/devops-modern-development",
-            image: "./assets/posts/101.png"
+            image: "posts/101.png",
         },
         {
             id: 102,
@@ -199,7 +200,7 @@ export const posts: BlogProps = {
             author: "Nadia Utami",
             published: "3 Agustus 2025",
             url: "https://example.com/blog/zero-trust-strategy",
-            image: "./assets/posts/101.png"
+            image: "posts/101.png"
         },
         {
             id: 103,
@@ -210,7 +211,7 @@ export const posts: BlogProps = {
             author: "Budi Santosa",
             published: "1 Agustus 2025",
             url: "https://example.com/blog/ai-bisnis-modern",
-            image: "./assets/posts/101.png"
+            image: "posts/101.png"
         }
     ]
 }
