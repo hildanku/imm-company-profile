@@ -42,10 +42,14 @@ export default function ProductGallery() {
                 <h1 className="text-3xl font-bold text-gray-900 mb-2 dark:text-white">Product Gallery</h1>
                 <p className="text-gray-600 dark:text-white">Discover our latest collection of premium products</p>
             </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6">
                 {products.map((product) => (
-                    <ProductCard key={product.id} product={product} />
+                    <div
+                        key={product.id}
+                        className="w-[calc(50%-6px)] sm:w-[calc(50%-8px)] lg:w-[calc(33.333%-16px)] xl:w-[calc(25%-18px)]"
+                    >
+                        <ProductCard product={product} />
+                    </div>
                 ))}
             </div>
         </div>
