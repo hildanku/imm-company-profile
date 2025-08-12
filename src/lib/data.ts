@@ -5,20 +5,30 @@ import { SUPABASE_OBJECT_URL } from "@/lib/const"
 
 const dummyJobImage = "./assets/careers/imm.jpg"
 
+export const ourProducts = [
+    { name: "Invitationery", url: "https://invitationery.asia" },
+    { name: "Invitto", url: "https://invittoprintery.com/" },
+    { name: "Printfy.ID", url: "https://printfy.id/" },
+    { name: "Galeria Invitation", url: "https://www.galeriainvitation.com/" },
+    { name: "IMM Enterprise", url: "https://immenterprise.com/" },
+    { name: "Luxea Wear", url: "https://www.luxeawear.com/" },
+    { name: "Souvenery.Asia", url: "https://souveneryasia.com" },
+]
+
 export const products: Product[] = [
     {
         id: 1,
         name: "Invitationery",
         description: "Creates high-quality physical invitations for weddings, birthdays, and other special occasions with elegant and exclusive designs.",
         image_path: SUPABASE_OBJECT_URL + "INVITATIONERY.jpg",
-        url_product: "https://invitationery.com/"
+        url_product: "https://invitationery.asia/"
     },
     {
         id: 2,
         name: "Invitto",
         description: "Offers complete invitation packages, including custom prints, premium boxes, and digital cards for various events.",
         image_path: SUPABASE_OBJECT_URL + "INVITTO.jpg",
-        url_product: "https://invitto.com/"
+        url_product: "https://invittoprintery.com/"
     },
     {
         id: 3,

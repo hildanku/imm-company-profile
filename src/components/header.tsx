@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
 import { ThemeToggle, ThemeToggleMobile } from "@/components/theme-toggle"
+import { ourProducts } from "@/lib/data"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -55,6 +56,19 @@ export const Header = () => {
                                         <NavigationMenuContent>
                                             <ul className="grid w-[300px] gap-4">
                                                 <li>
+                                                    {ourProducts.map((product) => (
+                                                        <NavigationMenuLink asChild key={product.name}>
+                                                            <Link href={product.url} to="/">
+                                                                <div className="font-medium">{product.name}</div>
+                                                            </Link>
+                                                        </NavigationMenuLink>
+                                                    ))}
+                                                </li>
+                                            </ul>
+                                        </NavigationMenuContent>
+                                        {/* <NavigationMenuContent>
+                                            <ul className="grid w-[300px] gap-4">
+                                                <li>
                                                     <NavigationMenuLink asChild>
                                                         <Link href="https://invitationery.asia" to="/">
                                                             <div className="font-medium">Invitationery</div>
@@ -88,6 +102,7 @@ export const Header = () => {
                                                 </li>
                                             </ul>
                                         </NavigationMenuContent>
+*/}
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
@@ -134,48 +149,16 @@ export const Header = () => {
                                 <div className="py-2 border-b border-gray-100">
                                     <div className="text-gray-800 font-medium mb-2">Our Products</div>
                                     <div className="pl-4 space-y-2">
-                                        <a
-                                            href="https://invitationery.asia"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            Invitationery
-                                        </a>
-                                        <a
-                                            href="https://invittoprintery.com/"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            Invitto
-                                        </a>
-                                        <a
-                                            href="https://printfy.id/"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            Printfy.ID
-                                        </a>
-                                        <a
-                                            href="https://www.galeriainvitation.com/"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            Galeria Invitation
-                                        </a>
-                                        <a
-                                            href="https://immenterprise.com/"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            IMM Enterprise
-                                        </a>
-                                        <a
-                                            href="https://www.luxeawear.com/"
-                                            className="block text-gray-600 hover:text-gray-800 py-1"
-                                            onClick={() => setMobileMenu(false)}
-                                        >
-                                            Luxea Wear
-                                        </a>
+                                        {ourProducts.map((product) => (
+                                            <a
+                                                key={product.name}
+                                                href={product.url}
+                                                className="block text-gray-600 hover:text-gray-800 py-1"
+                                                onClick={() => setMobileMenu(false)}
+                                            >
+                                                {product.name}
+                                            </a>
+                                        ))}
                                     </div>
                                 </div>
 
