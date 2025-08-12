@@ -52,7 +52,7 @@ export const Header = () => {
                             <NavigationMenu viewport={false}>
                                 <NavigationMenuList>
                                     <NavigationMenuItem>
-                                        <NavigationMenuTrigger>Our Product</NavigationMenuTrigger>
+                                        <NavigationMenuTrigger className="text-gray-600 hover:text-gray-800 font-medium dark:text-white dark:bg-black">Our Product</NavigationMenuTrigger>
                                         <NavigationMenuContent>
                                             <ul className="grid w-[300px] gap-4">
                                                 <li>
@@ -66,52 +66,12 @@ export const Header = () => {
                                                 </li>
                                             </ul>
                                         </NavigationMenuContent>
-                                        {/* <NavigationMenuContent>
-                                            <ul className="grid w-[300px] gap-4">
-                                                <li>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://invitationery.asia" to="/">
-                                                            <div className="font-medium">Invitationery</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://invittoprintery.com/" to="/">
-                                                            <div className="font-medium">Invitto</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://printfy.id/" to="/">
-                                                            <div className="font-medium">Printfy.ID</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://www.galeriainvitation.com/" to="/">
-                                                            <div className="font-medium">Galeria Invitation</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://immenterprise.com/" to="/">
-                                                            <div className="font-medium">IMM Enterprise</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                    <NavigationMenuLink asChild>
-                                                        <Link href="https://www.luxeawear.com/" to="/">
-                                                            <div className="font-medium">Luxea Wear</div>
-                                                        </Link>
-                                                    </NavigationMenuLink>
-                                                </li>
-                                            </ul>
-                                        </NavigationMenuContent>
-*/}
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
                             <a href="/blog" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
                             <a href="/career" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
                             <a href="/contact" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
-                            {/* <Button variant="secondary" size="icon" className="size-8">
-                                <Moon />
-                            </Button> */}
                             <ThemeToggle />
                         </nav>
                         <div className="md:hidden flex items-center space-x-2">
