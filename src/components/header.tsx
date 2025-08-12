@@ -11,7 +11,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
-import { ThemeToggle } from "./theme-toggle"
+import { ThemeToggle, ThemeToggleMobile } from "@/components/theme-toggle"
 
 export const Header = () => {
     const navigate = useNavigate()
@@ -99,14 +99,17 @@ export const Header = () => {
                             </Button> */}
                             <ThemeToggle />
                         </nav>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="md:hidden"
-                            onClick={() => setMobileMenu(!mobileMenu)}
-                        >
-                            {mobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5 dark:text-black" />}
-                        </Button>
+                        <div className="md:hidden flex items-center space-x-2">
+                            <ThemeToggleMobile />
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                className="rounded-full hover:bg-gray-200 dark:hover:bg-gray-50"
+                                onClick={() => setMobileMenu(!mobileMenu)}
+                            >
+                                {mobileMenu ? <X className="w-5 h-5 dark:text-black" /> : <Menu className="w-5 h-5 dark:text-black" />}
+                            </Button>
+                        </div>
                     </div>
                 </div>
 
