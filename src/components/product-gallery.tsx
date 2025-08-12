@@ -2,67 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import type { Product } from "@/types"
-import { SUPABASE_OBJECT_URL } from "@/lib/const"
-
-
-const products: Product[] = [
-    {
-        id: 1,
-        name: "Invitationery",
-        description: "Creates high-quality physical invitations for weddings, birthdays, and other special occasions with elegant and exclusive designs.",
-        image_path: SUPABASE_OBJECT_URL + "INVITATIONERY.jpg",
-        url_product: "https://invitationery.com/"
-    },
-    {
-        id: 2,
-        name: "Invitto",
-        description: "Offers complete invitation packages, including custom prints, premium boxes, and digital cards for various events.",
-        image_path: SUPABASE_OBJECT_URL + "INVITTO.jpg",
-        url_product: "https://invitto.com/"
-    },
-    {
-        id: 3,
-        name: "Galeria Invitation",
-        description: "Specializes in physical invitation design and printing, focusing on luxury materials and high-end finishes.",
-        image_path: SUPABASE_OBJECT_URL + "GALERIA.jpg",
-        url_product: "https://galeriainvitation.com/"
-    },
-    {
-        id: 4,
-        name: "Expose",
-        description: "Provides high-quality printing services for invitations, brochures, banners, and other promotional materials.",
-        image_path: SUPABASE_OBJECT_URL + "EXPOSE.jpg",
-        url_product: "https://galeriainvitation.com/"
-    },
-    {
-        id: 5,
-        name: "IMM Enterprise",
-        description: "Delivers creative and professional event planning services for a wide range of private and corporate events.",
-        image_path: SUPABASE_OBJECT_URL + "ENTERPRISE.jpg",
-        url_product: "https://galeriainvitation.com/"
-    },
-    {
-        id: 6,
-        name: "Luxea Wear",
-        description: "A modern clothing brand offering stylish and comfortable outfits, perfect for everyday wear or special occasions.",
-        image_path: SUPABASE_OBJECT_URL + "LUXEA.jpg",
-        url_product: "https://galeriainvitation.com/"
-    },
-    {
-        id: 7,
-        name: "Printfy.ID",
-        description: "Produces personalized office essentials such as ID cards, lanyards, name tags, and other custom accessories.",
-        image_path: SUPABASE_OBJECT_URL + "PRINTFY.jpg",
-        url_product: "https://printfy.id/"
-    },
-    {
-        id: 8,
-        name: "souvenery.asia",
-        description: "Offers a wide selection of custom souvenirs for weddings, company events, and other memorable occasions.",
-        image_path: SUPABASE_OBJECT_URL + "SOUVENERY.jpg",
-        url_product: "https://printfy.id/"
-    },
-]
+import { products } from "@/lib/data"
 
 function ProductCard({ product }: { product: Product }) {
 
@@ -76,39 +16,14 @@ function ProductCard({ product }: { product: Product }) {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                 </div>
-                {/* <div className="absolute top-2 left-2 flex gap-1">
-                    {product.isNew && (
-                        <Badge variant="default" className="bg-green-500 hover:bg-green-600">
-                            New
-                        </Badge>
-                    )}
-                    {product.isSale && <Badge variant="destructive">Sale</Badge>}
-                </div>                 <Button
-                    size="icon"
-                    variant="ghost"
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/80 hover:bg-white"
-                >
-                    <Heart className="w-4 h-4" />
-                </Button> */}
-
             </CardHeader>
 
             <CardContent className="px-4 pb-0">
-                {/* <div className="mb-2">
-                    <Badge variant="outline" className="text-xs">
-                        {product.category}
-                    </Badge>
-                </div> */}
-
                 <CardTitle className="text-lg mb-2 line-clamp-1">{product.name}</CardTitle>
-
                 <CardDescription className="text-sm mb-1 line-clamp-2">{product.description}</CardDescription>
             </CardContent>
 
             <CardFooter className="p-4 pt-0">
-                {/* <Link className="w-full" size="sm" href="https://www.luxeawear.com/" to="/">
-                    <div className="">Luxea Wear</div>
-                </Link> */}
                 <a href={product.url_product} target="_blank" rel="noopener noreferrer" className="w-full">
                     <Button variant="outline" className="w-full" size="sm">
                         <ExternalLink className="w-4 h-4 mr-2" />
