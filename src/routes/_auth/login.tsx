@@ -29,18 +29,26 @@ function LoginPage() {
 		},
 	})
 
-	const submit = (data: z.infer<typeof loginSchema>) => {
-
-		const { user, error } = supabase.auth.signInWithPassword({
-			email: data.email,
-			password: data.password,
-		})
-		console.log('Login data:', data)
-		if (error) {
-			toast.error(error.message)
-			return
+	const submit = async (data: z.infer<typeof loginSchema>) => {
+		try {
+			const { data: userData, error } = await supabase.auth.signInWithPassword({
+				email: data.email,
+				password: data.password,
+			})
+			
+			console.log('Login data:', data)
+			
+			if (error) {
+				toast.error(error.message)
+				return
+			}
+			
+			toast.success('Login berhasil')
+			navigate({ to: '/' })
+		} catch (error) {
+			console.error('Login error:', error)
+			toast.error('Terjadi kesalahan saat login')
 		}
-		toast.success('Login berhasil')
 	}
 
 	return (
@@ -90,7 +98,7 @@ function LoginPage() {
 						</div>
 						<div className='mt-4 text-center text-sm'>
 							Don&apos;t have an account?{' '}
-							<Link to='/career' className='underline'>
+							<Link to='/register' className='underline'>
 								Register
 							</Link>
 						</div>
