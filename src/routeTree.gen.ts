@@ -13,7 +13,10 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareerRouteImport } from './routes/career'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -35,10 +38,23 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -47,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/blog': typeof BlogRoute
   '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
+  '/login': typeof AuthLoginRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,25 +71,40 @@ export interface FileRoutesByTo {
   '/blog': typeof BlogRoute
   '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
+  '/login': typeof AuthLoginRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/_protected': typeof ProtectedRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
   '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
+  '/_auth/login': typeof AuthLoginRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/blog' | '/career' | '/contact'
+  fullPaths: '/' | '/about' | '/blog' | '/career' | '/contact' | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/blog' | '/career' | '/contact'
-  id: '__root__' | '/' | '/about' | '/blog' | '/career' | '/contact'
+  to: '/' | '/about' | '/blog' | '/career' | '/contact' | '/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_protected'
+    | '/about'
+    | '/blog'
+    | '/career'
+    | '/contact'
+    | '/_auth/login'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  ProtectedRoute: typeof ProtectedRoute
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
   CareerRoute: typeof CareerRoute
@@ -109,6 +141,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -116,11 +162,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/login': {
+      id: '/_auth/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  ProtectedRoute: ProtectedRoute,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
   CareerRoute: CareerRoute,
