@@ -31,7 +31,7 @@ function RegisterPage() {
 
 	const submit = async (data: z.infer<typeof registerSchema>) => {
 		try {
-			const { data: userData, error } = await supabase.auth.signUp({
+			const { data: _userData, error } = await supabase.auth.signUp({
 				email: data.email,
 				password: data.password,
 				options: {

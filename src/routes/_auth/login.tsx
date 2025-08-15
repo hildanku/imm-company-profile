@@ -31,7 +31,7 @@ function LoginPage() {
 
 	const submit = async (data: z.infer<typeof loginSchema>) => {
 		try {
-			const { data: userData, error } = await supabase.auth.signInWithPassword({
+			const { data: _userData, error } = await supabase.auth.signInWithPassword({
 				email: data.email,
 				password: data.password,
 			})
