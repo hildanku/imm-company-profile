@@ -1,0 +1,1 @@
+INSERT INTO "public"."post_images" ("id", "post_id", "image_path", "display_order", "is_featured", "created_at") VALUES ('1', '4', 'posts/4_1755315130550.png', '0', 'false', '2025-08-16 03:32:11.526292+00'), ('2', '4', 'posts/4_1755315131587.jpg', '0', 'true', '2025-08-16 03:32:12.062085+00');

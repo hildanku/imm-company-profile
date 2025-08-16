@@ -28,3 +28,15 @@ export const registerSchema = z
 			path: ['passwordConfirm'],
 		}
 	)
+
+export const postSchema = z
+	.object({
+		title: z.string().min(1, 'Title is required'),
+		slug: z.string().min(1, 'Slug is required').regex(/^[a-z0-9-]+$/i, 'Only letters, numbers and hyphens'),
+		label: z.string().optional().default(''),
+		author: z.string().min(1, 'Author is required'),
+		url: z.string().url('Must be a valid URL').optional().or(z.literal('')),
+		body: z.string().min(1, 'Content is required'),
+		is_published: z.boolean().default(false),
+	}
+)
