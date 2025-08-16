@@ -1,11 +1,29 @@
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { Separator } from '@/components/ui/separator'
-import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 export const Route = createRootRoute({
-    component: () => (
+    component: RootComponent,
+})
+
+function RootComponent() {
+    const routerState = useRouterState()
+    const currentPath = routerState.location.pathname
+    const isProtectedRoute = currentPath.startsWith('/_protected') ||
+        currentPath.includes('/management')
+
+    if (isProtectedRoute) {
+        return (
+            <>
+                <Outlet />
+                <TanStackRouterDevtools />
+            </>
+        )
+    }
+
+    return (
         <>
             <Header />
             <div className="mt-16">
@@ -15,5 +33,5 @@ export const Route = createRootRoute({
             <Footer />
             <TanStackRouterDevtools />
         </>
-    ),
-})
+    )
+}
