@@ -2,7 +2,7 @@ import type { BlogPost } from "@/types"
 import { ArrowRight } from "lucide-react"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { SUPABASE_OBJECT_URL } from "@/lib/const"
-import { HeaderSection } from "../header-section"
+import { HeaderSection } from "@/components/header-section"
 
 export interface BlogProps {
     tagline: string
