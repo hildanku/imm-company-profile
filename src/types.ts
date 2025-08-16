@@ -48,3 +48,35 @@ export interface Career {
     freelance = 'freelance',
     internship = 'internship',
 } */
+
+export interface User {
+
+}
+
+export interface Post {
+    id: number
+    title: string
+    body: string
+    slug: string
+    label: string
+    author: string
+    url: string
+    is_published: boolean
+    created_at: string
+    updated_at: string
+    deleted_at: string | null
+}
+
+export interface PostImage {
+    id: number
+    post_id: number
+    image_path: string
+    display_order: number
+    is_featured: boolean
+    created_at: string
+}
+
+export interface PostWithImages extends Post {
+    images: PostImage[]
+    featured_image?: PostImage
+}
