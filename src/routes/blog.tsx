@@ -6,6 +6,11 @@ import type { BlogProps } from '@/components/pages/blog'
 import type { PostWithImages } from '@/types'
 import { HeaderSection } from '@/components/header-section'
 import { ArrowLeft } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
+// import '@/components/pages/management/blog/markdown-styles.css'
 
 export const Route = createFileRoute('/blog')({
     component: BlogPage,
@@ -152,8 +157,13 @@ function BlogPostDetail({ slug }: { slug: string }) {
                     </div>
                 )}
 
-                <div className="prose prose-lg dark:prose-invert max-w-none">
-                    <div dangerouslySetInnerHTML={{ __html: post.body.replace(/\n/g, '<br />') }} />
+                <div className="prose prose-lg dark:prose-invert max-w-none markdown-preview">
+                    <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                    >
+                        {post.body}
+                    </ReactMarkdown>
                 </div>
 
                 {post.images.length > 1 && (

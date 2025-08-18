@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { ChangeEvent } from 'react'
-import { 
+import {
     createPost,
     updatePost,
     deletePost,
@@ -15,10 +15,15 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Spinner } from '@/components/ui/spinner'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { X, Upload, Star, AlertCircle } from 'lucide-react'
+import { X, Upload, Star, AlertCircle, Eye, Edit2 } from 'lucide-react'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { postSchema } from '@/lib/zod'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
+import './markdown-styles.css'
 
 interface BlogFormProps {
     post?: PostWithImages
@@ -34,6 +39,8 @@ export function BlogUpsert({ post, onSuccess }: BlogFormProps) {
     const [uploadProgress, setUploadProgress] = useState(0)
     const [submitError, setSubmitError] = useState<string | null>(null)
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [previewMode, setPreviewMode] = useState(false)
+    const [textareaRef, setTextareaRef] = useState<HTMLTextAreaElement | null>(null)
 
     const isEditing = !!post
 
@@ -97,7 +104,7 @@ export function BlogUpsert({ post, onSuccess }: BlogFormProps) {
             .toLowerCase()
             .replace(/[^\w-]/g, '') // Only allow letters, numbers, and hyphens
             .replace(/-+/g, '-') // Replace multiple hyphens with a single hyphen
-        
+
         setValue('slug', newSlug)
     }
 
@@ -223,6 +230,53 @@ export function BlogUpsert({ post, onSuccess }: BlogFormProps) {
         }
     }
 
+    const insertMarkdown = (markdownSyntax: string, selectionOffset = 0) => {
+        if (!textareaRef) return
+
+        const start = textareaRef.selectionStart
+        const end = textareaRef.selectionEnd
+        const selectedText = textareaRef.value.substring(start, end)
+
+        let newText
+        let newCursorPos
+
+        if (selectedText) {
+            newText = textareaRef.value.substring(0, start) +
+                markdownSyntax.replace('$1', selectedText) +
+                textareaRef.value.substring(end)
+            newCursorPos = end + markdownSyntax.length - 2 // -2 for the $1 placeholder
+        } else {
+            newText = textareaRef.value.substring(0, start) +
+                markdownSyntax.replace('$1', '') +
+                textareaRef.value.substring(end)
+            newCursorPos = start + selectionOffset
+        }
+
+        setValue('body', newText)
+
+        setTimeout(() => {
+            if (textareaRef) {
+                textareaRef.focus()
+                textareaRef.setSelectionRange(newCursorPos, newCursorPos)
+            }
+        }, 0)
+    }
+
+    const markdownToolbar = [
+        { label: 'B', title: 'Bold', action: () => insertMarkdown('**$1**', 2) },
+        { label: 'I', title: 'Italic', action: () => insertMarkdown('*$1*', 1) },
+        { label: 'H1', title: 'Heading 1', action: () => insertMarkdown('# $1', 2) },
+        { label: 'H2', title: 'Heading 2', action: () => insertMarkdown('## $1', 3) },
+        { label: 'Link', title: 'Link', action: () => insertMarkdown('[$1](url)', 1) },
+        { label: 'Img', title: 'Image', action: () => insertMarkdown('![$1](url)', 2) },
+        { label: 'List', title: 'Bullet List', action: () => insertMarkdown('- $1', 2) },
+        { label: '1.', title: 'Numbered List', action: () => insertMarkdown('1. $1', 3) },
+        { label: '`', title: 'Code', action: () => insertMarkdown('`$1`', 1) },
+        { label: '```', title: 'Code Block', action: () => insertMarkdown('```\n$1\n```', 4) },
+        { label: '>', title: 'Quote', action: () => insertMarkdown('> $1', 2) },
+        { label: '---', title: 'Horizontal Rule', action: () => insertMarkdown('\n---\n$1', 5) },
+    ]
+
     return (
         <Card className="w-full max-w-4xl mx-auto">
             <CardHeader>
@@ -312,23 +366,80 @@ export function BlogUpsert({ post, onSuccess }: BlogFormProps) {
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="body">Content *</Label>
+                        <div className="flex justify-between items-center">
+                            <Label htmlFor="body">Content *</Label>
+                            <div className="flex space-x-2">
+                                <Button
+                                    type="button"
+                                    variant={previewMode ? "outline" : "default"}
+                                    size="sm"
+                                    onClick={() => setPreviewMode(false)}
+                                >
+                                    <Edit2 className="h-4 w-4 mr-1" />
+                                    Edit
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant={previewMode ? "default" : "outline"}
+                                    size="sm"
+                                    onClick={() => setPreviewMode(true)}
+                                >
+                                    <Eye className="h-4 w-4 mr-1" />
+                                    Preview
+                                </Button>
+                            </div>
+                        </div>
+
+                        {!previewMode && (
+                            <div className="flex flex-wrap gap-1 mb-2 p-1 border rounded-md bg-gray-50 dark:bg-gray-800">
+                                {markdownToolbar.map((item, index) => (
+                                    <button
+                                        key={index}
+                                        type="button"
+                                        title={item.title}
+                                        className="px-2 py-1 text-xs font-medium bg-white dark:bg-gray-700 border rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+                                        onClick={item.action}
+                                    >
+                                        {item.label}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
                         <Controller
                             name="body"
                             control={control}
                             render={({ field }) => (
-                                <textarea
-                                    id="body"
-                                    placeholder="Post content"
-                                    className={`w-full min-h-[200px] p-2 border rounded-md ${
-                                        errors.body ? "border-red-500" : ""
-                                    }`}
-                                    {...field}
-                                />
+                                <>
+                                    {previewMode ? (
+                                        <div className="w-full min-h-[200px] p-4 border rounded-md bg-white dark:bg-gray-800 overflow-auto markdown-preview">
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkGfm]}
+                                                rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                                            >
+                                                {field.value}
+                                            </ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        <textarea
+                                            id="body"
+                                            placeholder="Post content (supports Markdown)"
+                                            className={`w-full min-h-[200px] p-2 border rounded-md font-mono ${errors.body ? "border-red-500" : ""
+                                                }`}
+                                            {...field}
+                                            ref={(el) => setTextareaRef(el)}
+                                        />
+                                    )}
+                                </>
                             )}
                         />
                         {errors.body && (
                             <p className="text-red-500 text-sm">{errors.body.message}</p>
+                        )}
+                        {!previewMode && (
+                            <p className="text-sm text-gray-500">
+                                Supports Markdown formatting: **bold**, *italic*, [links](url), ![images](url), # headings, etc.
+                            </p>
                         )}
                     </div>
 

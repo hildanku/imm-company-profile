@@ -3,9 +3,12 @@ import { createFileRoute } from '@tanstack/react-router'
 import type { PostWithImages } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Plus, Edit, Eye } from 'lucide-react'
+import { Plus, Edit, Eye, HelpCircle } from 'lucide-react'
 import { fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
 import { BlogUpsert } from '@/components/pages/management/blog/upsert'
+import { MarkdownCheatsheet } from '@/components/pages/management/blog/markdown-cheatsheet'
+import { useState as useModalState } from 'react'
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 
 export const Route = createFileRoute('/_protected/management/blog')({
     component: BlogManagementDashboard,
@@ -16,6 +19,7 @@ function BlogManagementDashboard() {
     const [loading, setLoading] = useState(true)
     const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
     const [isCreating, setIsCreating] = useState(false)
+    const [showCheatsheet, setShowCheatsheet] = useState(false)
 
     const loadPosts = async () => {
         try {
@@ -71,10 +75,28 @@ function BlogManagementDashboard() {
         <div className="container mx-auto py-8 px-4">
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-bold">Manage Blog Posts</h1>
-                <Button onClick={handleCreateClick}>
-                    <Plus className="mr-2 h-4 w-4" />
-                    Create New Post
-                </Button>
+                <div className="flex space-x-2">
+                    <Sheet>
+                        <SheetTrigger asChild>
+                            <Button variant="outline">
+                                <HelpCircle className="mr-2 h-4 w-4" />
+                                Markdown Help
+                            </Button>
+                        </SheetTrigger>
+                        <SheetContent className="w-[90%] sm:max-w-[80%] md:max-w-[70%] lg:max-w-[60%] overflow-y-auto">
+                            <SheetHeader>
+                                <SheetTitle>Markdown Cheatsheet</SheetTitle>
+                            </SheetHeader>
+                            <div className="mt-6">
+                                <MarkdownCheatsheet />
+                            </div>
+                        </SheetContent>
+                    </Sheet>
+                    <Button onClick={handleCreateClick}>
+                        <Plus className="mr-2 h-4 w-4" />
+                        Create New Post
+                    </Button>
+                </div>
             </div>
 
             {loading ? (
