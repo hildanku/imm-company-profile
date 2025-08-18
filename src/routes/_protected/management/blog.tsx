@@ -7,7 +7,6 @@ import { Plus, Edit, Eye, HelpCircle } from 'lucide-react'
 import { fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
 import { BlogUpsert } from '@/components/pages/management/blog/upsert'
 import { MarkdownCheatsheet } from '@/components/pages/management/blog/markdown-cheatsheet'
-import { useState as useModalState } from 'react'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 
 export const Route = createFileRoute('/_protected/management/blog')({
@@ -19,7 +18,7 @@ function BlogManagementDashboard() {
     const [loading, setLoading] = useState(true)
     const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
     const [isCreating, setIsCreating] = useState(false)
-    const [showCheatsheet, setShowCheatsheet] = useState(false)
+    const [_showCheatsheet, _setShowCheatsheet] = useState(false)
 
     const loadPosts = async () => {
         try {
