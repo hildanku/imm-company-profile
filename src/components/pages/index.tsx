@@ -40,7 +40,7 @@ export function Index() {
                     <div className="relative">
                         <ImageZoom>
                             <img
-                                src={`${SUPABASE_OBJECT_URL}/hero-section.jpg`}
+                                src={`${SUPABASE_OBJECT_URL}/assets/hero-section.jpg`}
                                 alt="hero section"
                                 className="rounded-lg shadow-2xl"
                                 loading="lazy"
