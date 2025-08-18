@@ -20,49 +20,49 @@ export const products: Product[] = [
         id: 1,
         name: "Invitationery",
         description: "Creates high-quality physical invitations for weddings, birthdays, and other special occasions with elegant and exclusive designs.",
-        image_path: SUPABASE_OBJECT_URL + "INVITATIONERY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/INVITATIONERY.jpg",
         url_product: "https://invitationery.asia/"
     },
     {
         id: 2,
         name: "Invitto",
         description: "Offers complete invitation packages, including custom prints, premium boxes, and digital cards for various events.",
-        image_path: SUPABASE_OBJECT_URL + "INVITTO.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/INVITTO.jpg",
         url_product: "https://invittoprintery.com/"
     },
     {
         id: 3,
         name: "Galeria Invitation",
         description: "Specializes in physical invitation design and printing, focusing on luxury materials and high-end finishes.",
-        image_path: SUPABASE_OBJECT_URL + "GALERIA.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/GALERIA.jpg",
         url_product: "https://galeriainvitation.com/"
     },
     {
         id: 4,
         name: "IMM Enterprise",
         description: "Delivers creative and professional event planning services for a wide range of private and corporate events.",
-        image_path: SUPABASE_OBJECT_URL + "ENTERPRISE.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/ENTERPRISE.jpg",
         url_product: "https://immenterprise.com/"
     },
     {
         id: 5,
         name: "Luxea Wear",
         description: "A modern clothing brand offering stylish and comfortable outfits, perfect for everyday wear or special occasions.",
-        image_path: SUPABASE_OBJECT_URL + "LUXEA.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/LUXEA.jpg",
         url_product: "https://luxeawear.com/"
     },
     {
         id: 6,
         name: "Printfy.ID",
         description: "Produces personalized office essentials such as ID cards, lanyards, name tags, and other custom accessories.",
-        image_path: SUPABASE_OBJECT_URL + "PRINTFY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/PRINTFY.jpg",
         url_product: "https://printfy.id/"
     },
     {
         id: 7,
         name: "Souvenery.Asia",
         description: "Offers a wide selection of custom souvenirs for weddings, company events, and other memorable occasions.",
-        image_path: SUPABASE_OBJECT_URL + "SOUVENERY.jpg",
+        image_path: SUPABASE_OBJECT_URL + "assets/SOUVENERY.jpg",
         url_product: "https://souveneryasia.com/"
     },
 ]
