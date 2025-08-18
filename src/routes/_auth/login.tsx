@@ -31,7 +31,7 @@ function LoginPage() {
 
 	const submit = async (data: z.infer<typeof loginSchema>) => {
 		try {
-			const { data: _userData, error } = await supabase.auth.signInWithPassword({
+			const { data: userData, error } = await supabase.auth.signInWithPassword({
 				email: data.email,
 				password: data.password,
 			})
@@ -43,8 +43,15 @@ function LoginPage() {
 				return
 			}
 			
+			console.log('User data:', userData)
+
+			if(userData.session.access_token ) {
+				localStorage.setItem('access_token', userData.session.access_token)
+				console.log('Access token saved to local storage')
+			}
+			
 			toast.success('Login berhasil')
-			navigate({ to: '/' })
+			navigate({ to: '/management/blog' })
 		} catch (error) {
 			console.error('Login error:', error)
 			toast.error('Terjadi kesalahan saat login')
