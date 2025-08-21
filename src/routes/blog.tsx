@@ -10,6 +10,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
+import { SEO } from '@/components/seo'
 // import '@/components/pages/management/blog/markdown-styles.css'
 
 export const Route = createFileRoute('/blog')({
@@ -84,7 +85,16 @@ function BlogPostList() {
     }
 
     return (
-        <BlogPostCard {...blogData} />
+        <>
+            <SEO
+                title="Blog - Indonesia Mitra Media"
+                description="Discover the latest trends, tips, and best practices in modern web development. From UI components to design systems, stay updated with our expert insights."
+                keywords="IMM, Indonesia Mitra Media, blog, articles, web development, design systems"
+                ogType="website"
+                ogUrl="/blog"
+            />
+            <BlogPostCard {...blogData} />
+        </>
     )
 }
 
@@ -134,6 +144,14 @@ function BlogPostDetail({ slug }: { slug: string }) {
 
     return (
         <>
+            <SEO
+                title={`${post.title} - Indonesia Mitra Media Blog`}
+                description={post.body.substring(0, 160)}
+                keywords={`IMM, Indonesia Mitra Media, ${post.label}, ${post.author}, blog post`}
+                ogType="article"
+                ogUrl={`/blog?slug=${slug}`}
+                ogImage={post.featured_image ? getImageUrl(post.featured_image.image_path) : undefined}
+            />
             <HeaderSection
                 firstText={post.label || 'Blog Post'}
                 secondText={post.title}

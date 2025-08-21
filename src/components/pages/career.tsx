@@ -1,10 +1,19 @@
 import { careers } from "@/lib/data"
 import { CareerCard } from "@/components/career-card"
 import { HeaderSection } from "@/components/header-section"
+import { SEO } from "@/components/seo"
 
 export default function CareerGalery() {
     return (
         <>
+            <SEO
+                title="Careers - Indonesia Mitra Media"
+                description="Ready to build the future with us? Explore open roles and let's shape something great together at Indonesia Mitra Media."
+                keywords="IMM, Indonesia Mitra Media, careers, jobs, employment, opportunities"
+                ogType="website"
+                ogUrl="/career"
+                ogImage="/assets/careers/imm.jpg"
+            />
             <HeaderSection
                 firstText='Your Next Opportunity'
                 secondText='Starts Here'
