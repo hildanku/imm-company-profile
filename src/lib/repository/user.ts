@@ -157,4 +157,4 @@ export async function resetUserPassword(email: string): Promise<{ success: boole
         console.error('Error resetting password:', error)
         return { success: false, error: 'An unexpected error occurred' }
     }
-}
+}   
