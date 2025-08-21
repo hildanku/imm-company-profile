@@ -1,6 +1,7 @@
 import { ContactMap } from "@/components/contact-map"
 import { contactInfo } from "@/lib/data"
 import { HeaderSection } from "../header-section"
+import { SEO } from "@/components/seo"
 
 export const ContactUs = () => {
     const businessLocation = {
@@ -10,6 +11,13 @@ export const ContactUs = () => {
 
     return (
         <>
+            <SEO
+                title="Contact Us - Indonesia Mitra Media"
+                description="Ready to transform your business? Get in touch with our team and let's discuss how we can help make your business more unique."
+                keywords="IMM, Indonesia Mitra Media, contact us, get in touch, office location, business inquiry"
+                ogType="website"
+                ogUrl="/contact"
+            />
             <HeaderSection
                 firstText='Stay Connected'
                 secondText='With Us'

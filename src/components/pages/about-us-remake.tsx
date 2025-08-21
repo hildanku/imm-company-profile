@@ -3,9 +3,18 @@ import { Badge } from '@/components/ui/badge'
 import { TrendingUp, Globe, Heart } from 'lucide-react'
 import { milestones, stats } from '@/lib/data'
 import { HeaderSection } from '@/components/header-section'
+import { SEO } from '@/components/seo'
 
 export const AboutUs = () => {
     return (
+        <>
+            <SEO
+                title="About Us - Indonesia Mitra Media"
+                description="From a modest kiosk in Kebumen to serving clients across Indonesia and Asia, our journey is powered by innovative digital marketing and unwavering dedication."
+                keywords="IMM, Indonesia Mitra Media, about us, company history, milestones, digital marketing"
+                ogType="website"
+                ogUrl="/about"
+            />
         <div className="min-h-screen bg-gray-50 dark:bg-black">
             <HeaderSection
                 firstText='Make Your Business'
@@ -133,5 +142,6 @@ export const AboutUs = () => {
                 </div>
             </div>
         </div>
+        </>
     )
 }
