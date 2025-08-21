@@ -50,7 +50,14 @@ export interface Career {
 } */
 
 export interface User {
-
+    id: string
+    email: string
+    name: string
+    role: 'admin' | 'editor' | 'viewer'
+    avatar_url?: string
+    created_at: string
+    updated_at: string
+    last_sign_in_at?: string
 }
 
 export interface Post {
@@ -80,3 +87,4 @@ export interface PostWithImages extends Post {
     images: PostImage[]
     featured_image?: PostImage
 }
+
