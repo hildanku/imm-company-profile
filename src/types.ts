@@ -25,14 +25,15 @@ export interface BlogPost {
 }
 
 export interface Career {
-    id: number
-    job_title: string
-    job_position: string
-    job_description: string
-    job_type: 'FullTime' | 'PartTime' | 'Freelance' | 'Internship'
-    job_location: string
+    id: string
+    title: string
+    position: string
+    description: string
+    type: 'FullTime' | 'PartTime' | 'Freelance' | 'Internship'
+    location: string
     work_arrangement: 'Hybrid' | 'Remote' | 'On-Site'
     deadline: string
+    status: 'Open' | 'Closed'
     image?: string
 }
 
