@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 
 .env
+prod.sql
+upload-to-supabase.js
+SCHEMA.md
+compare.md
