@@ -10,25 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as CareerRouteImport } from './routes/career'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CareerIndexRouteImport } from './routes/career/index'
+import { Route as CareerIdRouteImport } from './routes/career/$id'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as ProtectedManagementUserRouteImport } from './routes/_protected/management/user'
+import { Route as ProtectedManagementCareerRouteImport } from './routes/_protected/management/career'
 import { Route as ProtectedManagementBlogRouteImport } from './routes/_protected/management/blog'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CareerRoute = CareerRouteImport.update({
-  id: '/career',
-  path: '/career',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogRoute = BlogRouteImport.update({
@@ -54,6 +51,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareerIndexRoute = CareerIndexRouteImport.update({
+  id: '/career/',
+  path: '/career/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CareerIdRoute = CareerIdRouteImport.update({
+  id: '/career/$id',
+  path: '/career/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -69,6 +76,12 @@ const ProtectedManagementUserRoute = ProtectedManagementUserRouteImport.update({
   path: '/management/user',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ProtectedManagementCareerRoute =
+  ProtectedManagementCareerRouteImport.update({
+    id: '/management/career',
+    path: '/management/career',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
 const ProtectedManagementBlogRoute = ProtectedManagementBlogRouteImport.update({
   id: '/management/blog',
   path: '/management/blog',
@@ -79,22 +92,26 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
-  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/career/$id': typeof CareerIdRoute
+  '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
+  '/management/career': typeof ProtectedManagementCareerRoute
   '/management/user': typeof ProtectedManagementUserRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
-  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/career/$id': typeof CareerIdRoute
+  '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
+  '/management/career': typeof ProtectedManagementCareerRoute
   '/management/user': typeof ProtectedManagementUserRoute
 }
 export interface FileRoutesById {
@@ -104,11 +121,13 @@ export interface FileRoutesById {
   '/_protected': typeof ProtectedRouteWithChildren
   '/about': typeof AboutRoute
   '/blog': typeof BlogRoute
-  '/career': typeof CareerRoute
   '/contact': typeof ContactRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/career/$id': typeof CareerIdRoute
+  '/career/': typeof CareerIndexRoute
   '/_protected/management/blog': typeof ProtectedManagementBlogRoute
+  '/_protected/management/career': typeof ProtectedManagementCareerRoute
   '/_protected/management/user': typeof ProtectedManagementUserRoute
 }
 export interface FileRouteTypes {
@@ -117,22 +136,26 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/blog'
-    | '/career'
     | '/contact'
     | '/login'
     | '/register'
+    | '/career/$id'
+    | '/career'
     | '/management/blog'
+    | '/management/career'
     | '/management/user'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/blog'
-    | '/career'
     | '/contact'
     | '/login'
     | '/register'
+    | '/career/$id'
+    | '/career'
     | '/management/blog'
+    | '/management/career'
     | '/management/user'
   id:
     | '__root__'
@@ -141,11 +164,13 @@ export interface FileRouteTypes {
     | '/_protected'
     | '/about'
     | '/blog'
-    | '/career'
     | '/contact'
     | '/_auth/login'
     | '/_auth/register'
+    | '/career/$id'
+    | '/career/'
     | '/_protected/management/blog'
+    | '/_protected/management/career'
     | '/_protected/management/user'
   fileRoutesById: FileRoutesById
 }
@@ -155,8 +180,9 @@ export interface RootRouteChildren {
   ProtectedRoute: typeof ProtectedRouteWithChildren
   AboutRoute: typeof AboutRoute
   BlogRoute: typeof BlogRoute
-  CareerRoute: typeof CareerRoute
   ContactRoute: typeof ContactRoute
+  CareerIdRoute: typeof CareerIdRoute
+  CareerIndexRoute: typeof CareerIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -166,13 +192,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/career': {
-      id: '/career'
-      path: '/career'
-      fullPath: '/career'
-      preLoaderRoute: typeof CareerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -210,6 +229,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/career/': {
+      id: '/career/'
+      path: '/career'
+      fullPath: '/career'
+      preLoaderRoute: typeof CareerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/career/$id': {
+      id: '/career/$id'
+      path: '/career/$id'
+      fullPath: '/career/$id'
+      preLoaderRoute: typeof CareerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth/register': {
       id: '/_auth/register'
       path: '/register'
@@ -229,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/management/user'
       fullPath: '/management/user'
       preLoaderRoute: typeof ProtectedManagementUserRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/management/career': {
+      id: '/_protected/management/career'
+      path: '/management/career'
+      fullPath: '/management/career'
+      preLoaderRoute: typeof ProtectedManagementCareerRouteImport
       parentRoute: typeof ProtectedRoute
     }
     '/_protected/management/blog': {
@@ -255,11 +295,13 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface ProtectedRouteChildren {
   ProtectedManagementBlogRoute: typeof ProtectedManagementBlogRoute
+  ProtectedManagementCareerRoute: typeof ProtectedManagementCareerRoute
   ProtectedManagementUserRoute: typeof ProtectedManagementUserRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedManagementBlogRoute: ProtectedManagementBlogRoute,
+  ProtectedManagementCareerRoute: ProtectedManagementCareerRoute,
   ProtectedManagementUserRoute: ProtectedManagementUserRoute,
 }
 
@@ -273,8 +315,9 @@ const rootRouteChildren: RootRouteChildren = {
   ProtectedRoute: ProtectedRouteWithChildren,
   AboutRoute: AboutRoute,
   BlogRoute: BlogRoute,
-  CareerRoute: CareerRoute,
   ContactRoute: ContactRoute,
+  CareerIdRoute: CareerIdRoute,
+  CareerIndexRoute: CareerIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
