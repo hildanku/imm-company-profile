@@ -12,7 +12,7 @@ export function CareerCard({ career }: { career: Career }) {
                 <div className="aspect-square overflow-hidden bg-gray-50">
                     <img
                         src={career.image || "/placeholder.svg"}
-                        alt={career.job_title}
+                        alt={career.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                 </div>
@@ -23,16 +23,16 @@ export function CareerCard({ career }: { career: Career }) {
                         {career.work_arrangement}
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                        {career.job_type}
+                        {career.type}
                     </Badge>
                     <Badge variant="outline" className="text-xs">
-                        {career.job_position}
+                        {career.position}
                     </Badge>
                 </div>
-                <CardTitle className="text-lg mb-2">{career.job_title}</CardTitle>
-                <CardDescription className="text-sm mb-1 line-clamp-2">{career.job_description}</CardDescription>
+                <CardTitle className="text-lg mb-2">{career.title}</CardTitle>
+                <CardDescription className="text-sm mb-1 line-clamp-2">{career.description}</CardDescription>
                 <div className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                    <p>Placement: {career.job_location}</p>
+                    <p>Placement: {career.location}</p>
                 </div>
             </CardContent>
             <CardFooter className="flex flex-row gap-2 p-4">
