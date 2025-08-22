@@ -1,6 +1,20 @@
 import type { User } from '@/types'
 import supabase from '@/lib/supabase'
 
+// check id for registration user
+export async function checkUserId() {
+    const { data: users, error } = await supabase
+        .from('users')
+        .select('id')
+        .order('id', { ascending: true })
+    if (error) {
+        console.error('error fetching user id', error)
+        return {}
+    }
+
+    return users
+}
+
 export async function getAllUser(): Promise<User[]> {
     const { data: users, error } = await supabase
         .from('users')
@@ -48,7 +62,7 @@ export async function createUser(userData: {
                 },
             },
         })
-
+        console.log(authData)
         if (authError) {
             return { user: null, error: authError.message }
         }
@@ -61,6 +75,10 @@ export async function createUser(userData: {
                 role: userData.role,
                 created_at: authData.user.created_at || new Date().toISOString(),
                 updated_at: authData.user.updated_at || new Date().toISOString(),
+            }
+            const create = await supabase.from('users').insert(user)
+            if (!create) {
+                return { user: null, error: 'Failed to create user' }
             }
             return { user, error: null }
         }
