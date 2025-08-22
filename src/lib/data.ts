@@ -1,9 +1,9 @@
 import type { BlogProps } from "@/components/pages/blog"
-import type { Career, Product } from "@/types"
+import type { Product } from "@/types"
 import { Calendar, Mail, MapPin, Phone, TrendingUp, Users } from "lucide-react"
 import { SUPABASE_OBJECT_URL } from "@/lib/const"
 
-const dummyJobImage = "./assets/careers/imm.jpg"
+// const dummyJobImage = "./assets/careers/imm.jpg"
 
 export const ourProducts = [
     { name: "Invitationery", url: "https://invitationery.asia" },
@@ -114,7 +114,7 @@ export const milestones = [
     }
 ]
 
-export const careers: Career[] = [
+/* export const careers: Career[] = [
     {
         id: 1,
         job_title: "Printing Operations Specialist",
@@ -170,7 +170,7 @@ export const careers: Career[] = [
         deadline: "2025-09-20",
         image: dummyJobImage
     },
-]
+] */
 
 // https://wawilelrjyhdqnsuuioy.supabase.co/storage/v1/object/public/assets-imm/assets/posts/101.png
 export const posts: BlogProps = {
