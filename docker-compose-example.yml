@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Development service
+  app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: imm-profile-dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+    restart: unless-stopped
+
+  # Production service
+  app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: imm-profile-prod
+    ports:
+      - "8085:80"
+    restart: unless-stopped
+    # environment:
+    #  - NODE_ENV=production
+    #  - VITE_SUPABASE_URL=https://xxxxxxx.supabase.co
+    #  - VITE_SUPABASE_ANON_KEY=xxx.xx.xxx
+
+# Define a network for the services
+networks:
+  default:
+    name: imm-network
+    driver: bridge
