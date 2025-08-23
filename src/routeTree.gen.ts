@@ -19,6 +19,7 @@ import { Route as CareerIndexRouteImport } from './routes/career/index'
 import { Route as CareerIdRouteImport } from './routes/career/$id'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as CareerApplyIdRouteImport } from './routes/career/apply/$id'
 import { Route as ProtectedManagementUserRouteImport } from './routes/_protected/management/user'
 import { Route as ProtectedManagementCareerRouteImport } from './routes/_protected/management/career'
 import { Route as ProtectedManagementBlogRouteImport } from './routes/_protected/management/blog'
@@ -71,6 +72,11 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AuthRoute,
 } as any)
+const CareerApplyIdRoute = CareerApplyIdRouteImport.update({
+  id: '/career/apply/$id',
+  path: '/career/apply/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProtectedManagementUserRoute = ProtectedManagementUserRouteImport.update({
   id: '/management/user',
   path: '/management/user',
@@ -100,6 +106,7 @@ export interface FileRoutesByFullPath {
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
   '/management/user': typeof ProtectedManagementUserRoute
+  '/career/apply/$id': typeof CareerApplyIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -113,6 +120,7 @@ export interface FileRoutesByTo {
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
   '/management/user': typeof ProtectedManagementUserRoute
+  '/career/apply/$id': typeof CareerApplyIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -129,6 +137,7 @@ export interface FileRoutesById {
   '/_protected/management/blog': typeof ProtectedManagementBlogRoute
   '/_protected/management/career': typeof ProtectedManagementCareerRoute
   '/_protected/management/user': typeof ProtectedManagementUserRoute
+  '/career/apply/$id': typeof CareerApplyIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -144,6 +153,7 @@ export interface FileRouteTypes {
     | '/management/blog'
     | '/management/career'
     | '/management/user'
+    | '/career/apply/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -157,6 +167,7 @@ export interface FileRouteTypes {
     | '/management/blog'
     | '/management/career'
     | '/management/user'
+    | '/career/apply/$id'
   id:
     | '__root__'
     | '/'
@@ -172,6 +183,7 @@ export interface FileRouteTypes {
     | '/_protected/management/blog'
     | '/_protected/management/career'
     | '/_protected/management/user'
+    | '/career/apply/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CareerIdRoute: typeof CareerIdRoute
   CareerIndexRoute: typeof CareerIndexRoute
+  CareerApplyIdRoute: typeof CareerApplyIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -257,6 +270,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/career/apply/$id': {
+      id: '/career/apply/$id'
+      path: '/career/apply/$id'
+      fullPath: '/career/apply/$id'
+      preLoaderRoute: typeof CareerApplyIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_protected/management/user': {
       id: '/_protected/management/user'
       path: '/management/user'
@@ -318,6 +338,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CareerIdRoute: CareerIdRoute,
   CareerIndexRoute: CareerIndexRoute,
+  CareerApplyIdRoute: CareerApplyIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

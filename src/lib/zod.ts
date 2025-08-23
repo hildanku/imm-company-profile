@@ -58,3 +58,16 @@ export const careerSchema = z.object({
     }),
     image: z.string().optional(),
 })
+
+// form schema for applying to a career
+export const formApplySchema = z.object({
+    fullName: z.string().min(3, { message: 'Full name must be at least 3 characters' }),
+    email: z.string().email({ message: 'Please enter a valid email address' }),
+    phone: z.string().min(10, { message: 'Please enter a valid phone number' }),
+    // address: z.string().min(10, { message: 'Address must be at least 10 characters' }),
+    // education: z.string().min(3, { message: 'Education must be at least 3 characters' }),
+    // experience: z.string().min(10, { message: 'Experience must be at least 10 characters' }),
+    // coverLetter: z.string().min(50, { message: 'Cover letter must be at least 50 characters' }),
+    portfolioUrl: z.string().url({ message: 'Please enter a valid URL' }).optional().or(z.literal('')),
+    cv: z.instanceof(File, { message: 'Please upload your CV' }),
+})

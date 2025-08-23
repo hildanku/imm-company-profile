@@ -2,7 +2,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from "@/components/ui/button"
 import type { Career } from "@/types"
 import { Badge } from "@/components/ui/badge"
-//import { careers } from "@/lib/data"
+import { Link } from "@tanstack/react-router"
 
 export function CareerCard({ career }: { career: Career }) {
 
@@ -36,10 +36,17 @@ export function CareerCard({ career }: { career: Career }) {
                 </div>
             </CardContent>
             <CardFooter className="flex flex-row gap-2 p-4">
-                <Button className="flex-1" size="sm" variant="outline">
-                    Detail
+                <Button asChild className="flex-1" size="sm" variant="outline">
+                    <Link to="/career/$id" params={{ id: career.id }}>
+                        Detail
+                    </Link>
                 </Button>
-                <Button className="flex-1" size="sm">
+                <Button
+                    className="flex-1"
+                    size="sm"
+                    disabled={career.status !== 'Open'}
+                    onClick={() => window.open(`mailto:careers@indonesiamitramedia.com?subject=Application for ${career.title} - ${career.position}`)}
+                >
                     Apply
                 </Button>
             </CardFooter>
