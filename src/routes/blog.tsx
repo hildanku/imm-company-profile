@@ -1,5 +1,5 @@
 import BlogPostCard from '@/components/pages/blog'
-import { blogRepository, fetchPostBySlug, fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
+import { blogRepository, fetchPostBySlug, getImageUrl } from '@/lib/repository/blog'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import type { BlogProps } from '@/components/pages/blog'
