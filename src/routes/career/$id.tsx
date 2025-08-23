@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
+import { Link } from '@tanstack/react-router'
 import { careerRepository } from '@/lib/repository/career'
 import type { Career } from '@/types'
 import { SEO } from '@/components/seo'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Spinner } from '@/components/ui/spinner'
-import { HeaderSection } from '@/components/header-section'
 
 export const Route = createFileRoute('/career/$id')({
     component: CareerDetailPage,
@@ -41,7 +41,7 @@ function CareerDetailPage() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-[60vh]">
+            <div className="flex justify-center items-center min-h-[80vh]">
                 <Spinner className="h-8 w-8" />
                 <span className="ml-2 text-lg">Loading career details...</span>
             </div>
@@ -50,7 +50,7 @@ function CareerDetailPage() {
 
     if (error || !career) {
         return (
-            <div className="flex flex-col justify-center items-center min-h-[60vh]">
+            <div className="flex flex-col justify-center items-center min-h-[80vh]">
                 <h2 className="text-2xl font-bold text-red-500 mb-4">{error || 'Career not found'}</h2>
                 <Button onClick={() => window.history.back()}>Go Back</Button>
             </div>
@@ -67,18 +67,21 @@ function CareerDetailPage() {
                 ogUrl={`/career/${id}`}
                 ogImage={career.image || "/assets/careers/imm.jpg"}
             />
-
-            <HeaderSection
-                firstText={career.title}
-                secondText={career.position}
-                description={`${career.type} · ${career.location} · ${career.work_arrangement}`}
-            />
-
-            <div className="bg-gray-50 dark:bg-black">
-                <div className="container mx-auto px-4 py-8">
-                    <div className="max-w-4xl mx-auto bg-white dark:bg-gray-900 rounded-lg shadow-md overflow-hidden">
+            
+            <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+                <div className="container mx-auto px-4">
+                    <div className="mb-6">
+                        <Link to="/career" className="text-blue-600 dark:text-blue-400 hover:underline flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Back to all careers
+                        </Link>
+                    </div>
+                    
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
                         {career.image && (
-                            <div className="w-full h-64 overflow-hidden">
+                            <div className="w-full h-80 overflow-hidden">
                                 <img
                                     src={career.image}
                                     alt={career.title}
@@ -87,32 +90,49 @@ function CareerDetailPage() {
                             </div>
                         )}
 
-                        <div className="p-6">
-                            <div className="flex flex-wrap gap-2 mb-4">
-                                <Badge variant="outline">{career.work_arrangement}</Badge>
-                                <Badge variant="outline">{career.type}</Badge>
-                                <Badge variant="outline">{career.position}</Badge>
-                                <Badge variant={career.status === 'Open' ? 'default' : 'destructive'}>
+                        <div className="p-8">
+                            <div className="flex flex-wrap gap-2 mb-6">
+                                <Badge variant="outline" className="px-3 py-1 text-sm">{career.work_arrangement}</Badge>
+                                <Badge variant="outline" className="px-3 py-1 text-sm">{career.type}</Badge>
+                                <Badge variant="outline" className="px-3 py-1 text-sm">{career.position}</Badge>
+                                <Badge 
+                                    variant={career.status === 'Open' ? 'default' : 'destructive'}
+                                    className="px-3 py-1 text-sm"
+                                >
                                     {career.status}
                                 </Badge>
                             </div>
-
-                            <h1 className="text-3xl font-bold mb-2">{career.title}</h1>
-                            <p className="text-gray-500 dark:text-gray-400 mb-6">
-                                Location: {career.location} • Deadline: {new Date(career.deadline).toLocaleDateString()}
-                            </p>
-
-                            <div className="prose dark:prose-invert max-w-none mb-8">
-                                <h2 className="text-xl font-semibold mb-3">Job Description</h2>
-                                <div className="whitespace-pre-line">
+                            
+                            <h1 className="text-4xl font-bold mb-3">{career.title}</h1>
+                            <h2 className="text-2xl text-gray-600 dark:text-gray-300 mb-4">{career.position}</h2>
+                            
+                            <div className="flex flex-wrap gap-x-6 gap-y-2 text-gray-600 dark:text-gray-300 mb-8">
+                                <div className="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                    {career.location}
+                                </div>
+                                <div className="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    Deadline: {new Date(career.deadline).toLocaleDateString()}
+                                </div>
+                            </div>
+                            
+                            <div className="prose dark:prose-invert max-w-none mb-10">
+                                <h3 className="text-2xl font-semibold mb-4">Job Description</h3>
+                                <div className="whitespace-pre-line text-lg">
                                     {career.description}
                                 </div>
                             </div>
-
-                            <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                            
+                            <div className="flex flex-col sm:flex-row gap-4 mt-10">
                                 <Button
                                     size="lg"
-                                    className="flex-1"
+                                    className="flex-1 py-6"
                                     onClick={() => window.history.back()}
                                     variant="outline"
                                 >
@@ -120,9 +140,9 @@ function CareerDetailPage() {
                                 </Button>
                                 <Button
                                     size="lg"
-                                    className="flex-1"
+                                    className="flex-1 py-6"
                                     disabled={career.status !== 'Open'}
-                                    onClick={() => window.open(`mailto:careers@indonesiamitramedia.com?subject=Application for ${career.title} - ${career.position}`)}
+                                    onClick={() => window.location.href = `/career/apply/${id}`}
                                 >
                                     Apply Now
                                 </Button>
