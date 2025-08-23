@@ -4,7 +4,8 @@ import { RouterProvider, createRouter } from '@tanstack/react-router'
 import './index.css'
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
-import { ThemeProvider } from './contexts/theme-context'
+import { ThemeProvider } from '@/contexts/theme-context'
+import { LanguageProvider } from '@/contexts/language-context'
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -23,7 +24,9 @@ if (!rootElement.innerHTML) {
     root.render(
         <StrictMode>
             <ThemeProvider>
-                <RouterProvider router={router} />
+                <LanguageProvider>
+                    <RouterProvider router={router} />
+                </LanguageProvider>
             </ThemeProvider>
         </StrictMode>,
     )

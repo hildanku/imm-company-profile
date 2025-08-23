@@ -1,5 +1,13 @@
 export type Theme = 'light' | 'dark'
 
+export type Language = 'id' | 'en'
+
+export interface LanguageContextType {
+    language: Language
+    toggleLanguage: () => void
+    t: (id: string) => string
+}
+
 export interface ThemeContextType {
     theme: Theme
     toggleTheme: () => void
