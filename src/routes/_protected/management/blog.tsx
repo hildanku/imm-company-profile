@@ -4,7 +4,7 @@ import type { PostWithImages } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Plus, Edit, Eye, HelpCircle } from 'lucide-react'
-import { fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
+import { blogRepository, getImageUrl } from '@/lib/repository/blog'
 import { BlogUpsert } from '@/components/pages/management/blog/upsert'
 import { MarkdownCheatsheet } from '@/components/pages/management/blog/markdown-cheatsheet'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
@@ -23,8 +23,9 @@ function BlogManagementDashboard() {
     const loadPosts = async () => {
         try {
             setLoading(true)
-            const fetchedPosts = await fetchPublishedPosts()
-            setPosts(fetchedPosts)
+            const result = await blogRepository.listMerge()
+            console.log('Loaded posts:', result)
+            setPosts(result)
         } catch (error) {
             console.error('Error loading posts:', error)
         } finally {

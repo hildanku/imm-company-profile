@@ -1,5 +1,5 @@
 import BlogPostCard from '@/components/pages/blog'
-import { fetchPostBySlug, fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
+import { blogRepository, fetchPostBySlug, fetchPublishedPosts, getImageUrl } from '@/lib/repository/blog'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 import type { BlogProps } from '@/components/pages/blog'
@@ -48,7 +48,8 @@ function BlogPostList() {
         async function loadPosts() {
             try {
                 setLoading(true)
-                const posts = await fetchPublishedPosts()
+                const posts = await blogRepository.listMerge()
+                console.log('Loaded posts:', posts)
 
                 // Transform PostWithImages to BlogPost format
                 const blogPosts = posts.map(post => ({
