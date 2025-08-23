@@ -9,8 +9,27 @@ import type {
     UpdateArgs
 } from '@/lib/repository/base-repository'
 
-export class CareerRepository implements AsyncBaseRepository<Career> {
+export type findByUUIDArgs = {
+    uuid: string
+}
+
+export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'findByUUID'> {
     private tableName = 'careers'
+
+    async findByUUID(args: findByUUIDArgs): Promise<Career | null> {
+        const { data, error } = await supabase
+            .from(this.tableName)
+            .select('*')
+            .eq('id', args.uuid)
+            .single()
+
+        if (error || !data) {
+            console.error('Error fetching career:', error)
+            return null
+        }
+
+        return data
+    }
 
     async create(args: CreateArgs<Career>): Promise<Career[]> {
         const { data, error } = await supabase
