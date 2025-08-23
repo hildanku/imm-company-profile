@@ -12,11 +12,14 @@ import {
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
 import { ThemeToggle, ThemeToggleMobile } from "@/components/theme-toggle"
+import { LanguageToggle } from "@/components/language-toggle"
 import { ourProducts } from "@/lib/data"
+import { useLanguage } from "@/hooks/use-language"
 
 export const Header = () => {
     const navigate = useNavigate()
     const [mobileMenu, setMobileMenu] = useState(false)
+    const { t } = useLanguage()
 
     return (
         <div className="w-full space-y-8">
@@ -69,13 +72,17 @@ export const Header = () => {
                                     </NavigationMenuItem>
                                 </NavigationMenuList>
                             </NavigationMenu>
-                            <a href="/blog" className="text-gray-600 hover:text-gray-800 font-medium"> Blog</a>
-                            <a href="/career" className="text-gray-600 hover:text-gray-800 font-medium"> Career</a>
-                            <a href="/contact" className="text-gray-600 hover:text-gray-800 font-medium"> Contact</a>
-                            <ThemeToggle />
+                            <a href="/blog" className="text-gray-600 hover:text-gray-800 font-medium"> {t('blog')}</a>
+                            <a href="/career" className="text-gray-600 hover:text-gray-800 font-medium"> {t('career')}</a>
+                            <a href="/contact" className="text-gray-600 hover:text-gray-800 font-medium"> {t('contact')}</a>
+                            <div className="flex">
+                                <ThemeToggle />
+                                <LanguageToggle variant="ghost" size="icon" className="rounded-full" />
+                            </div>
                         </nav>
                         <div className="md:hidden flex items-center space-x-2">
                             <ThemeToggleMobile />
+                            <LanguageToggle variant="ghost" size="icon" />
                             <Button
                                 variant="ghost"
                                 size="icon"
@@ -127,22 +134,33 @@ export const Header = () => {
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
-                                    Blog
+                                    {t('blog')}
                                 </a>
                                 <a
                                     href="/career"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
-                                    Career
+                                    {t('career')}
                                 </a>
                                 <a
                                     href="/contact"
                                     className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
                                     onClick={() => setMobileMenu(false)}
                                 >
-                                    Contact
+                                    {t('contact')}
                                 </a>
+                                <a
+                                    href="/language-demo"
+                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
+                                    onClick={() => setMobileMenu(false)}
+                                >
+                                    {t('language')}
+                                </a>
+                                <div className="flex items-center justify-between py-2 border-b border-gray-100">
+                                    <span className="text-gray-600 font-medium">{t('language')}</span>
+                                    <LanguageToggle />
+                                </div>
 
                             </div>
                         </nav>
