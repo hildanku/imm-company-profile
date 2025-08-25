@@ -6,8 +6,10 @@ import { SUPABASE_OBJECT_URL } from '@/lib/const'
 import ProductGallery from '@/components/product-gallery'
 import { ImageZoom } from '@/components/ui/shadcn-io/image-zoom'
 import { SEO } from '@/components/seo'
+import { useLanguage } from '@/hooks/use-language'
 
 export function Index() {
+    const { t } = useLanguage()
     return (
         <>
             <SEO
@@ -25,15 +27,14 @@ export function Index() {
                                 <Badge variant="outline" className="dark:text-white border-gray-300 dark:border-gray-600 max-w-full">
                                     <Award className="w-4 h-4 mr-2 flex-shrink-0" />
                                     <span className="truncate">
-                                        Indonesia Mitra Media is a company that was established in 2016.
+                                        {t('company_intro')}
                                     </span>
                                 </Badge>
                                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                                    Unleashing Boundless Creativity Where Every Idea Finds Its Space
+                                    {t('hero_tagline')}
                                 </h1>
                                 <p className="text-xl max-w-2xl">
-                                    We help companies innovate, scale, and succeed in the digital age with cutting-edge solutions and
-                                    expert consulting.
+                                    {t('hero_description')}
                                 </p>
                             </div>
 
@@ -42,7 +43,7 @@ export function Index() {
                                     size="lg"
                                     variant="outline"
                                     className="bg-white hover:bg-gray-100">
-                                    More about us
+                                    {t('more_about_us')}
                                 </Button>
                             </div>
                         </div>
@@ -63,19 +64,19 @@ export function Index() {
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                             <div className="space-y-2">
                                 <div className="text-4xl font-bold text-white">500+</div>
-                                <div className="text-gray-300">Projects Completed</div>
+                                <div className="text-gray-300">{t('projects_completed')}</div>
                             </div>
                             <div className="space-y-2">
                                 <div className="text-4xl font-bold text-white">150+</div>
-                                <div className="text-gray-300">Happy Clients</div>
+                                <div className="text-gray-300">{t('happy_clients')}</div>
                             </div>
                             <div className="space-y-2">
                                 <div className="text-4xl font-bold text-white">8+</div>
-                                <div className="text-gray-300">Years Experience</div>
+                                <div className="text-gray-300">{t('years_experience')}</div>
                             </div>
                             <div className="space-y-2">
                                 <div className="text-4xl font-bold text-white">24/7</div>
-                                <div className="text-gray-300">Support Available</div>
+                                <div className="text-gray-300">{t('support_available')}</div>
                             </div>
                         </div>
                     </div>
@@ -84,10 +85,10 @@ export function Index() {
                     <div className="container mx-auto px-4">
                         <div className="text-center space-y-4 mb-16">
                             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white">
-                                Comprehensive Solutions for Your Business
+                                {t('services_title')}
                             </h2>
                             <p className="text-gray-600 max-w-2xl mx-auto dark:text-white">
-                                We offer a wide range of services to help your business grow and succeed in today's competitive market.
+                                {t('services_description')}
                             </p>
                         </div>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -96,9 +97,9 @@ export function Index() {
                                     <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center">
                                         <Target className="h-6 w-6 text-amber-600" />
                                     </div>
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Digital Strategy</h3>
+                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{t('digital_strategy')}</h3>
                                     <p className="text-gray-600 dark:text-gray-50">
-                                        Comprehensive digital strategies to help your business reach its full potential online.
+                                        {t('digital_strategy_desc')}
                                     </p>
                                 </CardContent>
                             </Card>
@@ -107,9 +108,9 @@ export function Index() {
                                     <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
                                         <Award className="h-6 w-6 text-blue-600" />
                                     </div>
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Brand Design</h3>
+                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{t('brand_design')}</h3>
                                     <p className="text-gray-600 dark:text-gray-50">
-                                        Creative branding solutions that make your business stand out from the competition.
+                                        {t('brand_design_desc')}
                                     </p>
                                 </CardContent>
                             </Card>
@@ -118,9 +119,9 @@ export function Index() {
                                     <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
                                         <Users className="h-6 w-6 text-green-600" />
                                     </div>
-                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Consulting</h3>
+                                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white">{t('consulting')}</h3>
                                     <p className="text-gray-600 dark:text-gray-50">
-                                        Expert consulting services to guide your business through digital transformation.
+                                        {t('consulting_desc')}
                                     </p>
                                 </CardContent>
                             </Card>

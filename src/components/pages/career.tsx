@@ -5,10 +5,12 @@ import { SEO } from "@/components/seo"
 import { careerRepository } from "@/lib/repository/career"
 import type { Career } from "@/types"
 import { Spinner } from "@/components/ui/spinner"
+import { useLanguage } from "@/hooks/use-language"
 
 export default function CareerGalery() {
     const [careers, setCareers] = useState<Career[]>([])
     const [loading, setLoading] = useState(true)
+    const { t } = useLanguage()
 
     useEffect(() => {
         const fetchCareers = async () => {
@@ -42,9 +44,9 @@ export default function CareerGalery() {
                 ogImage="/assets/careers/imm.jpg"
             />
             <HeaderSection
-                firstText='Your Next Opportunity'
-                secondText='Starts Here'
-                description='Ready to build the future with us? Explore open roles and let’s shape something great together.'
+                firstText={t('career_hero_title')}
+                secondText={t('career_hero_second_title')}
+                description={t('career_hero_desc')}
             />
             <div className="bg-gray-50 dark:bg-black">
                 <div className="container mx-auto px-4 py-8">

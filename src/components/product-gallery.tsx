@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink } from "lucide-react"
 import type { Product } from "@/types"
 import { products } from "@/lib/data"
+import { useLanguage } from "@/hooks/use-language"
 
 function ProductCard({ product }: { product: Product }) {
 
@@ -36,11 +37,12 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 export default function ProductGallery() {
+    const { t } = useLanguage()
     return (
         <div className="container mx-auto px-4 py-8">
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-gray-900 mb-2 dark:text-white">Product Gallery</h1>
-                <p className="text-gray-600 dark:text-white">Discover our latest collection of premium products</p>
+                <h1 className="text-3xl font-bold text-gray-900 mb-2 dark:text-white">{t('product_gallery')}</h1>
+                <p className="text-gray-600 dark:text-white">{t('product_gallery_desc')}</p>
             </div>
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6">
                 {products.map((product) => (
