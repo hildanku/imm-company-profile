@@ -11,7 +11,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
-import { ThemeToggle, ThemeToggleMobile } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageToggle } from "@/components/language-toggle"
 import { ourProducts } from "@/lib/data"
 import { useLanguage } from "@/hooks/use-language"
@@ -75,13 +75,13 @@ export const Header = () => {
                             <a href="/blog" className="text-gray-600 hover:text-gray-800 font-medium"> {t('blog')}</a>
                             <a href="/career" className="text-gray-600 hover:text-gray-800 font-medium"> {t('career')}</a>
                             <a href="/contact" className="text-gray-600 hover:text-gray-800 font-medium"> {t('contact')}</a>
-                            <div className="flex">
+                            <div className="flex gap-1.5">
                                 <ThemeToggle />
-                                <LanguageToggle variant="ghost" size="icon" className="rounded-full" />
+                                <LanguageToggle variant="ghost" size="icon" className="p-2 rounded-full" />
                             </div>
                         </nav>
                         <div className="md:hidden flex items-center space-x-2">
-                            <ThemeToggleMobile />
+                            <ThemeToggle isMobile />
                             <LanguageToggle variant="ghost" size="icon" />
                             <Button
                                 variant="ghost"
@@ -150,16 +150,9 @@ export const Header = () => {
                                 >
                                     {t('contact')}
                                 </a>
-                                <a
-                                    href="/language-demo"
-                                    className="text-gray-600 hover:text-gray-800 font-medium py-2 border-b border-gray-100"
-                                    onClick={() => setMobileMenu(false)}
-                                >
-                                    {t('language')}
-                                </a>
                                 <div className="flex items-center justify-between py-2 border-b border-gray-100">
                                     <span className="text-gray-600 font-medium">{t('language')}</span>
-                                    <LanguageToggle />
+                                    <LanguageToggle variant="ghost" size="lg" className="" />
                                 </div>
 
                             </div>
