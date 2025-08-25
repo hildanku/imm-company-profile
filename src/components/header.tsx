@@ -114,7 +114,7 @@ export const Header = () => {
                                     About
                                 </a>
                                 <div className="py-2 border-b border-gray-100">
-                                    <div className="text-gray-800 font-medium mb-2">Our Products</div>
+                                    <div className="text-gray-800 font-medium mb-2">{t('product')}</div>
                                     <div className="pl-4 space-y-2">
                                         {ourProducts.map((product) => (
                                             <a

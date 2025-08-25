@@ -1,7 +1,8 @@
 import { ContactMap } from "@/components/contact-map"
-import { contactInfo } from "@/lib/data"
 import { HeaderSection } from "../header-section"
 import { SEO } from "@/components/seo"
+import { useLanguage } from "@/hooks/use-language"
+import { Phone, Mail, MapPin } from "lucide-react"
 
 export const ContactUs = () => {
     const businessLocation = {
@@ -9,6 +10,28 @@ export const ContactUs = () => {
         lng: 109.584169,
     }
 
+    const { t } = useLanguage()
+
+    const contactInfo = [
+        {
+            icon: MapPin,
+            title: t('our_location'),
+            content: "Kebumen, Jawa Tengah",
+            detail: "RT.01/RW.04, Kepel, Candi, Kec. Karanganyar"
+        },
+        {
+            icon: Mail,
+            title: t('email_label'),
+            content: "indonesia.mitra.media@gmail.com",
+            detail: t('email_response_time')
+        },
+        {
+            icon: Phone,
+            title: t('phone_label'),
+            content: "( 0287 ) 551628",
+            detail: t('phone_hours')
+        }
+    ]
     return (
         <>
             <SEO
@@ -19,9 +42,9 @@ export const ContactUs = () => {
                 ogUrl="/contact"
             />
             <HeaderSection
-                firstText='Stay Connected'
-                secondText='With Us'
-                description='Ready to transform your business? Get in touch with our team and let&apos;s discuss how we can help make your business more unique.'
+                firstText={t('contact_hero_title')}
+                secondText={t('contact_hero_second_title')}
+                description={t('contact_hero_desc')}
             />
             <div className="min-h-screen bg-gray-50 dark:bg-black">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -46,10 +69,10 @@ export const ContactUs = () => {
 
                     <div className="text-center mb-8">
                         <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-                            Find Us on the Map
+                            {t('find_us_map')}
                         </h2>
                         <p className="text-gray-600 dark:text-gray-400">
-                            Visit our office in Kebumen, Central Java
+                            {t('visit_office')}
                         </p>
                     </div>
                     <ContactMap
