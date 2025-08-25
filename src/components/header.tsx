@@ -11,7 +11,7 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
-import { ThemeToggle, ThemeToggleMobile } from "@/components/theme-toggle"
+import { ThemeToggle } from "@/components/theme-toggle"
 import { LanguageToggle } from "@/components/language-toggle"
 import { ourProducts } from "@/lib/data"
 import { useLanguage } from "@/hooks/use-language"
@@ -81,7 +81,7 @@ export const Header = () => {
                             </div>
                         </nav>
                         <div className="md:hidden flex items-center space-x-2">
-                            <ThemeToggleMobile />
+                            <ThemeToggle isMobile />
                             <LanguageToggle variant="ghost" size="icon" />
                             <Button
                                 variant="ghost"

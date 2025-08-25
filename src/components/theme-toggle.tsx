@@ -2,19 +2,12 @@ import { useTheme } from "@/hooks/use-theme"
 import { Moon, Sun } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-export const ThemeToggle = () => {
-    const { theme, toggleTheme } = useTheme()
-    return (
-        <button
-            className="p-2 rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-            onClick={() => toggleTheme()}
-        >
-            {theme === 'light' ? <Moon /> : <Sun />}
-        </button>
-    )
+interface ThemeToggleProps {
+    isMobile?: boolean
 }
 
-export const ThemeToggleMobile = () => {
+export const ThemeToggle = ({ isMobile = false }: ThemeToggleProps) => {
+    console.log(isMobile)
     const { theme, toggleTheme } = useTheme()
     return (
         <Button
