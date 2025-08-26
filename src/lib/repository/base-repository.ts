@@ -14,16 +14,16 @@ export type CreateArgs<T> = {
 }
 
 export type FindByIdArgs = {
-	id: number
+	id: number | string
 }
 
 export type UpdateArgs<T> = {
-	id: number
+	id: number | string
 	item: Partial<Omit<T, 'id'>>
 }
 
 export type DeleteArgs = {
-	id: number
+	id: number | string
 }
 
 export interface AsyncBaseRepository<T> {
