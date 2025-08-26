@@ -1,8 +1,17 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar'
-import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import supabase from '@/lib/supabase'
 
 export const Route = createFileRoute('/_protected')({
+    beforeLoad: async () => {
+        const { data, error } = await supabase.auth.getSession()
+        if (error || !data.session) {
+            throw redirect({
+                to: '/login',
+            })
+        }
+    },
     component: ProtectedLayout,
 })
 
