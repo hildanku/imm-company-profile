@@ -44,7 +44,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
 
             if (isEditing && career) {
                 const result = await careerRepository.update({
-                    id: Number(career.id),
+                    id: career.id,
                     item: data
                 })
 

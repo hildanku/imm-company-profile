@@ -1,4 +1,4 @@
-import type { Career } from '@/types'
+import type { CareerApplication } from '@/types'
 import supabase from '@/lib/supabase'
 import type {
     AsyncBaseRepository,
@@ -6,7 +6,6 @@ import type {
     DeleteArgs,
     FindByIdArgs,
     ListArgs,
-    // UpdateArgs
 } from '@/lib/repository/base-repository'
 
 export type findByUUIDArgs = {
@@ -18,25 +17,25 @@ export type UpdateByUUIDArgs<T> = {
 	item: Partial<Omit<T, 'id'>>
 }
 
-export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'findByUUID' | 'update'> {
-    private tableName = 'careers'
+export class CareerApplicationRepository implements Omit<AsyncBaseRepository<CareerApplication>, 'findByUUID' | 'update'> {
+    private tableName = 'career_applications'
 
-    async findByUUID(args: findByUUIDArgs): Promise<Career | null> {
+    async findByUUID(args: findByUUIDArgs): Promise<CareerApplication | null> {
         const { data, error } = await supabase
             .from(this.tableName)
-            .select('*')
+            .select('*, career:careers(*)')
             .eq('id', args.uuid)
             .single()
 
         if (error || !data) {
-            console.error('Error fetching career:', error)
+            console.error('Error fetching career application:', error)
             return null
         }
 
         return data
     }
 
-    async create(args: CreateArgs<Career>): Promise<Career[]> {
+    async create(args: CreateArgs<CareerApplication>): Promise<CareerApplication[]> {
         const { data, error } = await supabase
             .from(this.tableName)
             .insert([args.item])
@@ -50,22 +49,22 @@ export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'find
         return data || []
     }
 
-    async findById(args: FindByIdArgs): Promise<Career[] | null> {
+    async findById(args: FindByIdArgs): Promise<CareerApplication[] | null> {
         const { data, error } = await supabase
             .from(this.tableName)
-            .select('*')
+            .select('*, career:careers(*)')
             .eq('id', args.id)
             .single()
 
         if (error || !data) {
-            console.error('Error fetching career:', error)
+            console.error('Error fetching career application:', error)
             return null
         }
 
         return [data]
     }
 
-    async list(args: Partial<ListArgs> = {}): Promise<{ items: Career[]; meta: { totalItems: number } }> {
+    async list(args: Partial<ListArgs> = {}): Promise<{ items: CareerApplication[]; meta: { totalItems: number } }> {
         const {
             sort = 'created_at',
             order = 'DESC',
@@ -75,34 +74,29 @@ export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'find
             ...filters
         } = args
 
-        // Calculate pagination
         const from = (page - 1) * limit
         const to = from + limit - 1
 
-        // Start building the query
         let query = supabase
             .from(this.tableName)
-            .select('*', { count: 'exact' })
+            .select('*, career:careers(*)', { count: 'exact' })
 
-        // Apply search if provided
         if (q) {
-            query = query.or(`job_title.ilike.%${q}%,job_description.ilike.%${q}%`)
+            query = query.or(`full_name.ilike.%${q}%,email.ilike.%${q}%,phone.ilike.%${q}%,status.ilike.%${q}%`)
         }
 
-        // Apply additional filters
         Object.entries(filters).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
-                query = query.eq(key, value)
+                query = query.eq(key, value as any)
             }
         })
 
-        // Apply sorting and pagination
         const { data, error, count } = await query
             .order(sort, { ascending: order === 'ASC' })
             .range(from, to)
 
         if (error) {
-            console.error('Error fetching careers:', error)
+            console.error('Error fetching career applications:', error)
             return { items: [], meta: { totalItems: 0 } }
         }
 
@@ -114,7 +108,7 @@ export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'find
         }
     }
 
-    async update(args: UpdateByUUIDArgs<Career>): Promise<Career[] | null> {
+    async update(args: UpdateByUUIDArgs<CareerApplication>): Promise<CareerApplication[] | null> {
         const { data, error } = await supabase
             .from(this.tableName)
             .update(args.item)
@@ -144,16 +138,4 @@ export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'find
     }
 }
 
-// Export a singleton instance for easy use
-export const careerRepository = new CareerRepository()
-
-// Export legacy functions for backward compatibility
-export async function getAllCareer(): Promise<Career[]> {
-    const result = await careerRepository.list({})
-    return result.items
-}
-
-export async function getCareerById(id: number): Promise<Career | null> {
-    const result = await careerRepository.findById({ id })
-    return result ? result[0] : null
-}
+export const careerApplicationRepository = new CareerApplicationRepository()

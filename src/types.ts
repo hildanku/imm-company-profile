@@ -97,3 +97,16 @@ export interface PostWithImages extends Post {
     featured_image?: PostImage
 }
 
+export interface CareerApplication {
+    id: string
+    career_id: string
+    full_name: string
+    email: string
+    phone: string
+    portfolio_url: string
+    cv_url: string
+    status: 'Pending' | 'Reviewed' | 'Accepted' | 'Rejected'
+    created_at: string
+    updated_at: string
+    career?: Career
+}

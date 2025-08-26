@@ -2,7 +2,9 @@ import * as React from "react"
 import {
     Frame,
     GalleryVerticalEnd,
-    SquareTerminal,
+    PenLine,
+    User2,
+    Users,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -33,18 +35,42 @@ const data = {
     ],
     navMain: [
         {
-            title: "Playground",
+            title: "User",
             url: "#",
-            icon: SquareTerminal,
+            icon: User2,
             isActive: true,
+            items: [
+                {
+                    title: "User Management",
+                    url: "/management/user",
+                },
+            ],
+        },
+        {
+            title: "Blog",
+            url: "#",
+            icon: PenLine,
+            isActive: false,
             items: [
                 {
                     title: "Blog Post Management",
                     url: "/management/blog",
                 },
+            ],
+        },
+        {
+            title: "Career",
+            url: "#",
+            icon: Users,
+            isActive: false,
+            items: [
                 {
-                    title: "User Management",
-                    url: "/management/user",
+                    title: "Career Management",
+                    url: "/management/career",
+                },
+                {
+                    title: "Carrer Application Management",
+                    url: "/management/career-application",
                 },
             ],
         },
