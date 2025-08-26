@@ -21,6 +21,7 @@ import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as CareerApplyIdRouteImport } from './routes/career/apply/$id'
 import { Route as ProtectedManagementUserRouteImport } from './routes/_protected/management/user'
+import { Route as ProtectedManagementCareerApplicationRouteImport } from './routes/_protected/management/career-application'
 import { Route as ProtectedManagementCareerRouteImport } from './routes/_protected/management/career'
 import { Route as ProtectedManagementBlogRouteImport } from './routes/_protected/management/blog'
 
@@ -82,6 +83,12 @@ const ProtectedManagementUserRoute = ProtectedManagementUserRouteImport.update({
   path: '/management/user',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const ProtectedManagementCareerApplicationRoute =
+  ProtectedManagementCareerApplicationRouteImport.update({
+    id: '/management/career-application',
+    path: '/management/career-application',
+    getParentRoute: () => ProtectedRoute,
+  } as any)
 const ProtectedManagementCareerRoute =
   ProtectedManagementCareerRouteImport.update({
     id: '/management/career',
@@ -105,6 +112,7 @@ export interface FileRoutesByFullPath {
   '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
+  '/management/career-application': typeof ProtectedManagementCareerApplicationRoute
   '/management/user': typeof ProtectedManagementUserRoute
   '/career/apply/$id': typeof CareerApplyIdRoute
 }
@@ -119,6 +127,7 @@ export interface FileRoutesByTo {
   '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
+  '/management/career-application': typeof ProtectedManagementCareerApplicationRoute
   '/management/user': typeof ProtectedManagementUserRoute
   '/career/apply/$id': typeof CareerApplyIdRoute
 }
@@ -136,6 +145,7 @@ export interface FileRoutesById {
   '/career/': typeof CareerIndexRoute
   '/_protected/management/blog': typeof ProtectedManagementBlogRoute
   '/_protected/management/career': typeof ProtectedManagementCareerRoute
+  '/_protected/management/career-application': typeof ProtectedManagementCareerApplicationRoute
   '/_protected/management/user': typeof ProtectedManagementUserRoute
   '/career/apply/$id': typeof CareerApplyIdRoute
 }
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/career'
     | '/management/blog'
     | '/management/career'
+    | '/management/career-application'
     | '/management/user'
     | '/career/apply/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -166,6 +177,7 @@ export interface FileRouteTypes {
     | '/career'
     | '/management/blog'
     | '/management/career'
+    | '/management/career-application'
     | '/management/user'
     | '/career/apply/$id'
   id:
@@ -182,6 +194,7 @@ export interface FileRouteTypes {
     | '/career/'
     | '/_protected/management/blog'
     | '/_protected/management/career'
+    | '/_protected/management/career-application'
     | '/_protected/management/user'
     | '/career/apply/$id'
   fileRoutesById: FileRoutesById
@@ -284,6 +297,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedManagementUserRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_protected/management/career-application': {
+      id: '/_protected/management/career-application'
+      path: '/management/career-application'
+      fullPath: '/management/career-application'
+      preLoaderRoute: typeof ProtectedManagementCareerApplicationRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/_protected/management/career': {
       id: '/_protected/management/career'
       path: '/management/career'
@@ -316,12 +336,15 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 interface ProtectedRouteChildren {
   ProtectedManagementBlogRoute: typeof ProtectedManagementBlogRoute
   ProtectedManagementCareerRoute: typeof ProtectedManagementCareerRoute
+  ProtectedManagementCareerApplicationRoute: typeof ProtectedManagementCareerApplicationRoute
   ProtectedManagementUserRoute: typeof ProtectedManagementUserRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedManagementBlogRoute: ProtectedManagementBlogRoute,
   ProtectedManagementCareerRoute: ProtectedManagementCareerRoute,
+  ProtectedManagementCareerApplicationRoute:
+    ProtectedManagementCareerApplicationRoute,
   ProtectedManagementUserRoute: ProtectedManagementUserRoute,
 }
 
