@@ -59,6 +59,18 @@ export const careerSchema = z.object({
     image: z.string().optional(),
 })
 
+export const careerApplicationSchema = z.object({
+    career_id: z.string().min(1, { message: 'Please select a career' }),
+    full_name: z.string().min(3, { message: 'Full name must be at least 3 characters' }),
+    email: z.string().email({ message: 'Please enter a valid email address' }),
+    phone: z.string().min(10, { message: 'Please enter a valid phone number' }),
+    portfolio_url: z.string().min(10, { message: 'PortfolioURL must be at least 10 characters' }),
+    cv_url: z.string().min(3, { message: 'CV Url must be at least 3 characters' }),
+    status: z.enum(['Pending', 'Reviewed', 'Accepted', 'Rejected'], {
+        message: 'Please select a status'
+    }),
+})
+
 // form schema for applying to a career
 export const formApplySchema = z.object({
     fullName: z.string().min(3, { message: 'Full name must be at least 3 characters' }),

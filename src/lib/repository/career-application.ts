@@ -6,25 +6,29 @@ import type {
     DeleteArgs,
     FindByIdArgs,
     ListArgs,
-    UpdateArgs
 } from '@/lib/repository/base-repository'
 
 export type findByUUIDArgs = {
     uuid: string
 }
 
-export class CareerApplicationRepository implements Omit<AsyncBaseRepository<CareerApplication>, 'findByUUID'> {
+export type UpdateByUUIDArgs<T> = {
+	id: string
+	item: Partial<Omit<T, 'id'>>
+}
+
+export class CareerApplicationRepository implements Omit<AsyncBaseRepository<CareerApplication>, 'findByUUID' | 'update'> {
     private tableName = 'career_applications'
 
     async findByUUID(args: findByUUIDArgs): Promise<CareerApplication | null> {
         const { data, error } = await supabase
             .from(this.tableName)
-            .select('*')
+            .select('*, career:careers(*)')
             .eq('id', args.uuid)
             .single()
 
         if (error || !data) {
-            console.error('Error fetching career:', error)
+            console.error('Error fetching career application:', error)
             return null
         }
 
@@ -48,12 +52,12 @@ export class CareerApplicationRepository implements Omit<AsyncBaseRepository<Car
     async findById(args: FindByIdArgs): Promise<CareerApplication[] | null> {
         const { data, error } = await supabase
             .from(this.tableName)
-            .select('*')
+            .select('*, career:careers(*)')
             .eq('id', args.id)
             .single()
 
         if (error || !data) {
-            console.error('Error fetching career:', error)
+            console.error('Error fetching career application:', error)
             return null
         }
 
@@ -70,34 +74,29 @@ export class CareerApplicationRepository implements Omit<AsyncBaseRepository<Car
             ...filters
         } = args
 
-        // Calculate pagination
         const from = (page - 1) * limit
         const to = from + limit - 1
 
-        // Start building the query
         let query = supabase
             .from(this.tableName)
-            .select('*', { count: 'exact' })
+            .select('*, career:careers(*)', { count: 'exact' })
 
-        // Apply search if provided
         if (q) {
-            query = query.or(`job_title.ilike.%${q}%,job_description.ilike.%${q}%`)
+            query = query.or(`full_name.ilike.%${q}%,email.ilike.%${q}%,phone.ilike.%${q}%,status.ilike.%${q}%`)
         }
 
-        // Apply additional filters
         Object.entries(filters).forEach(([key, value]) => {
             if (value !== undefined && value !== null) {
-                query = query.eq(key, value)
+                query = query.eq(key, value as any)
             }
         })
 
-        // Apply sorting and pagination
         const { data, error, count } = await query
             .order(sort, { ascending: order === 'ASC' })
             .range(from, to)
 
         if (error) {
-            console.error('Error fetching careers:', error)
+            console.error('Error fetching career applications:', error)
             return { items: [], meta: { totalItems: 0 } }
         }
 
@@ -109,7 +108,7 @@ export class CareerApplicationRepository implements Omit<AsyncBaseRepository<Car
         }
     }
 
-    async update(args: UpdateArgs<CareerApplication>): Promise<CareerApplication[] | null> {
+    async update(args: UpdateByUUIDArgs<CareerApplication>): Promise<CareerApplication[] | null> {
         const { data, error } = await supabase
             .from(this.tableName)
             .update(args.item)

@@ -1,4 +1,5 @@
 import { CareerApplicationTable } from '@/components/pages/management/career-application/carrer-application-table'
+import { CareerUpsert } from '@/components/pages/management/career-application/upsert'
 import { careerApplicationRepository } from '@/lib/repository/career-application'
 import type { CareerApplication } from '@/types'
 import { createFileRoute } from '@tanstack/react-router'
@@ -14,7 +15,7 @@ export const Route = createFileRoute(
 function CareerApplicationManagementDashboard() {
     const [careers, setCareers] = useState<CareerApplication[]>([])
     const [loading, setLoading] = useState(true)
-    const [_selectedCareer, setSelectedCareer] = useState<CareerApplication | null>(null)
+    const [selectedCareer, setSelectedCareer] = useState<CareerApplication | null>(null)
     const [isCreating, setIsCreating] = useState(false)
 
     const loadCareers = async () => {
@@ -45,27 +46,27 @@ function CareerApplicationManagementDashboard() {
     }
 
     const handleDeleteClick = async (career: CareerApplication) => {
-        if (window.confirm(`Are you sure you want to delete "${career.full_name}"?`)) {
+        if (window.confirm(`Are you sure you want to delete application for "${career.full_name}"?`)) {
             try {
-                const success = await careerApplicationRepository.delete({ id: Number(career.id) })
+                const success = await careerApplicationRepository.delete({ id: career.id })
                 if (success) {
-                    toast.success('Career deleted successfully')
+                    toast.success('Application deleted successfully')
                     loadCareers()
                 } else {
-                    toast.error('Failed to delete career')
+                    toast.error('Failed to delete application')
                 }
             } catch (error) {
-                console.error('Error deleting career:', error)
+                console.error('Error deleting application:', error)
                 toast.error('An unexpected error occurred')
             }
         }
     }
 
-    // const _handleFormSuccess = () => {
-    //     setSelectedCareer(null)
-    //     setIsCreating(false)
-    //     loadCareers()
-    // }
+    const handleFormSuccess = () => {
+        setSelectedCareer(null)
+        setIsCreating(false)
+        loadCareers()
+    }
 
     const handleBackToList = () => {
         setSelectedCareer(null)
@@ -80,10 +81,10 @@ function CareerApplicationManagementDashboard() {
                         onClick={handleBackToList}
                         className="text-blue-500 hover:text-blue-700 flex items-center"
                     >
-                        ← Back to Careers
+                        ← Back to Applications
                     </button>
                 </div>
-                {/* <CareerUpsert career={selectedCareer || undefined} onSuccess={handleFormSuccess} /> */}
+                <CareerUpsert careerApplication={selectedCareer || undefined} onSuccess={handleFormSuccess} />
             </div>
         )
     }

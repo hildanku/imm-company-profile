@@ -108,4 +108,5 @@ export interface CareerApplication {
     status: 'Pending' | 'Reviewed' | 'Accepted' | 'Rejected'
     created_at: string
     updated_at: string
+    career?: Career
 }

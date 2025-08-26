@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
-import { MoreHorizontal, Search, Plus, Calendar, MapPin, Briefcase } from "lucide-react"
+import { MoreHorizontal, Search, Plus, Calendar, Briefcase } from "lucide-react"
 import { useState, useEffect } from "react"
 import type { CareerApplication } from "@/types"
 
@@ -68,7 +68,7 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                         <div className="flex items-center justify-center py-12">
                             <div className="flex items-center space-x-2">
                                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                                <span className="text-muted-foreground">Loading careers...</span>
+                                <span className="text-muted-foreground">Loading applications...</span>
                             </div>
                         </div>
                     </CardContent>
@@ -82,16 +82,16 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
             <CardHeader>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <CardTitle>Careers</CardTitle>
+                        <CardTitle>Career Applications</CardTitle>
                         <CardDescription>
-                            Manage job openings and career opportunities
+                            Manage incoming applications linked to careers
                         </CardDescription>
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
                             <Input
-                                placeholder="Search careers..."
+                                placeholder="Search applications..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="pl-9 w-64"
@@ -99,7 +99,7 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                         </div>
                         <Button onClick={onCreate} size="sm">
                             <Plus className="mr-2 h-4 w-4" />
-                            Add Career
+                            Add Application
                         </Button>
                     </div>
                 </div>
@@ -111,15 +111,15 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                             <Briefcase className="h-8 w-8 text-muted-foreground" />
                         </div>
                         <h3 className="text-lg font-medium mb-2">
-                            {searchTerm ? "No careers found" : "No careers yet"}
+                            {searchTerm ? "No applications found" : "No applications yet"}
                         </h3>
                         <p className="text-muted-foreground mb-4">
-                            {searchTerm ? "Try adjusting your search terms" : "Get started by creating your first job opening"}
+                            {searchTerm ? "Try adjusting your search terms" : "Get started by creating your first application"}
                         </p>
                         {!searchTerm && (
                             <Button onClick={onCreate}>
                                 <Plus className="mr-2 h-4 w-4" />
-                                Create First Job Opening
+                                Create First Application
                             </Button>
                         )}
                     </div>
@@ -128,14 +128,13 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                         <Table>
                             <TableHeader>
                                 <TableRow className="hover:bg-transparent">
-                                    <TableHead className="w-[300px]">Job Title</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead>Location</TableHead>
+                                    <TableHead className="w-[300px]">Applicant</TableHead>
+                                    <TableHead>Career</TableHead>
                                     <TableHead>Status</TableHead>
                                     <TableHead className="hidden md:table-cell">
                                         <div className="flex items-center gap-1">
                                             <Calendar className="h-3 w-3" />
-                                            Deadline
+                                            Applied At
                                         </div>
                                     </TableHead>
                                     <TableHead className="text-right w-[100px]">Actions</TableHead>
@@ -150,7 +149,7 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                                                     {career.full_name}
                                                 </div>
                                                 <div className="text-sm text-muted-foreground truncate">
-                                                    {career.email} - {career.phone}
+                                                    {career.email} • {career.phone}
                                                 </div>
                                             </div>
                                         </TableCell>
@@ -166,13 +165,12 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
 
                                         <TableCell>
                                             <div className="flex items-center gap-1 text-sm">
-                                                <MapPin className="h-3 w-3" />
-                                                <span>{career.portfolio_url}</span>
+                                                <Briefcase className="h-3 w-3" />
+                                                <span>{career.career?.title ?? 'Unknown career'}</span>
                                             </div>
                                             <div className="text-xs text-muted-foreground">
-                                                {career.cv_url}
+                                                {career.career?.position ?? career.career_id}
                                             </div>
-
                                         </TableCell>
 
                                         <TableCell>
@@ -204,7 +202,7 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
 
                                                     <DropdownMenuItem onClick={() => onEdit?.(career)}>
-                                                        Edit Career
+                                                        Edit Application
                                                     </DropdownMenuItem>
 
                                                     {onDelete && (
@@ -212,7 +210,7 @@ export function CareerApplicationTable({ careerApplication, loading, onCreate, o
                                                             className="text-destructive focus:text-destructive"
                                                             onClick={() => onDelete(career)}
                                                         >
-                                                            Delete Career
+                                                            Delete Application
                                                         </DropdownMenuItem>
                                                     )}
                                                 </DropdownMenuContent>
