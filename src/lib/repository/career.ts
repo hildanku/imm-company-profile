@@ -6,14 +6,19 @@ import type {
     DeleteArgs,
     FindByIdArgs,
     ListArgs,
-    UpdateArgs
+    // UpdateArgs
 } from '@/lib/repository/base-repository'
 
 export type findByUUIDArgs = {
     uuid: string
 }
 
-export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'findByUUID'> {
+export type UpdateByUUIDArgs<T> = {
+	id: string
+	item: Partial<Omit<T, 'id'>>
+}
+
+export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'findByUUID' | 'update'> {
     private tableName = 'careers'
 
     async findByUUID(args: findByUUIDArgs): Promise<Career | null> {
@@ -109,7 +114,7 @@ export class CareerRepository implements Omit<AsyncBaseRepository<Career>, 'find
         }
     }
 
-    async update(args: UpdateArgs<Career>): Promise<Career[] | null> {
+    async update(args: UpdateByUUIDArgs<Career>): Promise<Career[] | null> {
         const { data, error } = await supabase
             .from(this.tableName)
             .update(args.item)
