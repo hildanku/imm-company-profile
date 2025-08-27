@@ -181,7 +181,7 @@ function CareerApplyPage() {
                 ogImage={career.image || "/assets/careers/imm.jpg"}
             />
             
-            <div className="bg-gray-50 dark:bg-gray-900 min-h-screen py-12">
+            <div className="bg-gray-50 dark:bg-black min-h-screen py-12">
                 <div className="container mx-auto px-4">
                     <div className="mb-6">
                         <Button 
@@ -196,7 +196,7 @@ function CareerApplyPage() {
                         </Button>
                     </div>
                     
-                    <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+                    <div className="max-w-3xl mx-auto bg-white dark:bg-neutral-900 rounded-xl shadow-lg overflow-hidden">
                         <div className="p-8">
                             <h1 className="text-3xl font-bold mb-2">Apply for {career.title}</h1>
                             <p className="text-gray-600 dark:text-gray-300 mb-8">
