@@ -1,37 +1,37 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import type { Career } from '@/types'
 import { careerRepository } from '@/lib/repository/career'
 import { CareerTable } from '@/components/pages/management/career/career-table'
 import { CareerUpsert } from '@/components/pages/management/career/upsert'
 import { toast } from 'sonner'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/_protected/management/career')({
     component: CareerManagementDashboard,
 })
 
 function CareerManagementDashboard() {
-    const [careers, setCareers] = useState<Career[]>([])
-    const [loading, setLoading] = useState(true)
+    const queryClient = useQueryClient()
     const [selectedCareer, setSelectedCareer] = useState<Career | null>(null)
     const [isCreating, setIsCreating] = useState(false)
 
-    const loadCareers = async () => {
-        try {
-            setLoading(true)
-            const result = await careerRepository.list({})
-            setCareers(result.items)
-        } catch (error) {
-            console.error('Error loading careers:', error)
-            toast.error('Failed to load careers')
-        } finally {
-            setLoading(false)
-        }
-    }
+    // WIP: isError or Error
+    const { data, isLoading } = useQuery({
+        queryKey: ['careers'],
+        queryFn: () => careerRepository.list({}),
+    })
 
-    useEffect(() => {
-        loadCareers()
-    }, [])
+    const careers = data?.items ?? []
+
+    const deleteMutation = useMutation({
+        mutationFn: (careerId: number) => careerRepository.delete({ id: careerId }),
+        onSuccess: () => {
+            toast.success('Career deleted successfully')
+            queryClient.invalidateQueries({ queryKey: ['careers'] })
+        },
+        onError: () => toast.error('Failed to delete career'),
+    })
 
     const handleCreateClick = () => {
         setSelectedCareer(null)
@@ -43,27 +43,16 @@ function CareerManagementDashboard() {
         setIsCreating(true)
     }
 
-    const handleDeleteClick = async (career: Career) => {
+    const handleDeleteClick = (career: Career) => {
         if (window.confirm(`Are you sure you want to delete "${career.title}"?`)) {
-            try {
-                const success = await careerRepository.delete({ id: Number(career.id) })
-                if (success) {
-                    toast.success('Career deleted successfully')
-                    loadCareers()
-                } else {
-                    toast.error('Failed to delete career')
-                }
-            } catch (error) {
-                console.error('Error deleting career:', error)
-                toast.error('An unexpected error occurred')
-            }
+            deleteMutation.mutate(Number(career.id))
         }
     }
 
     const handleFormSuccess = () => {
         setSelectedCareer(null)
         setIsCreating(false)
-        loadCareers()
+        queryClient.invalidateQueries({ queryKey: ['careers'] })
     }
 
     const handleBackToList = () => {
@@ -91,7 +80,7 @@ function CareerManagementDashboard() {
         <div className="container mx-auto py-8 px-4">
             <CareerTable
                 careers={careers}
-                loading={loading}
+                loading={isLoading}
                 onCreate={handleCreateClick}
                 onEdit={handleEditClick}
                 onDelete={handleDeleteClick}
