@@ -15,6 +15,13 @@ export const AboutUs = () => {
         { year: "2024", title: t("milestone_2024_title"), description: t("milestone_2024_desc") },
     ]
 
+    const localizedStats = [
+        { ...stats[0], label: t('employees') },
+        { ...stats[1], label: t('monthly_customers') },
+        { ...stats[2], label: t('daily_visitors') },
+        { ...stats[3], label: t('years_experience') },
+    ]
+
     return (
         <>
             <SEO
@@ -32,7 +39,7 @@ export const AboutUs = () => {
                 />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-                        {stats.map((stat, index) => (
+                        {localizedStats.map((stat, index) => (
                             <Card key={index} className="bg-white hover:shadow-md transition-shadow">
                                 <CardContent className="p-6 text-center">
                                     <div className="w-12 h-12 bg-gray-900 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -52,7 +59,7 @@ export const AboutUs = () => {
                                     {t('our_story_title')}
                                 </Badge>
                                 <h2 className="text-3xl font-bold text-gray-900 mb-4 dark:text-white">
-                                    Indonesia Mitra Media
+                                    {t('our_story_subtitle')}
                                 </h2>
                                 <p className="text-gray-600 dark:text-white">
                                     {t('our_story_desc')}
@@ -103,7 +110,7 @@ export const AboutUs = () => {
                                 <Badge className="mb-4 bg-gray-700 text-white">
                                     {t('our_journey_title')}
                                 </Badge>
-                                <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-white">Key Milestones</h2>
+                                <h2 className="text-3xl font-bold text-gray-900 mb-6 dark:text-white">{t('milestones_title')}</h2>
                             </div>
 
                             <div className="space-y-6">

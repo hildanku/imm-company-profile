@@ -6,6 +6,8 @@ export const strings = {
         loading: 'Memuat...',
         error: 'Terjadi kesalahan',
         success: 'Berhasil',
+        follow_us: 'Ikuti Kami',
+        footer_tagline: 'Jadikan bisnismu nomor #1',
 
         // Navigation
         home: 'Beranda',
@@ -39,6 +41,8 @@ export const strings = {
         message: 'Pesan',
         phone: 'Telepon',
         address: 'Alamat',
+        contact_information: 'Informasi Kontak',
+        company_address: 'Jl. Kepel, Kepel, Candi, Kec. Karanganyar, Kabupaten Kebumen, Jawa Tengah 54364',
 
         // Language
         language: 'Bahasa',
@@ -78,9 +82,9 @@ export const strings = {
             about_hero_desc: 'Dari kios sederhana di Kebumen hingga melayani klien di seluruh Indonesia dan Asia, perjalanan kami didorong oleh pemasaran digital inovatif dan dedikasi tanpa henti.',
 
             // Stats
-            employees: '140+ Karyawan',
-            monthly_customers: '1.000+ Pelanggan Bulanan',
-            daily_visitors: '20K-40K Pengunjung Harian Media Sosial',
+            employees: 'Karyawan',
+            monthly_customers: 'Pelanggan Bulanan',
+            daily_visitors: 'Pengunjung Harian Media Sosial',
 
             // Our Story
             our_story_title: 'Kisah Kami',
@@ -149,6 +153,8 @@ export const strings = {
         loading: 'Loading...',
         error: 'An error occurred',
         success: 'Success',
+        follow_us: 'Follow Us',
+        footer_tagline: 'Make your business be #1',
 
         // Navigation
         home: 'Home',
@@ -182,6 +188,8 @@ export const strings = {
         message: 'Message',
         phone: 'Phone',
         address: 'Address',
+        contact_information: 'Contact Information',
+        company_address: 'Jl. Kepel, Kepel, Candi, Kec. Karanganyar, Kabupaten Kebumen, Jawa Tengah 54364',
 
         // Language
         language: 'Language',
@@ -220,9 +228,9 @@ export const strings = {
         about_hero_desc: 'From a modest kiosk in Kebumen to serving clients across Indonesia and Asia, our journey is powered by innovative digital marketing and unwavering dedication.',
 
         // Stats
-        employees: '140+ Employees',
-        monthly_customers: '1,000+ Monthly Customers',
-        daily_visitors: '20K-40K Daily Social Media Visitors',
+        employees: 'Employees',
+        monthly_customers: 'Monthly Customers',
+        daily_visitors: 'Daily Social Media Visitors',
 
         // Our Story
         our_story_title: 'Our Story',
