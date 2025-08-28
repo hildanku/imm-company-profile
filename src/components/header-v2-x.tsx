@@ -15,6 +15,7 @@ import { LanguageToggle } from "@/components/language-toggle"
 import { ourProducts } from "@/lib/data"
 import { useLanguage } from "@/hooks/use-language"
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { SUPABASE_OBJECT_URL } from "@/lib/const"
 
 export const HeaderV2X = () => {
     const navigate = useNavigate()
@@ -33,7 +34,7 @@ export const HeaderV2X = () => {
                                         onClick={() => navigate({ to: "/" })}
                                     >
                                         <img
-                                            src="./logo-black.png"
+                                            src={`${SUPABASE_OBJECT_URL}logo-black.png`}
                                             alt="Indonesia Mitra Media"
                                             className="h-12 w-auto"
                                         />
@@ -76,8 +77,8 @@ export const HeaderV2X = () => {
                         <div className="md:hidden flex items-center gap-2">
                             <Sheet>
                                 <SheetTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="rounded-full">
-                                        <MenuIcon className="w-6 h-6" />
+                                    <Button variant="ghost" size="icon" className="rounded-full dark:bg-neutral-900">
+                                        <MenuIcon className="w-6 h-6 dark:border-neutral-500" />
                                     </Button>
                                 </SheetTrigger>
                                 <SheetContent side="right" className="w-64 bg-white p-12 text-small dark:bg-neutral-900">
