@@ -1,12 +1,13 @@
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
-import { MoreHorizontal, Search, Plus, Calendar, Briefcase } from "lucide-react"
-import { useState, useEffect } from "react"
+import { MoreHorizontal, Search, Calendar, ArrowUpDown, Copy } from "lucide-react"
+import { useState, useMemo } from "react"
 import type { CareerApplication } from "@/types"
+import { formatDT } from "@/lib/utils"
+import { LoadingManagement } from "@/components/ui/loading-management"
+import { flexRender, getCoreRowModel, getPaginationRowModel, getSortedRowModel, useReactTable, type ColumnDef, type SortingState } from "@tanstack/react-table"
+import { Badge } from "@/components/ui/badge"
 
 export type CareerApplicationRow = CareerApplication
 
@@ -16,16 +17,6 @@ type CareerApplicationTableProps = {
     onCreate?: () => void
     onEdit?: (careerApplication: CareerApplicationRow) => void
     onDelete?: (careerApplication: CareerApplicationRow) => void
-}
-
-function formatDate(dateString?: string | null) {
-    if (!dateString) return "-"
-    const date = new Date(dateString)
-    return isNaN(date.getTime()) ? "-" : date.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric'
-    })
 }
 
 // function getJobTypeBadgeVariant(jobType: string): "default" | "secondary" | "outline" | "destructive" {
@@ -42,187 +33,202 @@ function getStatusBadgeVariant(status: string): "default" | "secondary" | "outli
     switch (status) {
         case 'Pending': return 'default'
         case 'Rejected': return 'destructive'
+        case 'Reviewed': return 'outline'
+        case 'Accepted': return 'secondary'
         default: return 'outline'
     }
 }
 
-export function CareerApplicationTable({ careerApplication, loading, onCreate, onEdit, onDelete }: CareerApplicationTableProps) {
+export function CareerApplicationTable({ careerApplication, loading, onEdit, onDelete }: CareerApplicationTableProps) {
     const [searchTerm, setSearchTerm] = useState("")
-    const [filteredCareers, setFilteredCareers] = useState(careerApplication)
+    const [sorting, setSorting] = useState<SortingState>([])
 
-    useEffect(() => {
-        const filtered = careerApplication.filter(application =>
-            application.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            application.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            application.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            application.phone.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredData = useMemo(() => {
+        const term = searchTerm.trim().toLowerCase()
+        if (!term) return careerApplication
+
+        return careerApplication.filter((c) =>
+            [c.full_name, c.email, c.status, c.phone]
+                .some((v) => (v ?? '').toString().toLowerCase().includes(term))
         )
-        setFilteredCareers(filtered)
     }, [careerApplication, searchTerm])
 
+    const columns: ColumnDef<CareerApplicationRow>[] = useMemo(
+        () => [
+            {
+                accessorKey: "full_name",
+                header: "Applicant",
+                cell: ({ row }) => row.original.full_name
+            },
+            {
+                accessorKey: "email",
+                header: "Email",
+                cell: ({ row }) => row.original.email
+            },
+            {
+                accessorKey: "career",
+                header: "Job Detail",
+                cell: ({ row }) => {
+                    const jobTitle = row.original.career?.title
+                    const position = row.original.career?.position
+                    return (
+                        <Badge variant='outline' className="capitalize font-medium">
+                            {jobTitle} - {position}
+                        </Badge>
+                    )
+                }
+            },
+            {
+                accessorKey: "status",
+                header: "Status",
+                cell: ({ row }) => {
+                    const status = row.original.status
+                    return (
+                        <Badge variant={getStatusBadgeVariant(status)} className="capitalize font-medium">
+                            {status}
+                        </Badge>
+                    )
+                }
+            },
+            {
+                accessorKey: "created_at",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="p-0 hidden lg:flex gap-1"
+                    >
+                        <Calendar className="h-3 w-3" /> Created
+                        <ArrowUpDown className="ml-1 h-3 w-3" />
+                    </Button>
+                ),
+                cell: ({ row }) => (
+                    <span className="text-sm text-muted-foreground hidden lg:block">
+                        {formatDT(row.original.created_at)}
+                    </span>
+                ),
+            },
+            {
+                id: "actions",
+                header: "Actions",
+                cell: ({ row }) => (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => onEdit?.(row.original)}>
+                                Edit User
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(row.original.email)}>
+                                <Copy className="mr-2 h-3 w-3" />
+                                Copy Email
+                            </DropdownMenuItem>
+                            {onDelete && (
+                                <DropdownMenuItem
+                                    className="text-destructive"
+                                    onClick={() => onDelete(row.original)}
+                                >
+                                    Delete User
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                ),
+            },
+        ],
+        [onEdit, onDelete]
+    )
+
+    const table = useReactTable({
+        data: filteredData,
+        columns,
+        state: { sorting },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+    })
+
     if (loading) {
-        return (
-            <div className="space-y-4">
-                <Card>
-                    <CardContent className="p-6">
-                        <div className="flex items-center justify-center py-12">
-                            <div className="flex items-center space-x-2">
-                                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary"></div>
-                                <span className="text-muted-foreground">Loading applications...</span>
-                            </div>
-                        </div>
-                    </CardContent>
-                </Card>
-            </div>
-        )
+        <LoadingManagement />
     }
 
     return (
-        <Card>
-            <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <CardTitle>Career Applications</CardTitle>
-                        <CardDescription>
-                            Manage incoming applications linked to careers
-                        </CardDescription>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                            <Input
-                                placeholder="Search applications..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-9 w-64"
-                            />
-                        </div>
-                        <Button onClick={onCreate} size="sm">
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add Application
-                        </Button>
-                    </div>
+        <div className="border rounded-md">
+            {/* Toolbar */}
+            <div className="flex items-center justify-between p-4">
+                <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search users..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-9 w-64"
+                    />
                 </div>
-            </CardHeader>
-            <CardContent className="p-0">
-                {filteredCareers.length === 0 ? (
-                    <div className="text-center py-12 px-6">
-                        <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-                            <Briefcase className="h-8 w-8 text-muted-foreground" />
-                        </div>
-                        <h3 className="text-lg font-medium mb-2">
-                            {searchTerm ? "No applications found" : "No applications yet"}
-                        </h3>
-                        <p className="text-muted-foreground mb-4">
-                            {searchTerm ? "Try adjusting your search terms" : "Get started by creating your first application"}
-                        </p>
-                        {!searchTerm && (
-                            <Button onClick={onCreate}>
-                                <Plus className="mr-2 h-4 w-4" />
-                                Create First Application
-                            </Button>
-                        )}
-                    </div>
-                ) : (
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="hover:bg-transparent">
-                                    <TableHead className="w-[300px]">Applicant</TableHead>
-                                    <TableHead>Career</TableHead>
-                                    <TableHead>Status</TableHead>
-                                    <TableHead className="hidden md:table-cell">
-                                        <div className="flex items-center gap-1">
-                                            <Calendar className="h-3 w-3" />
-                                            Applied At
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="text-right w-[100px]">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredCareers.map((career) => (
-                                    <TableRow key={career.id} className="group">
-                                        <TableCell>
-                                            <div className="min-w-0 flex-1">
-                                                <div className="font-medium truncate">
-                                                    {career.full_name}
-                                                </div>
-                                                <div className="text-sm text-muted-foreground truncate">
-                                                    {career.email} • {career.phone}
-                                                </div>
-                                            </div>
-                                        </TableCell>
+                {/* <Button size="sm" onClick={onCreate}>
+                    <UserPlus className="mr-2 h-4 w-4" /> Add User
+                </Button>
+                */}
+            </div>
 
-                                        {/* <TableCell>
-                                            <Badge
-                                                variant={getJobTypeBadgeVariant(career.)}
-                                                className="capitalize font-medium"
-                                            >
-                                                {career.type}
-                                            </Badge>
-                                        </TableCell> */}
+            {/* Table */}
+            <table className="w-full text-sm">
+                <thead>
+                    {table.getHeaderGroups().map((hg) => (
+                        <tr key={hg.id}>
+                            {hg.headers.map((h) => (
+                                <th key={h.id} className="px-4 py-2 text-left border-b">
+                                    {flexRender(h.column.columnDef.header, h.getContext())}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id} className="hover:bg-muted/30">
+                            {row.getVisibleCells().map((cell) => (
+                                <td key={cell.id} className="px-4 py-2 border-b">
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
-                                        <TableCell>
-                                            <div className="flex items-center gap-1 text-sm">
-                                                <Briefcase className="h-3 w-3" />
-                                                <span>{career.career?.title ?? 'Unknown career'}</span>
-                                            </div>
-                                            <div className="text-xs text-muted-foreground">
-                                                {career.career?.position ?? career.career_id}
-                                            </div>
-                                        </TableCell>
+            {/* Empty state */}
+            {filteredData.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">No users found</div>
+            )}
 
-                                        <TableCell>
-                                            <Badge
-                                                variant={getStatusBadgeVariant(career.status)}
-                                                className="capitalize font-medium"
-                                            >
-                                                {career.status}
-                                            </Badge>
-                                        </TableCell>
-
-                                        <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
-                                            {formatDate(career.created_at)}
-                                        </TableCell>
-
-                                        <TableCell className="text-right">
-                                            <DropdownMenu>
-                                                <DropdownMenuTrigger asChild>
-                                                    <Button
-                                                        variant="ghost"
-                                                        size="sm"
-                                                        className="h-8 w-8 p-0"
-                                                    >
-                                                        <span className="sr-only">Open menu</span>
-                                                        <MoreHorizontal className="h-4 w-4" />
-                                                    </Button>
-                                                </DropdownMenuTrigger>
-                                                <DropdownMenuContent align="end" className="w-40">
-                                                    <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-                                                    <DropdownMenuItem onClick={() => onEdit?.(career)}>
-                                                        Edit Application
-                                                    </DropdownMenuItem>
-
-                                                    {onDelete && (
-                                                        <DropdownMenuItem
-                                                            className="text-destructive focus:text-destructive"
-                                                            onClick={() => onDelete(career)}
-                                                        >
-                                                            Delete Application
-                                                        </DropdownMenuItem>
-                                                    )}
-                                                </DropdownMenuContent>
-                                            </DropdownMenu>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </div>
-                )}
-            </CardContent>
-        </Card>
+            {/* Pagination */}
+            <div className="flex items-center justify-between p-4">
+                <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => table.previousPage()}
+                >
+                    Previous
+                </Button>
+                <span className="text-sm">
+                    Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                </span>
+                <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanNextPage()}
+                    onClick={() => table.nextPage()}
+                >
+                    Next
+                </Button>
+            </div>
+        </div>
     )
 }
