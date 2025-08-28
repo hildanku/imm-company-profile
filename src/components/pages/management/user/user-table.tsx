@@ -1,14 +1,22 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
-import { MoreHorizontal, Search, UserPlus, Mail, Clock, Calendar, Copy } from "lucide-react"
-import { useState, useEffect } from "react"
+import { MoreHorizontal, Search, UserPlus, Mail, Clock, Calendar, Copy, ArrowUpDown } from "lucide-react"
+import { useState, useMemo } from "react"
+import {
+    flexRender,
+    getCoreRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useReactTable,
+    type ColumnDef,
+    type SortingState
+} from "@tanstack/react-table"
 
 export type UserRow = {
-    id: number | string
+    id: string
     email: string
     name: string | null
     role?: string | null
@@ -29,44 +37,184 @@ type UserTableProps = {
 function formatDT(v?: string | null) {
     if (!v) return "-"
     const d = new Date(v)
-    return isNaN(d.getTime()) ? "-" : d.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    })
+    return isNaN(d.getTime())
+        ? "-"
+        : d.toLocaleDateString("id-ID", {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        })
 }
 
 function getRoleBadgeVariant(role: string) {
     switch (role.toLowerCase()) {
-        case 'admin': return 'destructive'
-        case 'manager': return 'default'
-        case 'editor': return 'secondary'
-        default: return 'outline'
+        case "admin":
+            return "destructive"
+        case "manager":
+            return "default"
+        case "editor":
+            return "secondary"
+        default:
+            return "outline"
     }
 }
 
 export function UserTable({ users, loading, onCreate, onEdit, onDelete }: UserTableProps) {
     const [searchTerm, setSearchTerm] = useState("")
-    const [filteredUsers, setFilteredUsers] = useState(users)
+    const [sorting, setSorting] = useState<SortingState>([])
 
-    useEffect(() => {
-        const filtered = users.filter(user =>
-            user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            (user.profile_role ?? user.role ?? "viewer").toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredData = useMemo(() => {
+        const term = searchTerm.trim().toLowerCase()
+        if (!term) return users
+        return users.filter((u) =>
+            [u.name, u.email, u.role, u.profile_role]
+                .filter(Boolean)
+                .some((v) => (v ?? "").toString().toLowerCase().includes(term))
         )
-        setFilteredUsers(filtered)
     }, [users, searchTerm])
 
-    const handleCopyEmail = async (email: string) => {
-        try {
-            await navigator.clipboard.writeText(email)
-        } catch (err) {
-            console.error('Failed to copy email:', err)
-        }
-    }
+    const columns: ColumnDef<UserRow>[] = useMemo(
+        () => [
+            {
+                accessorKey: "name",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="p-0"
+                    >
+                        User <ArrowUpDown className="ml-2 h-3 w-3" />
+                    </Button>
+                ),
+                cell: ({ row }) => {
+                    const user = row.original
+                    const displayName = user.name || "No name"
+                    const initials = displayName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()
+                        .slice(0, 2)
+                    return (
+                        <div className="flex items-center gap-3">
+                            {user.avatar_url ? (
+                                <img
+                                    src={user.avatar_url}
+                                    alt={displayName}
+                                    className="h-10 w-10 rounded-full object-cover"
+                                />
+                            ) : (
+                                <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-sm font-medium">
+                                    {initials}
+                                </div>
+                            )}
+                            <div className="min-w-0 flex-1">
+                                <div className="font-medium truncate">{displayName}</div>
+                                <div className="flex items-center gap-1 text-sm text-muted-foreground truncate">
+                                    <Mail className="h-3 w-3" />
+                                    {user.email}
+                                </div>
+                            </div>
+                        </div>
+                    )
+                },
+            },
+            {
+                accessorKey: "role",
+                header: "Role",
+                cell: ({ row }) => {
+                    const role = row.original.profile_role ?? row.original.role ?? "viewer"
+                    return (
+                        <Badge variant={getRoleBadgeVariant(role)} className="capitalize font-medium">
+                            {role}
+                        </Badge>
+                    )
+                },
+            },
+            {
+                accessorKey: "last_sign_in_at",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="p-0 hidden md:flex gap-1"
+                    >
+                        <Clock className="h-3 w-3" /> Last Sign-in
+                        <ArrowUpDown className="ml-1 h-3 w-3" />
+                    </Button>
+                ),
+                cell: ({ row }) => (
+                    <span className="text-sm text-muted-foreground hidden md:block">
+                        {row.original.last_sign_in_at
+                            ? formatDT(row.original.last_sign_in_at)
+                            : <span className="text-amber-600">Never</span>}
+                    </span>
+                ),
+            },
+            {
+                accessorKey: "created_at",
+                header: ({ column }) => (
+                    <Button
+                        variant="ghost"
+                        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                        className="p-0 hidden lg:flex gap-1"
+                    >
+                        <Calendar className="h-3 w-3" /> Created
+                        <ArrowUpDown className="ml-1 h-3 w-3" />
+                    </Button>
+                ),
+                cell: ({ row }) => (
+                    <span className="text-sm text-muted-foreground hidden lg:block">
+                        {formatDT(row.original.created_at)}
+                    </span>
+                ),
+            },
+            {
+                id: "actions",
+                header: "Actions",
+                cell: ({ row }) => (
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem onClick={() => onEdit?.(row.original)}>
+                                Edit User
+                            </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(row.original.email)}>
+                                <Copy className="mr-2 h-3 w-3" />
+                                Copy Email
+                            </DropdownMenuItem>
+                            {onDelete && (
+                                <DropdownMenuItem
+                                    className="text-destructive"
+                                    onClick={() => onDelete(row.original)}
+                                >
+                                    Delete User
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                ),
+            },
+        ],
+        [onEdit, onDelete]
+    )
+
+    const table = useReactTable({
+        data: filteredData,
+        columns,
+        state: { sorting },
+        onSortingChange: setSorting,
+        getCoreRowModel: getCoreRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+    })
 
     if (loading) {
         return (
@@ -86,172 +234,77 @@ export function UserTable({ users, loading, onCreate, onEdit, onDelete }: UserTa
     }
 
     return (
-        <Card>
-            <CardHeader>
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div>
-                        <CardTitle>Users</CardTitle>
-                        <CardDescription>
-                            List of all users in the system
-                        </CardDescription>
-                    </div>
-                    <div className="flex items-center gap-3">
-                        <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-                            <Input
-                                placeholder="Search users..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-9 w-64"
-                            />
-                        </div>
-                        <Button onClick={onCreate} size="sm">
-                            <UserPlus className="mr-2 h-4 w-4" />
-                            Add User
-                        </Button>
-                    </div>
+        <div className="border rounded-md">
+            {/* Toolbar */}
+            <div className="flex items-center justify-between p-4">
+                <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search users..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="pl-9 w-64"
+                    />
                 </div>
-            </CardHeader>
-            <CardContent className="p-0">
-                {filteredUsers.length === 0 ? (
-                    <div className="text-center py-12 px-6">
-                        <div className="mx-auto w-16 h-16 bg-muted rounded-full flex items-center justify-center mb-4">
-                            <UserPlus className="h-8 w-8 text-muted-foreground" />
-                        </div>
-                        <h3 className="text-lg font-medium mb-2">
-                            {searchTerm ? "No users found" : "No users yet"}
-                        </h3>
-                        <p className="text-muted-foreground mb-4">
-                            {searchTerm ? "Try adjusting your search terms" : "Get started by creating your first user"}
-                        </p>
-                        {!searchTerm && (
-                            <Button onClick={onCreate}>
-                                <UserPlus className="mr-2 h-4 w-4" />
-                                Create First User
-                            </Button>
-                        )}
-                    </div>
-                ) : (
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow className="hover:bg-transparent">
-                                    <TableHead className="w-[300px]">User</TableHead>
-                                    <TableHead>Role</TableHead>
-                                    <TableHead className="hidden md:table-cell">
-                                        <div className="flex items-center gap-1">
-                                            <Clock className="h-3 w-3" />
-                                            Last Sign-in
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="hidden lg:table-cell">
-                                        <div className="flex items-center gap-1">
-                                            <Calendar className="h-3 w-3" />
-                                            Created
-                                        </div>
-                                    </TableHead>
-                                    <TableHead className="text-right w-[100px]">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredUsers.map((user) => {
-                                    const role = user.profile_role ?? user.role ?? "viewer"
-                                    const displayName = user.name || "No name"
-                                    const initials = user.name ?
-                                        user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) :
-                                        user.email.slice(0, 2).toUpperCase()
+                <Button size="sm" onClick={onCreate}>
+                    <UserPlus className="mr-2 h-4 w-4" /> Add User
+                </Button>
+            </div>
 
-                                    return (
-                                        <TableRow key={user.id} className="group">
-                                            <TableCell>
-                                                <div className="flex items-center gap-3">
-                                                    {user.avatar_url ? (
-                                                        <img
-                                                            src={user.avatar_url}
-                                                            alt={displayName}
-                                                            className="h-10 w-10 rounded-full object-cover ring-2 ring-background"
-                                                        />
-                                                    ) : (
-                                                        <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center text-sm font-medium border">
-                                                            {initials}
-                                                        </div>
-                                                    )}
-                                                    <div className="min-w-0 flex-1">
-                                                        <div className="font-medium truncate">
-                                                            {displayName}
-                                                        </div>
-                                                        <div className="flex items-center gap-1 text-sm text-muted-foreground truncate">
-                                                            <Mail className="h-3 w-3" />
-                                                            {user.email}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </TableCell>
+            {/* Table */}
+            <table className="w-full text-sm">
+                <thead>
+                    {table.getHeaderGroups().map((hg) => (
+                        <tr key={hg.id}>
+                            {hg.headers.map((h) => (
+                                <th key={h.id} className="px-4 py-2 text-left border-b">
+                                    {flexRender(h.column.columnDef.header, h.getContext())}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id} className="hover:bg-muted/30">
+                            {row.getVisibleCells().map((cell) => (
+                                <td key={cell.id} className="px-4 py-2 border-b">
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
-                                            <TableCell>
-                                                <Badge
-                                                    variant={getRoleBadgeVariant(role)}
-                                                    className="capitalize font-medium"
-                                                >
-                                                    {role}
-                                                </Badge>
-                                            </TableCell>
+            {/* Empty state */}
+            {filteredData.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">No users found</div>
+            )}
 
-                                            <TableCell className="hidden md:table-cell text-sm text-muted-foreground">
-                                                {user.last_sign_in_at ? formatDT(user.last_sign_in_at) : (
-                                                    <span className="text-amber-600 font-medium">Never</span>
-                                                )}
-                                            </TableCell>
-
-                                            <TableCell className="hidden lg:table-cell text-sm text-muted-foreground">
-                                                {formatDT(user.created_at)}
-                                            </TableCell>
-
-                                            <TableCell className="text-right">
-                                                <DropdownMenu>
-                                                    <DropdownMenuTrigger asChild>
-                                                        <Button
-                                                            variant="ghost"
-                                                            size="sm"
-                                                            className="h-8 w-8 p-0"
-                                                        >
-                                                            <span className="sr-only">Open menu</span>
-                                                            <MoreHorizontal className="h-4 w-4" />
-                                                        </Button>
-                                                    </DropdownMenuTrigger>
-                                                    <DropdownMenuContent align="end" className="w-40">
-                                                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-
-                                                        <DropdownMenuItem onClick={() => onEdit?.(user)}>
-                                                            Edit User
-                                                        </DropdownMenuItem>
-
-                                                        <DropdownMenuItem
-                                                            onClick={() => handleCopyEmail(user.email)}
-                                                        >
-                                                            <Copy className="mr-2 h-3 w-3" />
-                                                            Copy Email
-                                                        </DropdownMenuItem>
-
-                                                        {onDelete && (
-                                                            <DropdownMenuItem
-                                                                className="text-destructive focus:text-destructive"
-                                                                onClick={() => onDelete(user)}
-                                                            >
-                                                                Delete User
-                                                            </DropdownMenuItem>
-                                                        )}
-                                                    </DropdownMenuContent>
-                                                </DropdownMenu>
-                                            </TableCell>
-                                        </TableRow>
-                                    )
-                                })}
-                            </TableBody>
-                        </Table>
-                    </div>
-                )}
-            </CardContent>
-        </Card>
+            {/* Pagination */}
+            <div className="flex items-center justify-between p-4">
+                <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanPreviousPage()}
+                    onClick={() => table.previousPage()}
+                >
+                    Previous
+                </Button>
+                <span className="text-sm">
+                    Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+                </span>
+                <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={!table.getCanNextPage()}
+                    onClick={() => table.nextPage()}
+                >
+                    Next
+                </Button>
+            </div>
+        </div>
     )
 }
+
