@@ -1,5 +1,5 @@
 import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
+import { HeaderV2X } from '@/components/header-v2-x'
 import { Separator } from '@/components/ui/separator'
 import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
@@ -25,7 +25,7 @@ function RootComponent() {
 
     return (
         <>
-            <Header />
+            <HeaderV2X />
             <div className="mt-16">
                 <Outlet />
             </div>

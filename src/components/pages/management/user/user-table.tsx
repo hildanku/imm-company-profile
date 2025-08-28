@@ -14,6 +14,7 @@ import {
     type ColumnDef,
     type SortingState
 } from "@tanstack/react-table"
+import { formatDT } from "@/lib/utils"
 
 export type UserRow = {
     id: string
@@ -32,20 +33,6 @@ type UserTableProps = {
     onCreate?: () => void
     onEdit?: (user: UserRow) => void
     onDelete?: (user: UserRow) => void
-}
-
-function formatDT(v?: string | null) {
-    if (!v) return "-"
-    const d = new Date(v)
-    return isNaN(d.getTime())
-        ? "-"
-        : d.toLocaleDateString("id-ID", {
-            day: "numeric",
-            month: "short",
-            year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-        })
 }
 
 function getRoleBadgeVariant(role: string) {
