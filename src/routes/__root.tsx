@@ -1,6 +1,4 @@
 import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
-import { HeaderV2 } from '@/components/header-v2'
 import { HeaderV2X } from '@/components/header-v2-x'
 import { Separator } from '@/components/ui/separator'
 import { createRootRoute, Outlet, useRouterState } from '@tanstack/react-router'
