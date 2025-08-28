@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 import type { PostWithImages } from '@/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,35 +8,42 @@ import { blogRepository, getImageUrl } from '@/lib/repository/blog'
 import { BlogUpsert } from '@/components/pages/management/blog/upsert'
 import { MarkdownCheatsheet } from '@/components/pages/management/blog/markdown-cheatsheet'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/_protected/management/blog')({
     component: BlogManagementDashboard,
 })
 
 function BlogManagementDashboard() {
-    const [posts, setPosts] = useState<PostWithImages[]>([])
-    const [loading, setLoading] = useState(true)
+
+    const queryClient = useQueryClient()
     const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
+
+    //const [posts, setPosts] = useState<PostWithImages[]>([])
+    // const [loading, setLoading] = useState(true)
+    // const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
     const [isCreating, setIsCreating] = useState(false)
     const [_showCheatsheet, _setShowCheatsheet] = useState(false)
 
-    const loadPosts = async () => {
-        try {
-            setLoading(true)
-            const result = await blogRepository.listMerge()
-            console.log('Loaded posts:', result)
-            setPosts(result)
-        } catch (error) {
-            console.error('Error loading posts:', error)
-        } finally {
-            setLoading(false)
-        }
-    }
 
-    useEffect(() => {
-        loadPosts()
-    }, [])
+    const { data, isLoading } = useQuery({
+        queryKey: ['posts'],
+        queryFn: () => blogRepository.listMerge()
+    })
 
+    const posts = data ?? []
+
+    /*
+        const loadPosts = async () => {
+            try {
+                setLoading(true)
+                const result = await blogRepository.listMerge()
+                console.log('Loaded posts:', result)
+                setPosts(result)
+            } catch (error) fect(() => {
+            loadPosts()
+        }, [])
+    */
     const handleCreateClick = () => {
         setSelectedPost(null)
         setIsCreating(true)
@@ -50,7 +57,7 @@ function BlogManagementDashboard() {
     const handleFormSuccess = () => {
         setSelectedPost(null)
         setIsCreating(false)
-        loadPosts()
+        queryClient.invalidateQueries({ queryKey: ['posts'] })
     }
 
     const handleBackToList = () => {
@@ -99,7 +106,7 @@ function BlogManagementDashboard() {
                 </div>
             </div>
 
-            {loading ? (
+            {isLoading ? (
                 <div className="text-center py-8">Loading posts...</div>
             ) : posts.length === 0 ? (
                 <div className="text-center py-8">
