@@ -13,7 +13,7 @@ export function Index() {
     return (
         <>
             <SEO
-                title="IMM Profile - Innovative Media Management"
+                title="IMM - Indonesia Mitra Media "
                 description="Indonesia Mitra Media - Unleashing Boundless Creativity Where Every Idea Finds Its Space. We help companies innovate, scale, and succeed in the digital age."
                 keywords="IMM, Indonesia Mitra Media, creative agency, digital strategy, brand design, consulting"
                 ogType="website"

@@ -15,6 +15,7 @@ import {
     type ColumnDef,
     type SortingState
 } from '@tanstack/react-table'
+import { formatDate } from "@/lib/utils"
 
 export type CareerRow = Career
 
@@ -24,16 +25,6 @@ type CareerTableProps = {
     onCreate?: () => void
     onEdit?: (career: CareerRow) => void
     onDelete?: (career: CareerRow) => void
-}
-
-function formatDate(dateString?: string | null) {
-    if (!dateString) return "-"
-    const date = new Date(dateString)
-    return isNaN(date.getTime()) ? "-" : date.toLocaleDateString('id-ID', {
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric'
-    })
 }
 
 // function getJobTypeBadgeVariant(jobType: string): "default" | "secondary" | "outline" | "destructive" {
@@ -65,18 +56,6 @@ export function CareerTable({ careers, loading, onCreate, onEdit, onDelete }: Ca
                 .some((v) => (v ?? '').toString().toLowerCase().includes(term))
         )
     }, [careers, searchTerm])
-    //const [filteredCareers, setFilteredCareers] = useState(careers)
-
-    /* useEffect(() => {
-        const filtered = careers.filter(career =>
-            career.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            career.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            career.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            career.location.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-        setFilteredCareers(filtered)
-    }, [careers, searchTerm])
-    */
 
     const columns: ColumnDef<CareerRow>[] = useMemo(() => [
         {
