@@ -10,13 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CareerIndexRouteImport } from './routes/career/index'
+import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as CareerIdRouteImport } from './routes/career/$id'
+import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as AuthRegisterRouteImport } from './routes/_auth/register'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as CareerApplyIdRouteImport } from './routes/career/apply/$id'
@@ -28,11 +29,6 @@ import { Route as ProtectedManagementBlogRouteImport } from './routes/_protected
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BlogRoute = BlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -58,9 +54,19 @@ const CareerIndexRoute = CareerIndexRouteImport.update({
   path: '/career/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CareerIdRoute = CareerIdRouteImport.update({
   id: '/career/$id',
   path: '/career/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRegisterRoute = AuthRegisterRouteImport.update({
@@ -104,11 +110,12 @@ const ProtectedManagementBlogRoute = ProtectedManagementBlogRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/career/$id': typeof CareerIdRoute
+  '/blog': typeof BlogIndexRoute
   '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
@@ -119,11 +126,12 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
   '/register': typeof AuthRegisterRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/career/$id': typeof CareerIdRoute
+  '/blog': typeof BlogIndexRoute
   '/career': typeof CareerIndexRoute
   '/management/blog': typeof ProtectedManagementBlogRoute
   '/management/career': typeof ProtectedManagementCareerRoute
@@ -137,11 +145,12 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
   '/about': typeof AboutRoute
-  '/blog': typeof BlogRoute
   '/contact': typeof ContactRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/register': typeof AuthRegisterRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/career/$id': typeof CareerIdRoute
+  '/blog/': typeof BlogIndexRoute
   '/career/': typeof CareerIndexRoute
   '/_protected/management/blog': typeof ProtectedManagementBlogRoute
   '/_protected/management/career': typeof ProtectedManagementCareerRoute
@@ -154,11 +163,12 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/login'
     | '/register'
+    | '/blog/$slug'
     | '/career/$id'
+    | '/blog'
     | '/career'
     | '/management/blog'
     | '/management/career'
@@ -169,11 +179,12 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/login'
     | '/register'
+    | '/blog/$slug'
     | '/career/$id'
+    | '/blog'
     | '/career'
     | '/management/blog'
     | '/management/career'
@@ -186,11 +197,12 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_protected'
     | '/about'
-    | '/blog'
     | '/contact'
     | '/_auth/login'
     | '/_auth/register'
+    | '/blog/$slug'
     | '/career/$id'
+    | '/blog/'
     | '/career/'
     | '/_protected/management/blog'
     | '/_protected/management/career'
@@ -204,9 +216,10 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
   AboutRoute: typeof AboutRoute
-  BlogRoute: typeof BlogRoute
   ContactRoute: typeof ContactRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   CareerIdRoute: typeof CareerIdRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CareerIndexRoute: typeof CareerIndexRoute
   CareerApplyIdRoute: typeof CareerApplyIdRoute
 }
@@ -218,13 +231,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/blog': {
-      id: '/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -262,11 +268,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareerIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/career/$id': {
       id: '/career/$id'
       path: '/career/$id'
       fullPath: '/career/$id'
       preLoaderRoute: typeof CareerIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/register': {
@@ -357,9 +377,10 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
   AboutRoute: AboutRoute,
-  BlogRoute: BlogRoute,
   ContactRoute: ContactRoute,
+  BlogSlugRoute: BlogSlugRoute,
   CareerIdRoute: CareerIdRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CareerIndexRoute: CareerIndexRoute,
   CareerApplyIdRoute: CareerApplyIdRoute,
 }
