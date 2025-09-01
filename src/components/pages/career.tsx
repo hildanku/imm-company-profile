@@ -1,37 +1,25 @@
-import { useState, useEffect } from "react"
 import { CareerCard } from "@/components/career-card"
 import { HeaderSection } from "@/components/header-section"
 import { SEO } from "@/components/seo"
 import { careerRepository } from "@/lib/repository/career"
-import type { Career } from "@/types"
 import { Spinner } from "@/components/ui/spinner"
 import { useLanguage } from "@/hooks/use-language"
+import { useQuery } from "@tanstack/react-query"
 
 export default function CareerGalery() {
-    const [careers, setCareers] = useState<Career[]>([])
-    const [loading, setLoading] = useState(true)
+    const { data, isLoading } = useQuery({
+        queryKey: ['careers'],
+        queryFn: () => careerRepository.list({
+            sort: 'deadline',
+            order: 'ASC',
+            limit: 100,
+            status: 'Open'
+        })
+    })
+
+    const res = data
+    const careers = res?.items ?? []
     const { t } = useLanguage()
-
-    useEffect(() => {
-        const fetchCareers = async () => {
-            try {
-                setLoading(true)
-                const result = await careerRepository.list({
-                    sort: 'deadline',
-                    order: 'ASC',
-                    limit: 100,
-                    status: 'Open'
-                })
-                setCareers(result.items)
-            } catch (error) {
-                console.error('Error fetching careers:', error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchCareers()
-    }, [])
 
     return (
         <>
@@ -50,7 +38,7 @@ export default function CareerGalery() {
             />
             <div className="bg-gray-50 dark:bg-black">
                 <div className="container mx-auto px-4 py-8">
-                    {loading ? (
+                    {isLoading ? (
                         <div className="flex justify-center items-center py-20">
                             <Spinner className="h-8 w-8" />
                             <span className="ml-2 text-lg">Loading careers...</span>
