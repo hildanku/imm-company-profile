@@ -2,14 +2,14 @@ import { CareerCard } from "@/components/career-card"
 import { HeaderSection } from "@/components/header-section"
 import { SEO } from "@/components/seo"
 import { careerRepository } from "@/lib/repository/career"
-import { Spinner } from "@/components/ui/spinner"
 import { useLanguage } from "@/hooks/use-language"
 import { useQuery } from "@tanstack/react-query"
+import { Loading } from "../ui/loading"
 
 export default function CareerGalery() {
-    const { data, isLoading } = useQuery({
+    const { data, isLoading, isError } = useQuery({
         queryKey: ['careers'],
-        queryFn: () => careerRepository.list({
+        queryFn: async () => careerRepository.list({
             sort: 'deadline',
             order: 'ASC',
             limit: 100,
@@ -17,9 +17,25 @@ export default function CareerGalery() {
         })
     })
 
-    const res = data
-    const careers = res?.items ?? []
+    const careers = data?.items ?? []
     const { t } = useLanguage()
+
+    if(isLoading) {
+        return (
+            <Loading />
+        )
+    }
+    
+    if(isError || !careers || careers.length === 0) {
+        return (
+            <div className="container mx-auto px-4 py-20 text-center">
+                <h3 className="text-xl font-medium mb-2">Error loading careers</h3>
+                <p className="text-muted-foreground">
+                    Please try again later or contact support if the issue persists.
+                </p>
+            </div>
+        )
+    }
 
     return (
         <>
@@ -38,25 +54,11 @@ export default function CareerGalery() {
             />
             <div className="bg-gray-50 dark:bg-black">
                 <div className="container mx-auto px-4 py-8">
-                    {isLoading ? (
-                        <div className="flex justify-center items-center py-20">
-                            <Spinner className="h-8 w-8" />
-                            <span className="ml-2 text-lg">Loading careers...</span>
-                        </div>
-                    ) : careers.length === 0 ? (
-                        <div className="text-center py-20">
-                            <h3 className="text-xl font-medium mb-2">No open positions at the moment</h3>
-                            <p className="text-muted-foreground">
-                                Please check back later for new opportunities
-                            </p>
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                            {careers.map((career) => (
-                                <CareerCard key={career.id} career={career} />
-                            ))}
-                        </div>
-                    )}
+                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                        {careers.map((career) => (
+                            <CareerCard key={career.id} career={career} />
+                        ))}
+                    </div>
                 </div>
             </div>
         </>

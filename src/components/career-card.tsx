@@ -45,7 +45,7 @@ export function CareerCard({ career }: { career: Career }) {
                     className="flex-1"
                     size="sm"
                     disabled={career.status !== 'Open'}
-                    onClick={() => window.open(`mailto:careers@indonesiamitramedia.com?subject=Application for ${career.title} - ${career.position}`)}
+                    onClick={() => window.location.href = `/career/apply/${career.id}`}
                 >
                     Apply
                 </Button>
