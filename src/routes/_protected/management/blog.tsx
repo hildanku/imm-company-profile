@@ -18,10 +18,6 @@ function BlogManagementDashboard() {
 
     const queryClient = useQueryClient()
     const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
-
-    //const [posts, setPosts] = useState<PostWithImages[]>([])
-    // const [loading, setLoading] = useState(true)
-    // const [selectedPost, setSelectedPost] = useState<PostWithImages | null>(null)
     const [isCreating, setIsCreating] = useState(false)
     const [_showCheatsheet, _setShowCheatsheet] = useState(false)
 
@@ -33,17 +29,6 @@ function BlogManagementDashboard() {
 
     const posts = data ?? []
 
-    /*
-        const loadPosts = async () => {
-            try {
-                setLoading(true)
-                const result = await blogRepository.listMerge()
-                console.log('Loaded posts:', result)
-                setPosts(result)
-            } catch (error) fect(() => {
-            loadPosts()
-        }, [])
-    */
     const handleCreateClick = () => {
         setSelectedPost(null)
         setIsCreating(true)

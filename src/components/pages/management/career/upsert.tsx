@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,6 +12,7 @@ import { Spinner } from '@/components/ui/spinner'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { careerSchema } from '@/lib/zod'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 interface CareerUpsertProps {
     career?: Career
@@ -20,7 +20,8 @@ interface CareerUpsertProps {
 }
 
 export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
-    const [isSubmitting, setIsSubmitting] = useState(false)
+
+    const queryClient = useQueryClient()
     const isEditing = !!career
 
     const form = useForm<z.infer<typeof careerSchema>>({
@@ -38,48 +39,40 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
         },
     })
 
-    const onSubmit = async (data: z.infer<typeof careerSchema>) => {
-        try {
-            setIsSubmitting(true)
 
+    const upsertMutation = useMutation({
+        mutationFn: async (data: z.infer<typeof careerSchema>) => {
             if (isEditing && career) {
-                const result = await careerRepository.update({
+                return careerRepository.update({
                     id: career.id,
-                    item: data
+                    item: data,
                 })
-
-                if (!result) {
-                    toast.error('Failed to update career')
-                    return
+            }
+            return careerRepository.create({
+                item: {
+                    ...data,
+                    deadline: new Date(data.deadline).toISOString(),
                 }
-
-                toast.success('Career updated successfully')
-            } else {
-                // Create new career
-                const result = await careerRepository.create({
-                    item: {
-                        ...data,
-                        deadline: new Date(data.deadline).toISOString(),
-                    }
-                })
-
-                if (!result || result.length === 0) {
-                    toast.error('Failed to create career')
-                    return
-                }
-
-                toast.success('Career created successfully')
+            })
+        },
+        onSuccess: (result) => {
+            if (!result || (Array.isArray(result) && result.length === 0)) {
+                toast.error(isEditing ? 'Failed to update career' : 'Failed to create career')
+                return
             }
 
+            toast.success(isEditing ? 'Career updated successfully' : 'Career created successfully')
+            queryClient.invalidateQueries({ queryKey: ['careers'] })
             onSuccess()
-        } catch (error) {
-            console.error('Error submitting career form:', error)
+        },
+        onError: () => {
             toast.error('An unexpected error occurred')
-        } finally {
-            setIsSubmitting(false)
-        }
-    }
+        },
+    })
 
+    const onSubmit = (data: z.infer<typeof careerSchema>) => {
+        upsertMutation.mutate(data)
+    }
     return (
         <Card className="w-full max-w-2xl mx-auto">
             <CardHeader>
@@ -103,7 +96,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Input
                                             placeholder="e.g., Frontend Developer"
                                             {...field}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -121,7 +114,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Input
                                             placeholder="e.g., Senior, Junior, Mid-Level"
                                             {...field}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -140,7 +133,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                             placeholder="Describe the job responsibilities and requirements"
                                             className="min-h-32"
                                             {...field}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -158,7 +151,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Select
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         >
                                             <FormControl>
                                                 <SelectTrigger>
@@ -186,7 +179,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Select
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         >
                                             <FormControl>
                                                 <SelectTrigger>
@@ -215,7 +208,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Input
                                             placeholder="e.g., Jakarta, Indonesia"
                                             {...field}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -234,7 +227,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                             <Input
                                                 type="date"
                                                 {...field}
-                                                disabled={isSubmitting}
+                                                disabled={upsertMutation.isPending}
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -251,7 +244,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Select
                                             onValueChange={field.onChange}
                                             defaultValue={field.value}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         >
                                             <FormControl>
                                                 <SelectTrigger>
@@ -279,7 +272,7 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                                         <Input
                                             placeholder="Image URL for the job posting"
                                             {...field}
-                                            disabled={isSubmitting}
+                                            disabled={upsertMutation.isPending}
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -290,10 +283,10 @@ export function CareerUpsert({ career, onSuccess }: CareerUpsertProps) {
                         <div className="flex justify-end space-x-2">
                             <Button
                                 type="submit"
-                                disabled={isSubmitting}
+                                disabled={upsertMutation.isPending}
                                 className="gap-2"
                             >
-                                {isSubmitting && <Spinner className="h-4 w-4" />}
+                                {upsertMutation.isPending && <Spinner className="h-4 w-4" />}
                                 {isEditing ? 'Update Career' : 'Create Career'}
                             </Button>
                         </div>
