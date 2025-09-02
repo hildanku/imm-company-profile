@@ -11,107 +11,113 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import supabase from '@/lib/supabase'
 import { toast } from 'sonner'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export const Route = createFileRoute('/_auth/login')({
- 	component: LoginPage,
+    component: LoginPage,
 })
 
 
 function LoginPage() {
-	const navigate = useNavigate()
+	const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
-	const form = useForm<z.infer<typeof loginSchema>>({
-		mode: 'all',
-		resolver: zodResolver(loginSchema),
-		defaultValues: {
-			email: '',
-			password: '',
-		},
-	})
+    const form = useForm<z.infer<typeof loginSchema>>({
+        mode: 'all',
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            email: '',
+            password: '',
+        },
+    })
 
-	const submit = async (data: z.infer<typeof loginSchema>) => {
-		try {
-			const { data: userData, error } = await supabase.auth.signInWithPassword({
-				email: data.email,
-				password: data.password,
-			})
-			
-			console.log('Login data:', data)
-			
-			if (error) {
-				toast.error(error.message)
-				return
-			}
-			
-			console.log('User data:', userData)
+    const loginMutation = useMutation({
+        mutationFn: async (data: z.infer<typeof loginSchema>) => {
+            const { data: userData, error } = await supabase.auth.signInWithPassword({
+                email: data.email,
+                password: data.password,
+            })
+            if (error) throw new Error(error.message)
+            return userData
+        },
+        onSuccess: (userData) => {
+            if (userData?.session?.access_token) {
+                localStorage.setItem('access_token', userData.session.access_token)
+                console.log('Access token saved to local storage')
+            }
+            toast.success('Login berhasil')
 
-			if(userData.session.access_token ) {
-				localStorage.setItem('access_token', userData.session.access_token)
-				console.log('Access token saved to local storage')
-			}
-			
-			toast.success('Login berhasil')
-			navigate({ to: '/management/blog' })
-		} catch (error) {
-			console.error('Login error:', error)
-			toast.error('Terjadi kesalahan saat login')
-		}
+			queryClient.invalidateQueries({ queryKey: ['user']})
+
+            navigate({ to: '/management/blog' })
+        },
+        onError: (error: any) => {
+            toast.error(error.message || 'Terjadi kesalahan saat login')
+        },
+    })
+
+	const submit = (data: z.infer<typeof loginSchema>) => {
+		loginMutation.mutate(data)
 	}
 
-	return (
-		<Form {...form}>
-			<Card className='mx-auto max-w-sm'>
-				<CardHeader>
-					<CardTitle className='text-2xl'>Login</CardTitle>
-					<CardDescription>Enter your email below to login to your account</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<form onSubmit={form.handleSubmit(submit)}>
-						<div className='grid gap-4'>
-							<div className='grid gap-2'>
-								<FormField
-									name='email'
-									control={form.control}
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>Email</FormLabel>
-											<FormControl>
-												<Input type='email' placeholder='Masukkan email' {...field} />
-											</FormControl>
-											<FormMessage className='font-normal' />
-										</FormItem>
-									)}
-								/>
-							</div>
-							<div className='grid gap-2'>
-								<FormField
-									name='password'
-									control={form.control}
-									render={({ field }) => (
-										<FormItem>
-											<FormLabel>Password</FormLabel>
-											<FormControl>
-												<Input type='password' placeholder='Masukkan password' {...field} />
-											</FormControl>
-											<FormMessage className='font-normal' />
-										</FormItem>
-									)}
-								/>
-							</div>
-							<Button type='submit' className='w-full gap-2.5' disabled={form.formState.isSubmitting}>
-								{form.formState.isSubmitting && <Spinner />}
-								<span>Login</span>
+    return (
+        <Form {...form}>
+            <Card className='mx-auto max-w-sm'>
+                <CardHeader>
+                    <CardTitle className='text-2xl'>Login</CardTitle>
+                    <CardDescription>Enter your email below to login to your account</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form onSubmit={form.handleSubmit(submit)}>
+                        <div className='grid gap-4'>
+                            <div className='grid gap-2'>
+                                <FormField
+                                    name='email'
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input type='email' placeholder='Masukkan email' {...field} />
+                                            </FormControl>
+                                            <FormMessage className='font-normal' />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <div className='grid gap-2'>
+                                <FormField
+                                    name='password'
+                                    control={form.control}
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input type='password' placeholder='Masukkan password' {...field} />
+                                            </FormControl>
+                                            <FormMessage className='font-normal' />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+							<Button 
+							type="submit" 
+							className="w-full gap-2.5" 
+							disabled={loginMutation.isPending}
+							>
+							{loginMutation.isPending && <Spinner />}
+							<span>Login</span>
 							</Button>
-						</div>
-						<div className='mt-4 text-center text-sm'>
-							Don&apos;t have an account?{' '}
-							<Link to='/register' className='underline'>
-								Register
-							</Link>
-						</div>
-					</form>
-				</CardContent>
-			</Card>
-		</Form>
-	)
+                        </div>
+                        <div className='mt-4 text-center text-sm'>
+                            Don&apos;t have an account?{' '}
+                            <Link to='/register' className='underline'>
+                                Register
+                            </Link>
+                        </div>
+                    </form>
+                </CardContent>
+            </Card>
+        </Form>
+    )
 }
