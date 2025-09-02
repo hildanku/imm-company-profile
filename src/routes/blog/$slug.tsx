@@ -9,7 +9,7 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import { SEO } from '@/components/seo'
 import { Loading } from '@/components/ui/loading'
-
+import '@/components/pages/management/blog/markdown-styles.css'
 export const Route = createFileRoute('/blog/$slug')({
     component: BlogPostDetail,
 })
@@ -50,6 +50,8 @@ function BlogPostDetail() {
         year: 'numeric',
     })
 
+    console.log(post.body)
+
     return (
         <>
             <SEO
@@ -84,10 +86,7 @@ function BlogPostDetail() {
                 )}
 
                 <div className="prose prose-lg dark:prose-invert max-w-none markdown-preview">
-                    <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
-                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
-                    >
+                    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw, rehypeSanitize]}>
                         {post.body}
                     </ReactMarkdown>
                 </div>
