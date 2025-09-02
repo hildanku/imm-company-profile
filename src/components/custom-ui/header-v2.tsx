@@ -10,14 +10,14 @@ import {
     NavigationMenuList,
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { LanguageToggle } from "@/components/language-toggle"
+import { ThemeToggle } from "@/components/custom-ui/toggle/theme-toggle"
+import { LanguageToggle } from "@/components/custom-ui/toggle/language-toggle"
 import { ourProducts } from "@/lib/data"
 import { useLanguage } from "@/hooks/use-language"
-import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet"
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { SUPABASE_OBJECT_URL } from "@/lib/const"
 
-export const HeaderV2X = () => {
+export const HeaderV2 = () => {
     const navigate = useNavigate()
     const { t } = useLanguage()
 

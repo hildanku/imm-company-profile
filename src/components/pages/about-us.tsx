@@ -2,8 +2,8 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { TrendingUp, Globe, Heart } from 'lucide-react'
 import { stats } from '@/lib/data'
-import { HeaderSection } from '@/components/header-section'
-import { SEO } from '@/components/seo'
+import { HeaderSection } from '@/components/custom-ui/header-section'
+import { SEO } from '@/components/custom-ui/seo'
 import { useLanguage } from '@/hooks/use-language'
 
 export const AboutUs = () => {

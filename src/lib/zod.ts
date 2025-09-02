@@ -1,5 +1,27 @@
 import z from 'zod'
 
+
+export const userSchema = z.object({
+    email: z.string().email({ message: 'Please enter a valid email address' }),
+    name: z.string().min(1, { message: 'Name is required' }),
+    role: z.enum(['admin', 'editor', 'viewer'], {
+        message: 'Please select a role'
+    }),
+    password: z.string()
+        .min(8, { message: 'Password must be at least 8 characters' })
+        .optional()
+        .or(z.literal('')),
+    confirmPassword: z.string().optional().or(z.literal('')),
+}).refine(data => {
+    if (data.password && data.password !== data.confirmPassword) {
+        return false
+    }
+    return true
+}, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+})
+
 export const loginSchema = z.object({
     email: z.string({ message: 'Email tidak valid' }).email({ message: 'Email tidak valid' }),
     password: z

@@ -3,9 +3,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Award, Target, Users } from 'lucide-react'
 import { SUPABASE_OBJECT_URL } from '@/lib/const'
-import ProductGallery from '@/components/product-gallery'
+import ProductGallery from '@/components/custom-ui/product-gallery'
 import { ImageZoom } from '@/components/ui/shadcn-io/image-zoom'
-import { SEO } from '@/components/seo'
+import { SEO } from '@/components/custom-ui/seo'
 import { useLanguage } from '@/hooks/use-language'
 
 export function Index() {

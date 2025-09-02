@@ -11,8 +11,8 @@ import {
     NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu"
 import { useState } from "react"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { LanguageToggle } from "@/components/language-toggle"
+import { ThemeToggle } from "@/components/custom-ui/toggle/theme-toggle"
+import { LanguageToggle } from "@/components/custom-ui/toggle/language-toggle"
 import { ourProducts } from "@/lib/data"
 import { useLanguage } from "@/hooks/use-language"
 

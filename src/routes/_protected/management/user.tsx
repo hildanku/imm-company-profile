@@ -21,7 +21,7 @@ function UserManagementDashboard() {
 
     const { data, isLoading } = useQuery({
         queryKey: ['users'],
-        queryFn: () => getAllUser(),
+        queryFn: async () => getAllUser(),
     })
 
     const users = data ?? []

@@ -2,7 +2,7 @@ import BlogPostCard from '@/components/pages/blog'
 import { blogRepository } from '@/lib/repository/blog'
 import { createFileRoute } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
-import { SEO } from '@/components/seo'
+import { SEO } from '@/components/custom-ui/seo'
 import { Loading } from '@/components/ui/loading'
 
 export const Route = createFileRoute('/blog/')({

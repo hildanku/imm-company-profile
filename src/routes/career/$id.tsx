@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
 import { careerRepository } from '@/lib/repository/career'
-import { SEO } from '@/components/seo'
+import { SEO } from '@/components/custom-ui/seo'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useQuery } from '@tanstack/react-query'

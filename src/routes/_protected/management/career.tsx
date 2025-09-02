@@ -19,7 +19,7 @@ function CareerManagementDashboard() {
     // WIP: isError or Error
     const { data, isLoading } = useQuery({
         queryKey: ['careers'],
-        queryFn: () => careerRepository.list({}),
+        queryFn: async () => careerRepository.list({}),
     })
 
     const careers = data?.items ?? []

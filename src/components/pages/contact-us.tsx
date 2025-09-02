@@ -1,6 +1,6 @@
-import { ContactMap } from "@/components/contact-map"
-import { HeaderSection } from "../header-section"
-import { SEO } from "@/components/seo"
+import { ContactMap } from "@/components/custom-ui/contact-map"
+import { HeaderSection } from "../custom-ui/header-section"
+import { SEO } from "@/components/custom-ui/seo"
 import { useLanguage } from "@/hooks/use-language"
 import { Phone, Mail, MapPin } from "lucide-react"
 
