@@ -47,7 +47,7 @@ function BlogPostList() {
         )
     }
 
-    if (isError) {
+    if (isError || posts.length === 0) {
         return (
             <div className="flex justify-center items-center min-h-screen">
                 <p className="text-red-600">Failed to load posts.</p>
